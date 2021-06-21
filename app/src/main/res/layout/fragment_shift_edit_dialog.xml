@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_between_elements"
+                android:layout_weight="1"
+                android:text="@string/button_cancel" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_between_elements"
+                android:layout_weight="1"
+                android:text="@string/button_save" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_day_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Смена/Выходной"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/sp_day_type" />
+
+                <EditText
+                    android:id="@+id/et_end_place"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:maxLength="3"
+                    android:hint="Место окончания"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/et_start_place"
+                    app:layout_constraintTop_toBottomOf="@+id/button_end_time" />
+
+                <EditText
+                    android:id="@+id/et_start_place"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:maxLength="3"
+                    android:hint="Место начала"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toStartOf="@+id/et_end_place"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/button_start_time" />
+
+                <Button
+                    android:id="@+id/button_end_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="16:00"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/button_start_time"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_end_text" />
+
+                <Button
+                    android:id="@+id/button_start_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="8:00"
+                    app:layout_constraintEnd_toStartOf="@+id/button_end_time"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_start_text" />
+
+                <TextView
+                    android:id="@+id/tv_end_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Окончание"
+                    app:layout_constraintStart_toStartOf="@+id/button_end_time"
+                    app:layout_constraintTop_toBottomOf="@+id/et_shift_name" />
+
+                <TextView
+                    android:id="@+id/tv_start_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Начало"
+                    app:layout_constraintStart_toStartOf="@+id/button_start_time"
+                    app:layout_constraintTop_toBottomOf="@+id/et_shift_name" />
+
+                <Button
+                    android:id="@+id/field_choose_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/button_choose_date"
+                    app:layout_constraintTop_toBottomOf="@id/sp_day_type" />
+
+                <EditText
+                    android:id="@+id/et_shift_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_between_elements"
+                    android:ems="10"
+                    android:maxLength="6"
+                    android:hint="@string/et_hint_shift_name"
+                    android:inputType="textPersonName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/field_choose_date" />
+
+                <Spinner
+                    android:id="@+id/sp_day_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_day_type"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_day_type"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

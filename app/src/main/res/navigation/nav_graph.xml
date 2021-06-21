@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.CalendarFragment"
+        android:label="@string/label_fragment_calendar"
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendarFragment_to_shiftEditDialogFragment"
+            app:destination="@id/shiftEditDialogFragment" />
+        <action
+            android:id="@+id/action_calendarFragment_to_shiftDetailFragment"
+            app:destination="@id/shiftDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tonightFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.TonightFragment"
+        android:label="@string/label_fragment_tonight"
+        tools:layout="@layout/fragment_tonight" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@xml/profile" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@xml/settings" />
+    <fragment
+        android:id="@+id/shiftDetailFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.ShiftDetailFragment"
+        android:label="@string/shift_details"
+        tools:layout="@layout/fragment_shift_detail"/>
+    <fragment
+        android:id="@+id/shiftEditDialogFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.ShiftEditDialogFragment"
+        android:label="@string/shift_edit"
+        tools:layout="@layout/fragment_shift_edit_dialog"/>
+
+</navigation>

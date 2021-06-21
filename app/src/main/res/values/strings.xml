@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MetroTimeX</string>
+    <string name="calendar_bnv">Календарь</string>
+    <string name="detail_bnv">Сегодня</string>
+    <string name="label_fragment_calendar">Список смен</string>
+    <string name="label_fragment_tonight">Сегодня</string>
+    <string name="settings">Настройки</string>
+    <string name="profile">Профиль</string>
+    <string name="shift_details">Детали смены</string>
+    <string name="shift_edit">Редактировать смену</string>
+    <string name="button_save">Сохранить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="button_choose_date">21.05.2021</string>
+    <string name="et_hint_shift_name">Название смены</string>
+
+    <string-array name="day_status_types">
+        <item>Смена</item>
+        <item>Выходной</item>
+        <item>Больничный</item>
+        <item>Отпуск</item>
+    </string-array>
+</resources>
