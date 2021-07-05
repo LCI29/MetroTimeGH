@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,8 +13,13 @@ import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.viewmodel.SharedViewModel
+import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var viewModel: SharedViewModel
+    lateinit var shiftCreateViewModel: ShiftCreateViewModel
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -22,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        shiftCreateViewModel = ViewModelProvider(this).get(ShiftCreateViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -45,8 +54,10 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(navController)
     }
 
-    private fun setupActionBar(navController: NavController,
-                               appBarConfiguration: AppBarConfiguration) {
+    private fun setupActionBar(
+        navController: NavController,
+        appBarConfiguration: AppBarConfiguration
+    ) {
 
         // This allows NavigationUI to decide what label to show in the action bar
         // By using appBarConfig, it will also determine whether to

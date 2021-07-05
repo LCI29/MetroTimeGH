@@ -1,5 +1,6 @@
 package ru.clementl.metrotimex.model.data
 
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -9,6 +10,7 @@ const val TYPE_SHIFT = 0
 const val TYPE_WEEKEND = 1
 const val TYPE_SICK_LIST = 2
 const val TYPE_VACATION_DAY = 3
+const val TYPE_MEDIC = 4
 
 sealed class DayStatus (val date: LocalDate) {abstract val type: Int}
 
@@ -23,7 +25,15 @@ class Shift(
     val endDate: LocalDate
         get() = if (endTime.isAfter(startTime)) date else date.plusDays(1)
     override val type = TYPE_SHIFT
+    val startDateTime: LocalDateTime
+        get() = LocalDateTime.of(date, startTime)
+    val endDateTime: LocalDateTime
+        get() = LocalDateTime.of(endDate, endTime)
+    val duration: Duration
+        get() = Duration.between(startDateTime, endDateTime)
 }
+
+class Workday(date: LocalDate) : DayStatus(date) {override val type = TYPE_SHIFT}
 
 class Weekend(date: LocalDate) : DayStatus(date) { override val type = TYPE_WEEKEND }
 
@@ -32,3 +42,5 @@ class SickListDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_
 class VacationDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_VACATION_DAY }
 
 class UnknownDay(date: LocalDate) : DayStatus(date) { override val type  = TYPE_UNKNOWN }
+
+class MedicDay(date: LocalDate) : DayStatus(date) {override val type = TYPE_MEDIC}

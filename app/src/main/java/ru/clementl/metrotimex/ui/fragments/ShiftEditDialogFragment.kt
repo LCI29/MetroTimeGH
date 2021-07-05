@@ -10,17 +10,30 @@ import android.widget.Spinner
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.databinding.FragmentShiftEditDialogBinding
 import ru.clementl.metrotimex.ui.fragments.pickers.DatePickerFragment
 import ru.clementl.metrotimex.ui.fragments.pickers.TimePickerFragment
+import ru.clementl.metrotimex.utils.asSimpleDate
+import ru.clementl.metrotimex.utils.asSimpleTime
 import ru.clementl.metrotimex.utils.showToast
+import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
+import java.time.LocalDate
 
 class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
     private var binding: FragmentShiftEditDialogBinding? = null
     private lateinit var spinner: Spinner
+    val createShiftVm: ShiftCreateViewModel by activityViewModels()
+
+    companion object {
+        const val DATE_PICKER = "date_picker"
+        const val TIME_PICKER_START = "time_picker_start"
+        const val TIME_PICKER_END = "time_picker_end"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,16 +63,30 @@ class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
         spinner.onItemSelectedListener = this
 
-        binding!!.buttonStartTime.setOnClickListener {
-            TimePickerFragment().show(requireActivity().supportFragmentManager, "timePickerStart")
+        with(binding!!) {
+            buttonStartTime.setOnClickListener {
+                TimePickerFragment().show(requireActivity().supportFragmentManager, TIME_PICKER_START)
+            }
+
+            buttonEndTime.setOnClickListener {
+                TimePickerFragment().show(requireActivity().supportFragmentManager, TIME_PICKER_END)
+            }
+
+            fieldChooseDate.setOnClickListener {
+                DatePickerFragment().show(requireActivity().supportFragmentManager, DATE_PICKER)
+            }
         }
 
-        binding!!.buttonEndTime.setOnClickListener {
-            TimePickerFragment().show(requireActivity().supportFragmentManager, "timePickerEnd")
-        }
-
-        binding!!.fieldChooseDate.setOnClickListener {
-            DatePickerFragment().show(requireActivity().supportFragmentManager, "datePicker")
+        with (createShiftVm) {
+            startDate.observe(viewLifecycleOwner) {
+                binding!!.fieldChooseDate.text = it.asSimpleDate()
+            }
+            startTime.observe(viewLifecycleOwner) {
+                binding!!.buttonStartTime.text = it.asSimpleTime()
+            }
+            endTime.observe(viewLifecycleOwner) {
+                binding!!.buttonEndTime.text = it.asSimpleTime()
+            }
         }
     }
 
@@ -94,6 +121,11 @@ class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        createShiftVm.reset()
     }
 
 }
