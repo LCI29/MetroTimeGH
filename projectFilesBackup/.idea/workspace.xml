@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="MetroTime" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d43809bd-fc3f-4215-a52c-91d40bce80ff" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/History.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/History.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/model/data/DayStatus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/model/data/DayStatus.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/ui/adapters/DayStatusAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/ru/clementl/metrotimex/ui/adapters/DayStatusAdapter.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="navigationResourceFile" />
+        <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="valueResourceFile" />
+        <option value="JUnit5 Test Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1twMTbmaw1jxXil1rAo7Kv2rLfk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="22540024b60d7ece" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-06-20T16:30:04.182Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="$PROJECT_DIR$/../../../android-sdk" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/androidTest/java/ru/clementl/metrotimex" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ForAndroid/lrn/Google Codelabs/Use Kotlin Coroutines in your Android App/kotlin-coroutines-master/coroutines-codelab" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ru.clementl.metrotimex.model.data" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+    <configuration name="ShiftTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MetroTimeX.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.clementl.metrotimex.model.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.clementl.metrotimex.model.data" />
+      <option name="MAIN_CLASS_NAME" value="ru.clementl.metrotimex.model.data.ShiftTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="MetroTimeX.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftTest.getDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MetroTimeX.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.clementl.metrotimex.model.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.clementl.metrotimex.model.data" />
+      <option name="MAIN_CLASS_NAME" value="ru.clementl.metrotimex.model.data.ShiftTest" />
+      <option name="METHOD_NAME" value="getDate(org.junit.jupiter.api.RepetitionInfo)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftTest.getEndDateTime" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MetroTimeX.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.clementl.metrotimex.model.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.clementl.metrotimex.model.data" />
+      <option name="MAIN_CLASS_NAME" value="ru.clementl.metrotimex.model.data.ShiftTest" />
+      <option name="METHOD_NAME" value="getEndDateTime(org.junit.jupiter.api.RepetitionInfo)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShiftTest.getStartDateTime" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MetroTimeX.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.clementl.metrotimex.model.data.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.clementl.metrotimex.model.data" />
+      <option name="MAIN_CLASS_NAME" value="ru.clementl.metrotimex.model.data.ShiftTest" />
+      <option name="METHOD_NAME" value="getStartDateTime(org.junit.jupiter.api.RepetitionInfo)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeUtilsKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="MetroTimeX.app" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="ru.clementl.metrotimex.utils.TimeUtilsKt" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TimeUtilsKt" />
+        <item itemvalue="Android JUnit.ShiftTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d43809bd-fc3f-4215-a52c-91d40bce80ff" name="Default Changelist" comment="" />
+      <created>1623675706899</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623675706899</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Initial commit 2">
+      <created>1624279694842</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1624279694842</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Initial commit 3">
+      <created>1625500628251</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1625500628251</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Initial commit 3.1">
+      <created>1625500687247</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1625500687247</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit 2" />
+    <MESSAGE value="Initial commit 3" />
+    <MESSAGE value="Initial commit 3.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit 3.1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="484" y="0" key="#app" timestamp="1624206649381">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="484" y="0" key="#app/0.0.1536.824@0.0.1536.824" timestamp="1624206649381" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1624206639226">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1624206639226" />
+    <state x="323" y="256" key="#com.intellij.ide.util.MemberChooser" timestamp="1624211184708">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="323" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1624211184708" />
+    <state x="538" y="495" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624181254622" />
+    <state x="313" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1625597886356">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="313" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1625597886356" />
+    <state x="477" y="526" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1623791899762">
+      <screen x="0" y="0" width="2560" height="1560" />
+    </state>
+    <state x="477" y="526" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1623791899762" />
+    <state x="369" y="534" key="AndroidCreateResourceDirectoryDialog" timestamp="1623790925408">
+      <screen x="0" y="0" width="2560" height="1560" />
+    </state>
+    <state x="369" y="534" key="AndroidCreateResourceDirectoryDialog/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1623790925408" />
+    <state x="327" y="534" key="AndroidCreateResourceFileDialog" timestamp="1624133880536">
+      <screen x="0" y="0" width="2560" height="1560" />
+    </state>
+    <state x="327" y="534" key="AndroidCreateResourceFileDialog/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624133880536" />
+    <state x="720" y="676" key="AndroidCreateXmlResourceDialog" timestamp="1624196208990">
+      <screen x="0" y="0" width="2560" height="1560" />
+    </state>
+    <state x="720" y="676" key="AndroidCreateXmlResourceDialog/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624196208990" />
+    <state x="395" y="0" key="CommitChangelistDialog2" timestamp="1625500684860">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="395" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1625500684860" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1624284430279">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1624284430279" />
+    <state x="642" y="310" key="Github.ShareDialog" timestamp="1624279349564">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="642" y="310" key="Github.ShareDialog/0.0.1536.824@0.0.1536.824" timestamp="1624279349564" />
+    <state x="535" y="117" key="Github.UntrackedFilesDialog" timestamp="1624279357118">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="535" y="117" key="Github.UntrackedFilesDialog/0.0.1536.824@0.0.1536.824" timestamp="1624279357118" />
+    <state width="1491" height="202" key="GridCell.Tab.0.bottom" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.0.bottom/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624193050997" />
+    <state width="1491" height="202" key="GridCell.Tab.0.center" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.0.center/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624193050997" />
+    <state width="1491" height="202" key="GridCell.Tab.0.left" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.0.left/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624193050997" />
+    <state width="1491" height="202" key="GridCell.Tab.0.right" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.0.right/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624193050997" />
+    <state width="1491" height="202" key="GridCell.Tab.1.bottom" timestamp="1625519340892">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1625519340892" />
+    <state width="1791" height="436" key="GridCell.Tab.1.bottom/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624137631552" />
+    <state width="1491" height="202" key="GridCell.Tab.1.center" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.1.center/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624137631552" />
+    <state width="1491" height="202" key="GridCell.Tab.1.left" timestamp="1625519340891">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1625519340891" />
+    <state width="1791" height="436" key="GridCell.Tab.1.left/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624137631552" />
+    <state width="1491" height="202" key="GridCell.Tab.1.right" timestamp="1625519340892">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="202" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1625519340892" />
+    <state width="1791" height="436" key="GridCell.Tab.1.right/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624137631552" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1624205864770">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1624205864770" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1625500633458">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1625500633458" />
+    <state x="583" y="190" key="chooseDestDirectoryDialog" timestamp="1624384761518">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="583" y="190" key="chooseDestDirectoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1624384761518" />
+    <state width="300" height="58" key="javadoc.popup.new" timestamp="1625601686341">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="300" height="58" key="javadoc.popup.new/0.0.1536.824@0.0.1536.824" timestamp="1625601686341" />
+    <state width="435" height="109" key="javadoc.popup.new/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624197854079" />
+    <state x="531" y="126" key="org.jetbrains.kotlin.idea.testIntegration.KotlinCreateTestDialog" timestamp="1624384761549">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="531" y="126" key="org.jetbrains.kotlin.idea.testIntegration.KotlinCreateTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1624384761549" />
+    <state x="403" y="365" key="run.anything.popup" timestamp="1624133989885">
+      <screen x="0" y="0" width="2560" height="1560" />
+    </state>
+    <state x="403" y="365" key="run.anything.popup/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1624133989885" />
+    <state x="246" y="190" width="672" height="359" key="search.everywhere.popup" timestamp="1624207218727">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="246" y="190" width="672" height="359" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1624207218727" />
+    <state x="410" y="359" width="672" height="678" key="search.everywhere.popup/0.0.2560.1560/-1920.315.1920.1080@0.0.2560.1560" timestamp="1623867661250" />
+  </component>
+</project>

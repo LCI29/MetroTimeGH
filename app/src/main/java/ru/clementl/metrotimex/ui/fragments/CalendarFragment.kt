@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.ui.adapters.DayStatusAdapter
-import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
 
 class CalendarFragment : Fragment() {
@@ -32,9 +31,8 @@ class CalendarFragment : Fragment() {
 //        val fragmentBinding = FragmentCalendarBinding.inflate(inflater, container, false)
 //        binding = fragmentBinding
 //        return binding?.root
-        val view = activity?.layoutInflater?.inflate(R.layout.fragment_calendar, container, false)
-//        view?.findViewById<RecyclerView>(R.id.recycler_view)
-        return view
+        //        view?.findViewById<RecyclerView>(R.id.recycler_view)
+        return activity?.layoutInflater?.inflate(R.layout.fragment_calendar, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +48,7 @@ class CalendarFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = dayStatusAdapter
-        dayStatusAdapter.setData(viewModel.shiftList)
+        dayStatusAdapter.setData(viewModel.dayList)
     }
 
     private fun createNewShift() {

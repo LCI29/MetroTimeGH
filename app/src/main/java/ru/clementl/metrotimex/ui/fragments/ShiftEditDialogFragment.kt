@@ -7,11 +7,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.TimePicker
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.databinding.FragmentShiftEditDialogBinding
 import ru.clementl.metrotimex.ui.fragments.pickers.DatePickerFragment
@@ -20,7 +17,6 @@ import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.asSimpleTime
 import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
-import java.time.LocalDate
 
 class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
 

@@ -1,46 +1,62 @@
 package ru.clementl.metrotimex.model.data
 
-import java.time.Duration
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
-const val TYPE_UNKNOWN = -1
-const val TYPE_SHIFT = 0
-const val TYPE_WEEKEND = 1
-const val TYPE_SICK_LIST = 2
-const val TYPE_VACATION_DAY = 3
-const val TYPE_MEDIC = 4
 
-sealed class DayStatus (val date: LocalDate) {abstract val type: Int}
+//sealed class DayStatus (val date: LocalDate) {abstract val type: Int}
+//
+//
+//
+//open class Workday(date: LocalDate, val shift: Shift) : DayStatus(date) {override val type = TYPE_SHIFT}
+//
+//class Weekend(date: LocalDate) : DayStatus(date) { override val type = TYPE_WEEKEND }
+//
+//class SickListDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_SICK_LIST }
+//
+//class VacationDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_VACATION_DAY }
+//
+//class UnknownDay(date: LocalDate) : DayStatus(date) { override val type  = TYPE_UNKNOWN }
+//
+//class MedicDay(date: LocalDate) : DayStatus(date) {override val type = TYPE_MEDIC}
 
-class Shift(
-    _startDate: LocalDate,
-    val startTime: LocalTime,
-    val endTime: LocalTime,
-    val shiftName: String = "Смена",
-    val startPlace: String = "",
-    val endPlace: String = ""
-) : DayStatus(_startDate) {
-    val endDate: LocalDate
-        get() = if (endTime.isAfter(startTime)) date else date.plusDays(1)
-    override val type = TYPE_SHIFT
-    val startDateTime: LocalDateTime
-        get() = LocalDateTime.of(date, startTime)
-    val endDateTime: LocalDateTime
-        get() = LocalDateTime.of(endDate, endTime)
-    val duration: Duration
-        get() = Duration.between(startDateTime, endDateTime)
+/**
+ * Represents a day by its date, type (workday or weekend) and shift if it has
+ */
+@Entity
+data class DayStatus(
+    @PrimaryKey @ColumnInfo(name = "date", typeAffinity = ColumnInfo.INTEGER)
+    val date: LocalDate,
+
+    @NonNull @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
+    val workDayType: WorkDayType,
+
+    @Nullable @ColumnInfo(name = "shift")
+    val shift: Shift?
+)
+
+/**
+ * Returns date and time of shift's START if DayStatus object has type [WorkDayType.SHIFT]
+ */
+fun DayStatus.shiftStart(): LocalDateTime? {
+    return if (workDayType == WorkDayType.SHIFT) {
+        LocalDateTime.of(date, shift!!.startTime)
+    } else null
 }
 
-class Workday(date: LocalDate) : DayStatus(date) {override val type = TYPE_SHIFT}
-
-class Weekend(date: LocalDate) : DayStatus(date) { override val type = TYPE_WEEKEND }
-
-class SickListDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_SICK_LIST }
-
-class VacationDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_VACATION_DAY }
-
-class UnknownDay(date: LocalDate) : DayStatus(date) { override val type  = TYPE_UNKNOWN }
-
-class MedicDay(date: LocalDate) : DayStatus(date) {override val type = TYPE_MEDIC}
+/**
+ * Returns date and time of shift's END if DayStatus object has type [WorkDayType.SHIFT]
+ */
+fun DayStatus.shiftEnd(): LocalDateTime? {
+    return if (workDayType == WorkDayType.SHIFT) {
+        with(shift!!) {
+            if (startTime.isBefore(endTime)) LocalDateTime.of(date, endTime)
+            else LocalDateTime.of(date.plusDays(1), endTime)
+        }
+    } else null
+}

@@ -1,12 +1,10 @@
 package ru.clementl.metrotimex.utils
 
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.*
 
 fun LocalDateTime.asSimpleTime(): String {
     return format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
@@ -22,6 +20,18 @@ fun LocalDateTime.asSimpleDate(): String {
 
 fun LocalDate.asSimpleDate(): String {
     return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+}
+
+private fun LocalDate.isDateEven() = dayOfMonth % 2 == 0
+
+fun LocalDate.oddEven(endTime: LocalTime): Int {
+    val oddEvenDifferAfter = LocalTime.of(22,30)
+    val latestNightEnd = LocalTime.of(4,0)
+    return if (endTime.isBefore(oddEvenDifferAfter) && endTime.isAfter(latestNightEnd)) {
+        0
+    } else {
+        if (isDateEven()) 2 else 1
+    }
 }
 
 fun main() {

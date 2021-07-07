@@ -13,13 +13,13 @@ class ShiftCreateViewModel : ViewModel() {
     private var initialStartTime = LocalTime.of(8, 0)
     private var initialEndTime = LocalTime.of(16, 0)
 
-    private var _startDate = MutableLiveData<LocalDate>(initialDate)
+    private var _startDate = MutableLiveData(initialDate)
     val startDate: LiveData<LocalDate> = _startDate
 
-    private var _startTime = MutableLiveData<LocalTime>(initialStartTime)
+    private var _startTime = MutableLiveData(initialStartTime)
     val startTime: LiveData<LocalTime> = _startTime
 
-    private var _endTime = MutableLiveData<LocalTime>(initialEndTime)
+    private var _endTime = MutableLiveData(initialEndTime)
     val endTime: LiveData<LocalTime> = _endTime
 
 
