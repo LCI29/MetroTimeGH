@@ -9,7 +9,8 @@ import java.time.LocalDate
  */
 enum class WeekDayType(val code: String) {
     WORKDAY("Р"),
-    WEEKEND("В")
+    WEEKEND("В"),
+    UNKNOWN("Н")
 }
 
 fun LocalDate.weekDayType(): WeekDayType {

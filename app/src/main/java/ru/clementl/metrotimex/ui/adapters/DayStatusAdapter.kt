@@ -13,6 +13,7 @@ abstract class DayStatusHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     abstract fun bind(day: DayStatus)
 }
 
+@Deprecated("")
 class DayStatusAdapter : RecyclerView.Adapter<DayStatusHolder>() {
 
     private val mDayList: MutableList<DayStatus> = mutableListOf()
@@ -26,7 +27,7 @@ class DayStatusAdapter : RecyclerView.Adapter<DayStatusHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return mDayList[position].workDayType.type
+        return mDayList[position].workDayType?.type ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayStatusHolder {
@@ -59,14 +60,13 @@ class DayStatusAdapter : RecyclerView.Adapter<DayStatusHolder>() {
         val tvEndPlace: TextView = itemView.findViewById(R.id.endPlace)
 
         override fun bind(day: DayStatus) {
-
-            tvDate.text = day.date.dayOfMonth.toString()
-            tvDayOfWeek.text = day.date.dayOfWeek.toString()
+            tvDate.text = day.date?.dayOfMonth.toString()
+            tvDayOfWeek.text = day.date?.dayOfWeek.toString()
             with(day.shift!!) {
                 tvShiftName.text = name
-                tvStartTime.text = startTime.asSimpleTime()
+                tvStartTime.text = startTime?.asSimpleTime()
                 tvStartPlace.text = startLoc
-                tvEndTime.text = endTime.asSimpleTime()
+                tvEndTime.text = endTime?.asSimpleTime()
                 tvEndPlace.text = endLoc
             }
         }
@@ -79,9 +79,9 @@ class DayStatusAdapter : RecyclerView.Adapter<DayStatusHolder>() {
         val tvMainText: TextView = itemView.findViewById(R.id.main_text)
 
         override fun bind(day: DayStatus) {
-            tvDate.text = day.date.dayOfMonth.toString()
-            tvDayOfWeek.text = day.date.dayOfWeek.toString()
-            tvMainText.text = day.workDayType.desc
+            tvDate.text = day.date?.dayOfMonth.toString()
+            tvDayOfWeek.text = day.date?.dayOfWeek.toString()
+            tvMainText.text = day.workDayType?.desc
         }
     }
 }

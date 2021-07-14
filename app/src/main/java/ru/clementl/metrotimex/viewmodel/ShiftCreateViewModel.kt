@@ -3,13 +3,18 @@ package ru.clementl.metrotimex.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.TypeConverters
+import ru.clementl.metrotimex.converters.ShiftConverter
+import ru.clementl.metrotimex.repositories.DayStatusRepository
 import ru.clementl.metrotimex.utils.logd
+import java.lang.IllegalStateException
 import java.time.LocalDate
 import java.time.LocalTime
 
-class ShiftCreateViewModel : ViewModel() {
+class ShiftCreateViewModel() : ViewModel() {
 
-    private var initialDate = LocalDate.now()
+    private val initialDate = LocalDate.now()
     private var initialStartTime = LocalTime.of(8, 0)
     private var initialEndTime = LocalTime.of(16, 0)
 
@@ -37,10 +42,15 @@ class ShiftCreateViewModel : ViewModel() {
 
     fun reset() {
         _startDate.value = initialDate
+        _startTime.value = initialStartTime
+        _endTime.value = initialEndTime
     }
 
     override fun onCleared() {
         super.onCleared()
         logd("ShiftCreateViewModel cleared")
     }
+
+
+
 }

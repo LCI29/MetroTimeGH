@@ -6,22 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.ui.adapters.DayStatusAdapter
+import ru.clementl.metrotimex.ui.adapters.DayStatusListAdapter
+import ru.clementl.metrotimex.viewmodel.CalendarViewModel
+import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
 
 class CalendarFragment : Fragment() {
 
     private val viewModel: SharedViewModel by activityViewModels()
+    private val calendarViewModel: CalendarViewModel by activityViewModels {
+        CalendarViewModelFactory((activity?.application as MetroTimeApplication).repository)
+    }
 
 //    private var binding: FragmentCalendarBinding? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
-    private lateinit var mAdapter: DayStatusAdapter
+    private lateinit var mAdapter: DayStatusListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,14 +50,18 @@ class CalendarFragment : Fragment() {
         fab.setOnClickListener { createNewShift() }
         recyclerView = view.findViewById(R.id.recycler_view)
         setupAdapter()
+
+        calendarViewModel.allDays.observe(viewLifecycleOwner) { days ->
+            days?.let { mAdapter.submitList(it) }
+        }
     }
 
     private fun setupAdapter() {
-        val dayStatusAdapter = DayStatusAdapter()
+        val dayStatusAdapter = DayStatusListAdapter()
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = dayStatusAdapter
-        dayStatusAdapter.setData(viewModel.dayList)
+        mAdapter = dayStatusAdapter
     }
 
     private fun createNewShift() {

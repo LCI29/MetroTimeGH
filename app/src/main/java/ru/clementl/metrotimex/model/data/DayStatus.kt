@@ -2,9 +2,11 @@ package ru.clementl.metrotimex.model.data
 
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import ru.clementl.metrotimex.converters.DateTimeConverters
+import ru.clementl.metrotimex.converters.ShiftConverter
+import ru.clementl.metrotimex.converters.WeekDayTypeConverters
+import ru.clementl.metrotimex.converters.WorkDayTypeConverters
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -28,15 +30,19 @@ import java.time.LocalDateTime
 /**
  * Represents a day by its date, type (workday or weekend) and shift if it has
  */
-@Entity
+@Entity(tableName = "calendar")
+@TypeConverters(ShiftConverter::class)
 data class DayStatus(
+
     @PrimaryKey @ColumnInfo(name = "date", typeAffinity = ColumnInfo.INTEGER)
-    val date: LocalDate,
+    @TypeConverters(ShiftConverter::class)
+    val date: LocalDate?,
 
-    @NonNull @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
-    val workDayType: WorkDayType,
+    @TypeConverters(WorkDayTypeConverters::class)
+    @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
+    val workDayType: WorkDayType?,
 
-    @Nullable @ColumnInfo(name = "shift")
+    @Nullable @Embedded
     val shift: Shift?
 )
 
@@ -55,8 +61,8 @@ fun DayStatus.shiftStart(): LocalDateTime? {
 fun DayStatus.shiftEnd(): LocalDateTime? {
     return if (workDayType == WorkDayType.SHIFT) {
         with(shift!!) {
-            if (startTime.isBefore(endTime)) LocalDateTime.of(date, endTime)
-            else LocalDateTime.of(date.plusDays(1), endTime)
+            if (startTime!!.isBefore(endTime)) LocalDateTime.of(date, endTime)
+            else LocalDateTime.of(date!!.plusDays(1), endTime)
         }
     } else null
 }

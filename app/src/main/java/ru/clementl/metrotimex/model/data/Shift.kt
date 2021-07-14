@@ -5,6 +5,10 @@ import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import ru.clementl.metrotimex.converters.DateTimeConverters
+import ru.clementl.metrotimex.converters.ShiftConverter
+import ru.clementl.metrotimex.converters.WeekDayTypeConverters
 import java.time.LocalTime
 
 //@Entity
@@ -28,16 +32,44 @@ import java.time.LocalTime
 //        get() = Duration.between(startDateTime, endDateTime)
 //}
 
-@Entity
+@Entity(tableName = "shifts")
+@TypeConverters(ShiftConverter::class)
 data class Shift(
-    @NonNull @ColumnInfo(name = "name") val name: String = "Смена",
-    @NonNull @ColumnInfo(name = "week_day_type", typeAffinity = ColumnInfo.INTEGER) val weekDayType: WeekDayType, // 1-раб, 2-вых
-    @NonNull @ColumnInfo(name = "odd_even") val oddEven: Int, // 0-без, 1-нечет, 2-чет
-    @NonNull @ColumnInfo(name = "start_time", typeAffinity = ColumnInfo.INTEGER) val startTime: LocalTime,
-    @Nullable @ColumnInfo(name = "start_loc") val startLoc: String = "",
-    @NonNull @ColumnInfo(name = "end_time", typeAffinity = ColumnInfo.INTEGER) val endTime: LocalTime,
-    @Nullable @ColumnInfo(name = "end_loc") val endLoc: String = ""
+
+    @ColumnInfo(name = "name")
+    val name: String? = "Смена",
+
+    @ColumnInfo(
+        name = "week_day_type",
+        typeAffinity = ColumnInfo.TEXT
+    ) val weekDayType: WeekDayType?, // Р - рабочий, В - выходной, Н - неизвестный
+
+    @ColumnInfo(name = "odd_even")
+    val oddEven: Int?, // 0-без, 1-нечет, 2-чет
+
+
+    @ColumnInfo(
+        name = "start_time",
+        typeAffinity = ColumnInfo.INTEGER)
+    val startTime: LocalTime?,
+
+
+    @ColumnInfo(name = "start_loc") val startLoc: String? = "",
+
+    @ColumnInfo(
+        name = "end_time",
+        typeAffinity = ColumnInfo.INTEGER
+    ) val endTime: LocalTime?,
+
+    @Nullable @ColumnInfo(name = "end_loc") val endLoc: String? = "",
+
 ) {
-    @PrimaryKey @NonNull @ColumnInfo(name = "id")
-    val id: String = "$name-${weekDayType.code}$oddEven" // 85.2-Р0, М18-В2
+
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    var id: String = "$name-${weekDayType?.code}$oddEven" // 85.2-Р0, М18-В2
+    init {
+        id = ""
+    }
 }
+

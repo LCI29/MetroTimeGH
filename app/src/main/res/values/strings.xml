@@ -18,5 +18,6 @@
         <item>Выходной</item>
         <item>Больничный</item>
         <item>Отпуск</item>
+        <item>Медкомиссия</item>
     </string-array>
 </resources>

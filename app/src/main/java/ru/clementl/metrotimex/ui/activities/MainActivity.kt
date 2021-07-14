@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.ui.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -11,11 +12,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.viewmodel.CalendarViewModel
+import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
 
 class MainActivity : AppCompatActivity() {
+
 
     lateinit var viewModel: SharedViewModel
     lateinit var shiftCreateViewModel: ShiftCreateViewModel
