@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import ru.clementl.metrotimex.ui.activities.MainActivity
-import ru.clementl.metrotimex.ui.fragments.ShiftEditDialogFragment
+import ru.clementl.metrotimex.ui.fragments.ShiftCreateFragment
 import ru.clementl.metrotimex.utils.logd
 import java.time.LocalTime
 import java.util.*
@@ -24,11 +24,11 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
     override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
         val activity = activity as MainActivity
         when(tag!!) {
-            ShiftEditDialogFragment.TIME_PICKER_START -> {
+            ShiftCreateFragment.TIME_PICKER_START -> {
                 activity.shiftCreateViewModel.setStartTime(LocalTime.of(p1, p2))
                 logd("onTimeSet: Start = $p1, $p2")
             }
-            ShiftEditDialogFragment.TIME_PICKER_END -> {
+            ShiftCreateFragment.TIME_PICKER_END -> {
                 activity.shiftCreateViewModel.setEndTime(LocalTime.of(p1, p2))
                 logd("onTimeSet: End = $p1, $p2")
             }

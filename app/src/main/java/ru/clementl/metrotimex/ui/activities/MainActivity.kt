@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -14,16 +15,14 @@ import androidx.navigation.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
-import ru.clementl.metrotimex.viewmodel.CalendarViewModel
-import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
-import ru.clementl.metrotimex.viewmodel.SharedViewModel
-import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
+import ru.clementl.metrotimex.viewmodel.*
 
 class MainActivity : AppCompatActivity() {
 
 
-    lateinit var viewModel: SharedViewModel
-    lateinit var shiftCreateViewModel: ShiftCreateViewModel
+    val shiftCreateViewModel: ShiftCreateViewModel by viewModels {
+        ShiftCreateViewModelFactory((application as MetroTimeApplication).repository)
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -33,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        shiftCreateViewModel = ViewModelProvider(this).get(ShiftCreateViewModel::class.java)
+//        shiftCreateViewModel = ViewModelProvider(this).get(ShiftCreateViewModel::class.java)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)

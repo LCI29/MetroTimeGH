@@ -34,6 +34,10 @@ fun LocalDate.oddEven(endTime: LocalTime): Int {
     }
 }
 
+fun LocalDate.ofPattern(pattern: String): String {
+    return format(DateTimeFormatter.ofPattern(pattern))
+}
+
 fun main() {
     val a = LocalDate.now().asSimpleDate()
     println(a)

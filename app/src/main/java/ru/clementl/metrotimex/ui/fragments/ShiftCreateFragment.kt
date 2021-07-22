@@ -12,8 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
-import ru.clementl.metrotimex.databinding.FragmentShiftEditDialogBinding
+import ru.clementl.metrotimex.databinding.FragmentShiftCreateBinding
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.Shift
 import ru.clementl.metrotimex.model.data.WorkDayType
@@ -27,15 +28,19 @@ import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
+import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModelFactory
 import java.lang.Exception
+import java.time.LocalDate
 
-class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
 
-    private var binding: FragmentShiftEditDialogBinding? = null
+    private var binding: FragmentShiftCreateBinding? = null
     private lateinit var spinner: Spinner
-    val createShiftVm: ShiftCreateViewModel by activityViewModels()
+    private val createShiftVm: ShiftCreateViewModel by activityViewModels {
+        ShiftCreateViewModelFactory((activity?.application as MetroTimeApplication).repository)
+    }
     val calendarViewModel: CalendarViewModel by activityViewModels()
 
 
@@ -52,7 +57,7 @@ class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val fragmentBinding = FragmentShiftEditDialogBinding.inflate(inflater, container, false)
+        val fragmentBinding = FragmentShiftCreateBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
     }
@@ -85,11 +90,16 @@ class ShiftEditDialogFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
             fieldChooseDate.setOnClickListener {
-                DatePickerFragment().show(requireActivity().supportFragmentManager, DATE_PICKER)
+                DatePickerFragment(createShiftVm.startDate.value ?: LocalDate.now())
+                    .show(requireActivity().supportFragmentManager, DATE_PICKER)
+            }
+            cancelButton.setOnClickListener {
+                findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
             }
         }
 
         with (createShiftVm) {
+            initializeStartDate()
             startDate.observe(viewLifecycleOwner) {
                 binding!!.fieldChooseDate.text = it.asSimpleDate()
             }

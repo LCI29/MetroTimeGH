@@ -1,31 +1,55 @@
 package ru.clementl.metrotimex.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.room.TypeConverters
-import ru.clementl.metrotimex.converters.ShiftConverter
-import ru.clementl.metrotimex.repositories.DayStatusRepository
+import android.util.Log
+import androidx.lifecycle.*
+import kotlinx.coroutines.*
+import ru.clementl.metrotimex.repositories.CalendarRepository
+import ru.clementl.metrotimex.utils.LOG_TAG
 import ru.clementl.metrotimex.utils.logd
 import java.lang.IllegalStateException
-import java.time.LocalDate
-import java.time.LocalTime
+import java.time.*
 
-class ShiftCreateViewModel() : ViewModel() {
+class ShiftCreateViewModel(val repository: CalendarRepository) : ViewModel() {
 
-    private val initialDate = LocalDate.now()
+    private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
+
     private var initialStartTime = LocalTime.of(8, 0)
     private var initialEndTime = LocalTime.of(16, 0)
 
-    private var _startDate = MutableLiveData(initialDate)
-    val startDate: LiveData<LocalDate> = _startDate
+    private var _startDate = MutableLiveData<LocalDate>()
+    val startDate: LiveData<LocalDate>
+        get() = _startDate
 
-    private var _startTime = MutableLiveData(initialStartTime)
-    val startTime: LiveData<LocalTime> = _startTime
+    private var _startTime = MutableLiveData<LocalTime>()
+    val startTime: LiveData<LocalTime>
+        get() = _startTime
 
-    private var _endTime = MutableLiveData(initialEndTime)
-    val endTime: LiveData<LocalTime> = _endTime
+    private var _endTime = MutableLiveData<LocalTime>()
+    val endTime: LiveData<LocalTime>
+        get() = _endTime
+
+    init {
+        _startTime.value = initialStartTime
+        _endTime.value = initialEndTime
+        initializeStartDate()
+    }
+
+    fun initializeStartDate() {
+        uiScope.launch {
+            _startDate.value = getFirstFreeDateFromDb()
+        }
+    }
+
+    private suspend fun getFirstFreeDateFromDb(): LocalDate {
+        val offset = OffsetDateTime.now(ZoneId.systemDefault()).offset
+        return withContext(Dispatchers.IO) {
+            var epochmilli = repository.getLastDate().div(1000) ?: 0
+            logd("${epochmilli}, ${LocalDateTime.ofEpochSecond(epochmilli, 0, offset)}")
+            var date = LocalDateTime.ofEpochSecond(
+                epochmilli, 0, offset).toLocalDate().plusDays(1)
+            date
+        }
+    }
 
 
     fun setStartDate(date: LocalDate) {
@@ -41,7 +65,6 @@ class ShiftCreateViewModel() : ViewModel() {
     }
 
     fun reset() {
-        _startDate.value = initialDate
         _startTime.value = initialStartTime
         _endTime.value = initialEndTime
     }
@@ -53,4 +76,14 @@ class ShiftCreateViewModel() : ViewModel() {
 
 
 
+}
+
+class ShiftCreateViewModelFactory(private val repository: CalendarRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ShiftCreateViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ShiftCreateViewModel(repository) as T
+        }
+        throw IllegalStateException("Unknown ViewModel class")
+    }
 }

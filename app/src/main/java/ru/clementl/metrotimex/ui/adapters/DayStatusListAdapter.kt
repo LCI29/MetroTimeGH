@@ -10,10 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.TYPE_SHIFT
-import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.utils.asSimpleTime
+import ru.clementl.metrotimex.utils.ofPattern
+import java.time.LocalDate
 
 class DayStatusListAdapter : ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder> (DayStatusComparator()){
+
+    companion object {
+        val today = LocalDate.now()
+    }
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).workDayType?.type ?: 0
@@ -36,7 +41,14 @@ class DayStatusListAdapter : ListAdapter<DayStatus, DayStatusListAdapter.DayStat
     }
 
     abstract class DayStatusViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        abstract fun bind(day: DayStatus)
+        open fun bind(day: DayStatus) {
+            if (day.date == today) {
+                itemView.setBackgroundResource(android.R.color.holo_orange_light)
+            }
+            itemView.setOnClickListener {
+
+            }
+        }
     }
 
     class ShiftViewHolder(itemView: View) : DayStatusViewHolder(itemView) {
@@ -44,20 +56,16 @@ class DayStatusListAdapter : ListAdapter<DayStatus, DayStatusListAdapter.DayStat
         private val tvDate: TextView = itemView.findViewById(R.id.date)
         private val tvDayOfWeek: TextView = itemView.findViewById(R.id.dayOfWeek)
         private val tvShiftName: TextView = itemView.findViewById(R.id.shiftName)
-        private val tvStartTime: TextView = itemView.findViewById(R.id.startTime)
-        private val tvStartPlace: TextView = itemView.findViewById(R.id.startPlace)
-        private val tvEndTime: TextView = itemView.findViewById(R.id.main_text)
-        private val tvEndPlace: TextView = itemView.findViewById(R.id.endPlace)
+        private val tvShiftDescString: TextView = itemView.findViewById(R.id.shift_desc_string)
 
         override fun bind(day: DayStatus) {
+            super.bind(day)
             tvDate.text = day.date?.dayOfMonth.toString()
-            tvDayOfWeek.text = day.date?.dayOfWeek.toString()
+            tvDayOfWeek.text = day.date?.ofPattern("EE")
             with(day.shift!!) {
-                tvShiftName.text = name
-                tvStartTime.text = startTime?.asSimpleTime()
-                tvStartPlace.text = startLoc
-                tvEndTime.text = endTime?.asSimpleTime()
-                tvEndPlace.text = endLoc
+                tvShiftName.text = if (name?.isEmpty() != false) "Смена" else name
+                tvShiftDescString.text = day.shift.getDescriptionString()
+
             }
         }
     }
@@ -66,12 +74,13 @@ class DayStatusListAdapter : ListAdapter<DayStatus, DayStatusListAdapter.DayStat
 
         private val tvDate: TextView = itemView.findViewById(R.id.date)
         private val tvDayOfWeek: TextView = itemView.findViewById(R.id.dayOfWeek)
-        private val tvMainText: TextView = itemView.findViewById(R.id.main_text)
+        private val tvShiftName: TextView = itemView.findViewById(R.id.shiftName)
 
         override fun bind(day: DayStatus) {
+            super.bind(day)
             tvDate.text = day.date?.dayOfMonth.toString()
-            tvDayOfWeek.text = day.date?.dayOfWeek.toString()
-            tvMainText.text = day.workDayType?.desc
+            tvDayOfWeek.text = day.date?.ofPattern("EE")
+            tvShiftName.text = day.workDayType?.desc
         }
     }
 
@@ -84,4 +93,8 @@ class DayStatusListAdapter : ListAdapter<DayStatus, DayStatusListAdapter.DayStat
             return oldItem == newItem
         }
     }
+}
+
+class DayListener(val clickListener: (date: LocalDate) -> Unit) {
+    fun onClick(day: DayStatus) = clickListener(day.date!!)
 }

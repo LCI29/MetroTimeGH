@@ -9,7 +9,9 @@ import androidx.room.TypeConverters
 import ru.clementl.metrotimex.converters.DateTimeConverters
 import ru.clementl.metrotimex.converters.ShiftConverter
 import ru.clementl.metrotimex.converters.WeekDayTypeConverters
+import ru.clementl.metrotimex.utils.asSimpleTime
 import java.time.LocalTime
+import java.util.*
 
 //@Entity
 //class Shift(
@@ -64,6 +66,13 @@ data class Shift(
     @Nullable @ColumnInfo(name = "end_loc") val endLoc: String? = "",
 
 ) {
+    /**
+     * Returns string like "8:25 СК - 16:04 СК"
+     */
+    fun getDescriptionString() =
+        "${startTime?.asSimpleTime()} ${startLoc?.toUpperCase(Locale.ROOT)}" +
+                "${if (startLoc?.isEmpty() != false) "" else " "}-" +
+                " ${endTime?.asSimpleTime()} ${endLoc?.toUpperCase(Locale.ROOT)}"
 
     @PrimaryKey
     @ColumnInfo(name = "id")

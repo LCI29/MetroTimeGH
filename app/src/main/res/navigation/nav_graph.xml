@@ -38,9 +38,9 @@
         tools:layout="@layout/fragment_shift_detail"/>
     <fragment
         android:id="@+id/shiftEditDialogFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.ShiftEditDialogFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.ShiftCreateFragment"
         android:label="@string/shift_edit"
-        tools:layout="@layout/fragment_shift_edit_dialog">
+        tools:layout="@layout/fragment_shift_create">
         <action
             android:id="@+id/action_shiftEditDialogFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"

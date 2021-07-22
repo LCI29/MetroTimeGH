@@ -14,15 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
-import ru.clementl.metrotimex.ui.adapters.DayStatusAdapter
 import ru.clementl.metrotimex.ui.adapters.DayStatusListAdapter
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
-import ru.clementl.metrotimex.viewmodel.SharedViewModel
 
 class CalendarFragment : Fragment() {
 
-    private val viewModel: SharedViewModel by activityViewModels()
+
+    // Так создается ViewModel с репозиторием (с параметрами)
     private val calendarViewModel: CalendarViewModel by activityViewModels {
         CalendarViewModelFactory((activity?.application as MetroTimeApplication).repository)
     }
@@ -41,6 +40,7 @@ class CalendarFragment : Fragment() {
 //        binding = fragmentBinding
 //        return binding?.root
         //        view?.findViewById<RecyclerView>(R.id.recycler_view)
+
         return activity?.layoutInflater?.inflate(R.layout.fragment_calendar, container, false)
     }
 
@@ -57,11 +57,10 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        val dayStatusAdapter = DayStatusListAdapter()
+        mAdapter = DayStatusListAdapter()
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = dayStatusAdapter
-        mAdapter = dayStatusAdapter
+        recyclerView.adapter = mAdapter
     }
 
     private fun createNewShift() {

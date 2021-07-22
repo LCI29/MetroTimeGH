@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
-
-        <TextView
-            android:id="@+id/dayOfWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="чт"
-            android:textSize="14sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/date" />
 
         <TextView
             android:id="@+id/shiftName"
@@ -27,72 +20,46 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="96.3"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/dayOfWeek" />
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/dayOfWeek"
+            app:layout_constraintTop_toTopOf="@+id/date" />
 
         <TextView
-            android:id="@+id/defis"
+            android:id="@+id/shift_desc_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="-"
-            android:textColor="@android:color/black"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/startPlace" />
-
-        <TextView
-            android:id="@+id/startTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="13:16"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/shiftName" />
-
-        <TextView
-            android:id="@+id/main_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="21:21"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/defis" />
-
-        <TextView
-            android:id="@+id/endPlace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="БДД"
-            android:textColor="@android:color/black"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/main_text" />
-
-        <TextView
-            android:id="@+id/startPlace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="НАГ"
-            android:textColor="@android:color/black"
-            app:layout_constraintBaseline_toBaselineOf="@+id/date"
-            app:layout_constraintStart_toEndOf="@+id/startTime" />
+            android:text="13:16 НАГ - 21:21 АН"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintStart_toStartOf="@+id/shiftName" />
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@color/primaryColor"
+            android:gravity="center"
+            android:paddingBottom="@dimen/cell_date_bottom_padding"
             android:text="20"
-            android:textColor="@android:color/black"
+            android:textColor="@color/icons_or_text"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dayOfWeek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#00F1F8E9"
+            android:gravity="top|center"
+            android:paddingBottom="@dimen/cell_day_of_week_bottom_padding"
+            android:text="чт"
+            android:textColor="@color/icons_or_text"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintEnd_toEndOf="@+id/date"
+            app:layout_constraintStart_toStartOf="@+id/date" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</layout>
