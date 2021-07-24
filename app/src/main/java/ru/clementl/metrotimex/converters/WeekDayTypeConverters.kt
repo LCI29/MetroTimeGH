@@ -1,19 +1,15 @@
 package ru.clementl.metrotimex.converters
 
-import androidx.room.TypeConverter
 import ru.clementl.metrotimex.model.data.WeekDayType
+import java.util.*
 
-class WeekDayTypeConverters {
 
-    @TypeConverter
-    fun fromWeekDayToString(weekDayType: WeekDayType) = weekDayType.code
+fun WeekDayType.toStringCode() = code
 
-    @TypeConverter
-    fun fromStringToWeekDayType(s: String): WeekDayType {
-        return when (s.toUpperCase()) {
-            "Р" -> WeekDayType.WORKDAY
-            "В" -> WeekDayType.WEEKEND
-            else -> WeekDayType.UNKNOWN
-        }
+fun String.toWeekDayType(): WeekDayType {
+    return when (toUpperCase(Locale.getDefault())) {
+        "Р" -> WeekDayType.WORKDAY
+        "В" -> WeekDayType.WEEKEND
+        else -> WeekDayType.UNKNOWN
     }
 }

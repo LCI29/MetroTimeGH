@@ -12,11 +12,17 @@ interface CalendarDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(dayStatus: DayStatus)
 
-    @Query("SELECT * FROM calendar ORDER BY date")
+    @Query("SELECT * FROM calendar_table WHERE date = :date")
+    fun getDayByDate(date: Long): LiveData<DayStatus>
+
+    @Query("SELECT * FROM calendar_table ORDER BY date")
     fun getAll(): Flow<List<DayStatus>>
 
-    @Query("SELECT MAX(date) FROM calendar")
-    suspend fun getLastDate(): Long
+    @Query("SELECT MAX(date) FROM calendar_table")
+    suspend fun getLastDateLong(): Long?
+
+    @Query("DELETE FROM calendar_table WHERE date = :dayId")
+    suspend fun deleteDayById(dayId: Long)
 
 
 

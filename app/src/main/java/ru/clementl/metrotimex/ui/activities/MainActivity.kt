@@ -2,12 +2,9 @@ package ru.clementl.metrotimex.ui.activities
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -25,7 +22,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var navController: NavController
+    private lateinit var _navController: NavController
+    val navController: NavController
+        get() = _navController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
-        navController = host.navController
+        _navController = host.navController
 
         val topLevelDestinations = setOf(R.id.calendarFragment, R.id.tonightFragment)
 
@@ -50,10 +49,10 @@ class MainActivity : AppCompatActivity() {
         // и применяем к еще navController
         // поскольку у AppBarConfiguration отсутствует конструктор, принимающий сразу
         // и NavController, и topLevelDestinations: Set<Int>
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(_navController, appBarConfiguration)
 
-        setupActionBar(navController, appBarConfiguration)
-        setupBottomNavMenu(navController)
+        setupActionBar(_navController, appBarConfiguration)
+        setupBottomNavMenu(_navController)
     }
 
     private fun setupActionBar(
@@ -81,14 +80,11 @@ class MainActivity : AppCompatActivity() {
 
     // Создать оверфлоу меню
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.overflow_menu, menu)
+        menuInflater.inflate(R.menu.null_menu, menu)
         return true
     }
 
-    // Подключение пунктов оверфлоу-меню к навигации. Id должны совпадать
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-    }
+
 
 
 }

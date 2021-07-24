@@ -4,4 +4,5 @@
     <dimen name="text_size_places">16sp</dimen>
     <dimen name="cell_day_of_week_bottom_padding">4dp</dimen>
     <dimen name="cell_date_bottom_padding">8dp</dimen>
+    <dimen name="padding_standard">16dp</dimen>
 </resources>

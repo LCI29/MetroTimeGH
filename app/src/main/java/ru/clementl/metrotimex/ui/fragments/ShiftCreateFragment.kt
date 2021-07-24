@@ -14,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.converters.toInt
+import ru.clementl.metrotimex.converters.toLong
+import ru.clementl.metrotimex.converters.toStringCode
 import ru.clementl.metrotimex.databinding.FragmentShiftCreateBinding
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.Shift
@@ -33,7 +36,6 @@ import java.lang.Exception
 import java.time.LocalDate
 
 class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
-
 
 
     private var binding: FragmentShiftCreateBinding? = null
@@ -170,18 +172,18 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val shift = if (workDayType == WorkDayType.SHIFT) {
             Shift(
                 name = binding.etShiftName.text.toString(),
-                weekDayType = date.weekDayType(),
+                weekDayTypeString = date.weekDayType().toStringCode(),
                 oddEven = date.oddEven(endTime),
-                startTime = startTime,
+                startTimeInt = startTime.toInt(),
                 startLoc = binding.etStartPlace.text.toString(),
-                endTime = endTime,
+                endTimeInt = endTime.toInt(),
                 endLoc = binding.etEndPlace.text.toString()
             )
         } else {
             null
         }
 
-        val day = DayStatus(date, workDayType, shift)
+        val day = DayStatus(date.toLong(), workDayType.toInt(), shift)
         calendarViewModel.insert(day)
         findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
     }

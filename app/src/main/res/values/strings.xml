@@ -13,6 +13,7 @@
     <string name="button_choose_date">21.05.2021</string>
     <string name="et_hint_shift_name">Название смены</string>
     <string name="weekend_string">Выходной</string>
+    <string name="delete">Удалить</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

@@ -35,7 +35,16 @@
         android:id="@+id/shiftDetailFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.ShiftDetailFragment"
         android:label="@string/shift_details"
-        tools:layout="@layout/fragment_shift_detail"/>
+        tools:layout="@layout/fragment_shift_detail">
+        <argument
+            android:name="dayId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_shiftDetailFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/calendarFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/shiftEditDialogFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.ShiftCreateFragment"

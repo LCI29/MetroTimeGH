@@ -3,10 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/day_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/blue_gray"
+            android:paddingStart="@dimen/padding_standard"
+            android:paddingTop="@dimen/padding_standard"
+            android:paddingEnd="@dimen/padding_standard"
+            android:textColor="@color/icons_or_text"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:dayName="@{viewModel.day}"
+            tools:text="95.2" />
+
+        <TextView
+            android:id="@+id/desc_string"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            app:descString="@{viewModel.day}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_text"
+            tools:text="10:27 СК - 19:05 СК" />
+
+        <TextView
+            android:id="@+id/date_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/blue_gray"
+            android:paddingStart="@dimen/padding_standard"
+            android:paddingEnd="@dimen/padding_standard"
+            android:paddingBottom="@dimen/padding_standard"
+            android:textColor="@color/icons_or_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/day_name"
+            tools:text="28 июля 2021"
+            app:fullDate="@{viewModel.day}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

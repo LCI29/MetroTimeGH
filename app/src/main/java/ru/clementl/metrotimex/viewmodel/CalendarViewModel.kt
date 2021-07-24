@@ -14,6 +14,18 @@ class CalendarViewModel(private val repository: CalendarRepository) : ViewModel(
         repository.insert(dayStatus)
     }
 
+    private val _navigateToShiftDetail = MutableLiveData<Long>()
+    val navigateToShiftDetail: LiveData<Long>
+        get() = _navigateToShiftDetail
+
+    fun onShiftClicked(id: Long) {
+        _navigateToShiftDetail.value = id
+    }
+
+    fun onShiftDetailNavigated() {
+        _navigateToShiftDetail.value = null
+    }
+
 
 }
 

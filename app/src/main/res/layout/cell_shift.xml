@@ -6,20 +6,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="day"
+            type="ru.clementl.metrotimex.model.data.DayStatus" />
+        <variable
+            name="clickListener"
+            type="ru.clementl.metrotimex.ui.adapters.DayListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:onClick="@{() -> clickListener.onClick(day)}">
 
         <TextView
             android:id="@+id/shiftName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="96.3"
+            app:dayName="@{day}"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/dayOfWeek"
@@ -30,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="13:16 НАГ - 21:21 АН"
+            app:descString="@{day}"
             android:textColor="@color/secondary_text"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/date"
@@ -45,6 +53,7 @@
             android:text="20"
             android:textColor="@color/icons_or_text"
             android:textSize="24sp"
+            app:dayOfMonth="@{day}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,6 +67,7 @@
             android:text="чт"
             android:textColor="@color/icons_or_text"
             android:textSize="10sp"
+            app:dayOfWeek="@{day}"
             app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/date" />

@@ -2,13 +2,9 @@ package ru.clementl.metrotimex.model.data
 
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import ru.clementl.metrotimex.converters.DateTimeConverters
-import ru.clementl.metrotimex.converters.ShiftConverter
-import ru.clementl.metrotimex.converters.WeekDayTypeConverters
+import androidx.room.*
+import ru.clementl.metrotimex.converters.toTime
+import ru.clementl.metrotimex.converters.toWeekDayType
 import ru.clementl.metrotimex.utils.asSimpleTime
 import java.time.LocalTime
 import java.util.*
@@ -34,38 +30,36 @@ import java.util.*
 //        get() = Duration.between(startDateTime, endDateTime)
 //}
 
-@Entity(tableName = "shifts")
-@TypeConverters(ShiftConverter::class)
+@Entity(tableName = "shifts_table")
 data class Shift(
 
     @ColumnInfo(name = "name")
     val name: String? = "Смена",
 
-    @ColumnInfo(
-        name = "week_day_type",
-        typeAffinity = ColumnInfo.TEXT
-    ) val weekDayType: WeekDayType?, // Р - рабочий, В - выходной, Н - неизвестный
+    @ColumnInfo(name = "week_day_type")
+    val weekDayTypeString: String?, // Р - рабочий, В - выходной, Н - неизвестный
 
     @ColumnInfo(name = "odd_even")
     val oddEven: Int?, // 0-без, 1-нечет, 2-чет
 
 
-    @ColumnInfo(
-        name = "start_time",
-        typeAffinity = ColumnInfo.INTEGER)
-    val startTime: LocalTime?,
+    @ColumnInfo(name = "start_time")
+    val startTimeInt: Int?,
 
 
-    @ColumnInfo(name = "start_loc") val startLoc: String? = "",
+    @ColumnInfo(name = "start_loc")
+    val startLoc: String? = "",
 
-    @ColumnInfo(
-        name = "end_time",
-        typeAffinity = ColumnInfo.INTEGER
-    ) val endTime: LocalTime?,
+    @ColumnInfo(name = "end_time")
+    val endTimeInt: Int?,
 
-    @Nullable @ColumnInfo(name = "end_loc") val endLoc: String? = "",
+    @ColumnInfo(name = "end_loc")
+    val endLoc: String? = "",
 
 ) {
+    @Ignore val startTime = startTimeInt?.toTime()
+    @Ignore val endTime = endTimeInt?.toTime()
+    @Ignore val weekDayType = weekDayTypeString?.toWeekDayType()
     /**
      * Returns string like "8:25 СК - 16:04 СК"
      */
@@ -76,9 +70,7 @@ data class Shift(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String = "$name-${weekDayType?.code}$oddEven" // 85.2-Р0, М18-В2
-    init {
-        id = ""
-    }
+    var id: String = "$name-${weekDayTypeString}$oddEven" // 85.2-Р0, М18-В2
+
 }
 

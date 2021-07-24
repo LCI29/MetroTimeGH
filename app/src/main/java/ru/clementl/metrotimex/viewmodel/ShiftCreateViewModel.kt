@@ -1,10 +1,8 @@
 package ru.clementl.metrotimex.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import ru.clementl.metrotimex.repositories.CalendarRepository
-import ru.clementl.metrotimex.utils.LOG_TAG
 import ru.clementl.metrotimex.utils.logd
 import java.lang.IllegalStateException
 import java.time.*
@@ -43,7 +41,7 @@ class ShiftCreateViewModel(val repository: CalendarRepository) : ViewModel() {
     private suspend fun getFirstFreeDateFromDb(): LocalDate {
         val offset = OffsetDateTime.now(ZoneId.systemDefault()).offset
         return withContext(Dispatchers.IO) {
-            var epochmilli = repository.getLastDate().div(1000) ?: 0
+            var epochmilli = repository.getLastDateLong()?.div(1000) ?: return@withContext LocalDate.now()
             logd("${epochmilli}, ${LocalDateTime.ofEpochSecond(epochmilli, 0, offset)}")
             var date = LocalDateTime.ofEpochSecond(
                 epochmilli, 0, offset).toLocalDate().plusDays(1)

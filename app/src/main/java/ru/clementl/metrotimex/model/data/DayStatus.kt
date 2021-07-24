@@ -3,10 +3,7 @@ package ru.clementl.metrotimex.model.data
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
-import ru.clementl.metrotimex.converters.DateTimeConverters
-import ru.clementl.metrotimex.converters.ShiftConverter
-import ru.clementl.metrotimex.converters.WeekDayTypeConverters
-import ru.clementl.metrotimex.converters.WorkDayTypeConverters
+import ru.clementl.metrotimex.converters.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -30,27 +27,27 @@ import java.time.LocalDateTime
 /**
  * Represents a day by its date, type (workday or weekend) and shift if it has
  */
-@Entity(tableName = "calendar")
-@TypeConverters(ShiftConverter::class)
+@Entity(tableName = "calendar_table")
 data class DayStatus(
 
-    @PrimaryKey @ColumnInfo(name = "date", typeAffinity = ColumnInfo.INTEGER)
-    @TypeConverters(ShiftConverter::class)
-    val date: LocalDate?,
+    @PrimaryKey @NonNull @ColumnInfo(name = "date")
+    val dateLong: Long,
 
-    @TypeConverters(WorkDayTypeConverters::class)
     @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
-    val workDayType: WorkDayType?,
+    val workDayTypeInt: Int?,
 
     @Nullable @Embedded
     val shift: Shift?
-)
+) {
+    @Ignore val date = dateLong.toDate()
+    @Ignore val workDayType = workDayTypeInt?.toWorkDayType()
+}
 
 /**
  * Returns date and time of shift's START if DayStatus object has type [WorkDayType.SHIFT]
  */
 fun DayStatus.shiftStart(): LocalDateTime? {
-    return if (workDayType == WorkDayType.SHIFT) {
+    return if (workDayTypeInt == WorkDayType.SHIFT.type) {
         LocalDateTime.of(date, shift!!.startTime)
     } else null
 }
@@ -62,7 +59,7 @@ fun DayStatus.shiftEnd(): LocalDateTime? {
     return if (workDayType == WorkDayType.SHIFT) {
         with(shift!!) {
             if (startTime!!.isBefore(endTime)) LocalDateTime.of(date, endTime)
-            else LocalDateTime.of(date!!.plusDays(1), endTime)
+            else LocalDateTime.of(date.plusDays(1), endTime)
         }
     } else null
 }
