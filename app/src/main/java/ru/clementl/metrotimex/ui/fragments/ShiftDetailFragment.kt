@@ -3,15 +3,18 @@ package ru.clementl.metrotimex.ui.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.SHIFT_EDITING
 import ru.clementl.metrotimex.databinding.FragmentShiftDetailBinding
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.room.MetroTimeDatabase
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.viewmodel.SharedViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModelFactory
 
@@ -21,6 +24,7 @@ class ShiftDetailFragment : Fragment() {
     private lateinit var binding: FragmentShiftDetailBinding
     private lateinit var shiftDetailViewModel: ShiftDetailViewModel
     private lateinit var arguments: ShiftDetailFragmentArgs
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,16 +50,16 @@ class ShiftDetailFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = shiftDetailViewModel
 
+        shiftDetailViewModel.getDay().observe(viewLifecycleOwner, Observer {
+            sharedViewModel.currentDay = it
+        })
+
 
 
         setHasOptionsMenu(true)
 
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,18 +70,27 @@ class ShiftDetailFragment : Fragment() {
         when (item.itemId) {
             R.id.delete_option -> deleteDay(arguments.dayId)
             android.R.id.home -> findNavController().navigateUp()
+            R.id.edit_option -> editDay(arguments.dayId)
         }
         return true
     }
 
+    private fun editDay(dayId: Long) {
+        findNavController().navigate(
+            ShiftDetailFragmentDirections.actionShiftDetailFragmentToShiftEditDialogFragment(
+                SHIFT_EDITING
+            )
+        )
+    }
+
     private fun deleteDay(dayId: Long) {
         shiftDetailViewModel.deleteDay(dayId)
-        logd("before onClose calling")
         findNavController().navigate(
             ShiftDetailFragmentDirections.actionShiftDetailFragmentToCalendarFragment()
         )
-
     }
+
+
 
 
 

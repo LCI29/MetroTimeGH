@@ -15,16 +15,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.clementl.metrotimex.MetroTimeApplication
+import ru.clementl.metrotimex.NO_DAY_ID
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.SHIFT_CREATING
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.ui.adapters.DayListener
 import ru.clementl.metrotimex.ui.adapters.DayStatusListAdapter
 import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
+import ru.clementl.metrotimex.viewmodel.SharedViewModel
 
 class CalendarFragment : Fragment() {
 
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     // Так создается ViewModel с репозиторием (с параметрами)
     private val calendarViewModel: CalendarViewModel by activityViewModels {
@@ -82,7 +86,10 @@ class CalendarFragment : Fragment() {
     }
 
     private fun createNewShift() {
-        findNavController().navigate(R.id.action_calendarFragment_to_shiftEditDialogFragment)
+        sharedViewModel.currentDay = null
+        findNavController().navigate(
+            CalendarFragmentDirections.actionCalendarFragmentToShiftEditDialogFragment(SHIFT_CREATING)
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

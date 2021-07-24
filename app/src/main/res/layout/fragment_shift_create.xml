@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,7 +68,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/et_start_place"
-                    app:layout_constraintTop_toBottomOf="@+id/button_end_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/button_end_time"
+                    app:endLoc="@{viewModel.editingDay}"/>
 
                 <EditText
                     android:id="@+id/et_start_place"
@@ -77,7 +84,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/et_end_place"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button_start_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/button_start_time"
+                    app:startLoc="@{viewModel.editingDay}"/>
 
                 <Button
                     android:id="@+id/button_end_time"
@@ -88,7 +96,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/button_start_time"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_end_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_end_text"
+                    app:simpleEndTime="@{viewModel.editingDay}"/>
 
                 <Button
                     android:id="@+id/button_start_time"
@@ -99,7 +108,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/button_end_time"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_start_text" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_start_text"
+                    app:simpleStartTime="@{viewModel.editingDay}"/>
 
                 <TextView
                     android:id="@+id/tv_end_text"
@@ -125,7 +135,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/button_choose_date"
-                    app:layout_constraintTop_toBottomOf="@id/sp_day_type" />
+                    app:layout_constraintTop_toBottomOf="@id/sp_day_type"
+                    app:simpleStartDate="@{viewModel.editingDay}"/>
 
                 <EditText
                     android:id="@+id/et_shift_name"
@@ -138,7 +149,8 @@
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/field_choose_date" />
+                    app:layout_constraintTop_toBottomOf="@id/field_choose_date"
+                    app:dayName="@{viewModel.editingDay}"/>
 
                 <Spinner
                     android:id="@+id/sp_day_type"

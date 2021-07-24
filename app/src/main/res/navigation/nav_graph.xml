@@ -44,6 +44,9 @@
             app:destination="@id/calendarFragment"
             app:popUpTo="@id/calendarFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_shiftDetailFragment_to_shiftEditDialogFragment"
+            app:destination="@id/shiftEditDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/shiftEditDialogFragment"
@@ -54,6 +57,14 @@
             android:id="@+id/action_shiftEditDialogFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"
             app:popUpTo="@id/calendarFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="mode"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_shiftEditDialogFragment_to_shiftDetailFragment"
+            app:destination="@id/shiftDetailFragment"
+            app:popUpTo="@id/shiftEditDialogFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

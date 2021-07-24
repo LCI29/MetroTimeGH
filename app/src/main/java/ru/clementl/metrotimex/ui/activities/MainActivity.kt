@@ -16,11 +16,6 @@ import ru.clementl.metrotimex.viewmodel.*
 
 class MainActivity : AppCompatActivity() {
 
-
-    val shiftCreateViewModel: ShiftCreateViewModel by viewModels {
-        ShiftCreateViewModelFactory((application as MetroTimeApplication).repository)
-    }
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var _navController: NavController
     val navController: NavController

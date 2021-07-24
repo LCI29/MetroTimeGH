@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:background="@color/blue_gray"
             android:paddingStart="@dimen/padding_standard"
-            android:paddingTop="@dimen/padding_standard"
+            android:paddingTop="120dp"
             android:paddingEnd="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
             android:textSize="34sp"
+            app:dayName="@{viewModel.day}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:dayName="@{viewModel.day}"
             tools:text="95.2" />
 
         <TextView

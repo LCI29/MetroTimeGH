@@ -3,10 +3,8 @@ package ru.clementl.metrotimex.viewmodel
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.room.daos.CalendarDao
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.utils.logd
 
@@ -22,7 +20,7 @@ class ShiftDetailViewModel(
 
     init {
         logd("dayID = $dayId")
-        val d = dataSource.getDayByDate(dayId)
+        val d = dataSource.getLiveDayByDate(dayId)
         logd("d = ${d.value}")
         day.addSource(d, day::setValue)
         logd("ShiftDetailViewModel: day.value = ${day.value}")

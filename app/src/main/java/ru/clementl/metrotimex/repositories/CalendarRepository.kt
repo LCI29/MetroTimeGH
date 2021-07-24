@@ -11,7 +11,12 @@ class CalendarRepository(private val calendarDao: CalendarDao) {
     val allDays: Flow<List<DayStatus>> = calendarDao.getAll()
 
     // Получение дня по дате
-    fun getDayByDate(dateLong: Long): LiveData<DayStatus> {
+    fun getLiveDayByDate(dateLong: Long): LiveData<DayStatus> {
+        return calendarDao.getLiveDayByDate(dateLong)
+    }
+
+    @WorkerThread
+    suspend fun getDaybyDate(dateLong: Long): DayStatus?{
         return calendarDao.getDayByDate(dateLong)
     }
 

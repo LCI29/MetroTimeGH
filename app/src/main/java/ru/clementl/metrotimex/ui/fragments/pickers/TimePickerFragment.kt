@@ -8,10 +8,11 @@ import androidx.fragment.app.DialogFragment
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.ui.fragments.ShiftCreateFragment
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
 import java.time.LocalTime
 import java.util.*
 
-class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
+class TimePickerFragment(val viewModel: ShiftCreateViewModel) : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
@@ -25,11 +26,11 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         val activity = activity as MainActivity
         when(tag!!) {
             ShiftCreateFragment.TIME_PICKER_START -> {
-                activity.shiftCreateViewModel.setStartTime(LocalTime.of(p1, p2))
+                viewModel.setStartTime(LocalTime.of(p1, p2))
                 logd("onTimeSet: Start = $p1, $p2")
             }
             ShiftCreateFragment.TIME_PICKER_END -> {
-                activity.shiftCreateViewModel.setEndTime(LocalTime.of(p1, p2))
+                viewModel.setEndTime(LocalTime.of(p1, p2))
                 logd("onTimeSet: End = $p1, $p2")
             }
         }

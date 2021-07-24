@@ -14,6 +14,7 @@
     <string name="et_hint_shift_name">Название смены</string>
     <string name="weekend_string">Выходной</string>
     <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

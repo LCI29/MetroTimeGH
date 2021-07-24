@@ -13,7 +13,10 @@ interface CalendarDao {
     suspend fun insert(dayStatus: DayStatus)
 
     @Query("SELECT * FROM calendar_table WHERE date = :date")
-    fun getDayByDate(date: Long): LiveData<DayStatus>
+    fun getLiveDayByDate(date: Long): LiveData<DayStatus>
+
+    @Query("SELECT * FROM calendar_table WHERE date = :date")
+    suspend fun getDayByDate(date: Long): DayStatus?
 
     @Query("SELECT * FROM calendar_table ORDER BY date")
     fun getAll(): Flow<List<DayStatus>>
