@@ -1,5 +1,6 @@
 package ru.clementl.metrotimex.databinding
 
+import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import ru.clementl.metrotimex.model.data.DayStatus
@@ -22,11 +23,25 @@ fun TextView.setDayOfWeek(day: DayStatus?) {
     }
 }
 
+@SuppressLint("SetTextI18n")
+@BindingAdapter("dayNameWithOddEven")
+fun TextView.setDayNameWithOddEven(day: DayStatus?) {
+    day?.let {
+        if (day.workDayType == WorkDayType.SHIFT) {
+            val shift = it.shift
+            val oddEvenPostfix = if (shift?.oddEvenString?.isEmpty() != false) "" else "(${shift.oddEvenString})"
+            text = "${shift?.name} $oddEvenPostfix"
+        } else {
+            text = day.workDayType?.desc
+        }
+    }
+}
+
 @BindingAdapter("dayName")
 fun TextView.setDayName(day: DayStatus?) {
     day?.let {
         if (day.workDayType == WorkDayType.SHIFT) {
-            text = if (day.shift?.name?.isEmpty() != false) "Смена" else day.shift.name
+            text = "${it.shift?.name}"
         } else {
             text = day.workDayType?.desc
         }

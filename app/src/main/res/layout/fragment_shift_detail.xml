@@ -24,7 +24,7 @@
             android:paddingEnd="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
             android:textSize="34sp"
-            app:dayName="@{viewModel.day}"
+            app:dayNameWithOddEven="@{viewModel.day}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

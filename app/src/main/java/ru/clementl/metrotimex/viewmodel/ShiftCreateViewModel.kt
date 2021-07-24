@@ -2,11 +2,17 @@ package ru.clementl.metrotimex.viewmodel
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import ru.clementl.metrotimex.converters.toInt
+import ru.clementl.metrotimex.converters.toLong
+import ru.clementl.metrotimex.converters.toStringCode
 import ru.clementl.metrotimex.model.data.DayStatus
+import ru.clementl.metrotimex.model.data.Shift
 import ru.clementl.metrotimex.model.data.WorkDayType
+import ru.clementl.metrotimex.model.data.weekDayType
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.oddEven
 import java.lang.IllegalStateException
 import java.time.*
 
@@ -40,7 +46,9 @@ class ShiftCreateViewModel(
     val endTime: LiveData<LocalTime>
         get() = _endTime
 
-    val workDayTypeLive = MutableLiveData<WorkDayType>(WorkDayType.SHIFT)
+    private var _workDayTypeLive = MutableLiveData<WorkDayType>()
+    val workDayTypeLive: LiveData<WorkDayType>
+        get() = _workDayTypeLive
 
     var workDayType = workDayTypeLive.value ?: WorkDayType.SHIFT
 
@@ -48,9 +56,7 @@ class ShiftCreateViewModel(
         _startTime.value = initialStartTime
         _endTime.value = initialEndTime
         initializeStartDate()
-        workDayTypeLive.value = editingDay?.workDayType ?: WorkDayType.SHIFT
-        logd("ShiftCreateViewModel: mode = ${mode}, day = ${editingDay?.dateLong}")
-        logd("CurrentDay = ${editingDay?.date?.asSimpleDate()}")
+        _workDayTypeLive.value = editingDay?.workDayType ?: WorkDayType.SHIFT
     }
 
     fun initializeStartDate() {
@@ -97,7 +103,26 @@ class ShiftCreateViewModel(
         logd("ShiftCreateViewModel cleared")
     }
 
-
+    fun createDay(name: String, startLoc: String, endLoc: String): DayStatus {
+        val date = startDate.value ?: throw IllegalStateException("startDate not set")
+        val startTime = startTime.value ?: throw IllegalStateException("startTime not set")
+        val endTime = endTime.value ?: throw IllegalStateException("endTime not set")
+        val wdt = workDayTypeLive.value ?: throw IllegalStateException("workDayType not set")
+        val shift = if (workDayTypeLive.value == WorkDayType.SHIFT) {
+            Shift(
+                name = if (name.isEmpty()) "Смена" else name,
+                weekDayTypeString = date.weekDayType().toStringCode(),
+                oddEven = date.oddEven(endTime),
+                startTimeInt = startTime.toInt(),
+                startLoc = startLoc,
+                endTimeInt = endTime.toInt(),
+                endLoc = endLoc
+            )
+        } else {
+            null
+        }
+        return DayStatus(date.toLong(), wdt.toInt(), shift)
+    }
 }
 
 class ShiftCreateViewModelFactory(

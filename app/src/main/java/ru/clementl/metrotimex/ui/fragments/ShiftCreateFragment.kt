@@ -12,7 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ru.clementl.metrotimex.MetroTimeApplication
+import ru.clementl.metrotimex.NO_DAY_ID
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.SHIFT_EDITING
 import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.converters.toStringCode
@@ -47,6 +49,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
 
+
     companion object {
         const val DATE_PICKER = "date_picker"
         const val TIME_PICKER_START = "time_picker_start"
@@ -72,17 +75,6 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ViewModelProvider(
                 this, viewModelFactory).get(ShiftCreateViewModel::class.java)
         binding!!.viewModel = shiftCreateViewModel
-
-        shiftCreateViewModel.workDayTypeLive.observe(viewLifecycleOwner, {
-            spinner.setSelection(it.toInt())
-        })
-
-
-        return fragmentBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         // make spinner
         spinner = binding!!.spDayType
@@ -114,7 +106,6 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     .show(requireActivity().supportFragmentManager, DATE_PICKER)
             }
             cancelButton.setOnClickListener {
-//                findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
                 findNavController().navigateUp()
             }
         }
@@ -122,7 +113,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         with (shiftCreateViewModel) {
             initializeStartDate()
             startDate.observe(viewLifecycleOwner) {
-                binding!!.fieldChooseDate.text = it.asSimpleDate()
+                binding!!.fieldChooseDate.text = it.ofPattern("d MMMM yyyy, EE")
             }
             startTime.observe(viewLifecycleOwner) {
                 binding!!.buttonStartTime.text = it.asSimpleTime()
@@ -130,9 +121,14 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             endTime.observe(viewLifecycleOwner) {
                 binding!!.buttonEndTime.text = it.asSimpleTime()
             }
+            workDayTypeLive.observe(viewLifecycleOwner, {
+                spinner.setSelection(it.toInt())
+            })
         }
 
         binding!!.saveButton.setOnClickListener { saveDay() }
+
+        return fragmentBinding.root
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, p3: Long) {
@@ -187,25 +183,16 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
      * Saves day and shift in db.
      */
     private fun saveDay() {
-        val binding = binding!!
-        val date = shiftCreateViewModel.startDate.value ?: throw Exception("Date no set")
-        val startTime = shiftCreateViewModel.startTime.value ?: throw Exception("Start time not set")
-        val endTime = shiftCreateViewModel.endTime.value ?: throw Exception("End time not set")
-        val shift = if (shiftCreateViewModel.workDayType == WorkDayType.SHIFT) {
-            Shift(
-                name = binding.etShiftName.text.toString(),
-                weekDayTypeString = date.weekDayType().toStringCode(),
-                oddEven = date.oddEven(endTime),
-                startTimeInt = startTime.toInt(),
-                startLoc = binding.etStartPlace.text.toString(),
-                endTimeInt = endTime.toInt(),
-                endLoc = binding.etEndPlace.text.toString()
-            )
-        } else {
-            null
+        if (arguments.mode == SHIFT_EDITING) {
+            calendarViewModel.delete(shiftCreateViewModel.editingDay?.dateLong ?: NO_DAY_ID)
         }
 
-        val day = DayStatus(date.toLong(), shiftCreateViewModel.workDayType.toInt(), shift)
+        val binding = binding!!
+        val day = shiftCreateViewModel.createDay(
+            name = binding.etShiftName.text.toString(),
+            startLoc = binding.etStartPlace.text.toString(),
+            endLoc = binding.etEndPlace.text.toString()
+        )
         calendarViewModel.insert(day)
         findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
     }

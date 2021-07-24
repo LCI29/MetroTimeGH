@@ -60,6 +60,14 @@ data class Shift(
     @Ignore val startTime = startTimeInt?.toTime()
     @Ignore val endTime = endTimeInt?.toTime()
     @Ignore val weekDayType = weekDayTypeString?.toWeekDayType()
+    val oddEvenString: String
+        get() = oddEven?.let {
+            when(it) {
+                1 -> "неч"
+                2 -> "чет"
+                else -> ""
+            }
+        } ?: ""
     /**
      * Returns string like "8:25 СК - 16:04 СК"
      */

@@ -13,17 +13,13 @@ class ShiftDetailViewModel(
     val dataSource: CalendarRepository
 ) : ViewModel() {
 
-
     private val day = MediatorLiveData<DayStatus>()
 
     fun getDay() = day
 
     init {
-        logd("dayID = $dayId")
         val d = dataSource.getLiveDayByDate(dayId)
-        logd("d = ${d.value}")
         day.addSource(d, day::setValue)
-        logd("ShiftDetailViewModel: day.value = ${day.value}")
     }
 
     /**
@@ -51,11 +47,8 @@ class ShiftDetailViewModel(
     fun onClose() { _navigateToCalendar.value = true}
 
     fun deleteDay(dayId: Long) {
-        logd("deleteDay")
         CoroutineScope(Dispatchers.IO).launch {
-            logd("deleteDay - coroutine started with dayId = $dayId")
             dataSource.delete(dayId)
-            logd("deleteDay - coroutine finished")
         }
     }
 

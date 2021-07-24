@@ -54,10 +54,7 @@ class ShiftDetailFragment : Fragment() {
             sharedViewModel.currentDay = it
         })
 
-
-
         setHasOptionsMenu(true)
-
 
         return binding.root
     }
@@ -70,12 +67,12 @@ class ShiftDetailFragment : Fragment() {
         when (item.itemId) {
             R.id.delete_option -> deleteDay(arguments.dayId)
             android.R.id.home -> findNavController().navigateUp()
-            R.id.edit_option -> editDay(arguments.dayId)
+            R.id.edit_option -> editDay()
         }
         return true
     }
 
-    private fun editDay(dayId: Long) {
+    private fun editDay() {
         findNavController().navigate(
             ShiftDetailFragmentDirections.actionShiftDetailFragmentToShiftEditDialogFragment(
                 SHIFT_EDITING

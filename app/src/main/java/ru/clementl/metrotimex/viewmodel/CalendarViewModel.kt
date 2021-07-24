@@ -14,6 +14,10 @@ class CalendarViewModel(private val repository: CalendarRepository) : ViewModel(
         repository.insert(dayStatus)
     }
 
+    fun delete(dayId: Long) = viewModelScope.launch{
+        repository.delete(dayId)
+    }
+
     private val _navigateToShiftDetail = MutableLiveData<Long>()
     val navigateToShiftDetail: LiveData<Long>
         get() = _navigateToShiftDetail

@@ -30,7 +30,7 @@ fun LocalDate.oddEven(endTime: LocalTime): Int {
     return if (endTime.isBefore(oddEvenDifferAfter) && endTime.isAfter(latestNightEnd)) {
         0
     } else {
-        if (isDateEven()) 2 else 1
+        if (plusDays(1).isDateEven()) 2 else 1
     }
 }
 
@@ -42,3 +42,4 @@ fun main() {
     val a = LocalDate.now().asSimpleDate()
     println(a)
 }
+
