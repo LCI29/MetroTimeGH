@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.converters.*
+import ru.clementl.metrotimex.utils.asSimpleDate
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -63,3 +64,6 @@ fun DayStatus.shiftEnd(): LocalDateTime? {
         }
     } else null
 }
+
+val DayStatus.descriptionString
+    get() = "${date.asSimpleDate(false)}: ${shift?.getDescriptionString(true) ?: workDayType?.desc}"

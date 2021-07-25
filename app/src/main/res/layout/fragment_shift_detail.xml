@@ -58,5 +58,29 @@
             tools:text="28 июля 2021"
             app:fullDate="@{viewModel.day}"/>
 
+        <TextView
+            android:id="@+id/reserve_label"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/reserve"
+            app:showReserve="@{viewModel.day}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/desc_string"
+            style="@style/label_shift_style" />
+
+        <TextView
+            android:id="@+id/atz_label"
+            style="@style/label_shift_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:text="@string/atz"
+            app:showAtz="@{viewModel.day}"
+            app:layout_constraintStart_toEndOf="@+id/reserve_label"
+            app:layout_constraintTop_toBottomOf="@+id/desc_string"
+            app:layout_goneMarginStart="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -108,6 +108,13 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             cancelButton.setOnClickListener {
                 findNavController().navigateUp()
             }
+            reserveCheckBox.setOnClickListener {
+                shiftCreateViewModel.onReserveChecked(reserveCheckBox.isChecked)
+            }
+            atzCheckBox.setOnClickListener {
+                shiftCreateViewModel.onAtzChecked(atzCheckBox.isChecked)
+            }
+
         }
 
         with (shiftCreateViewModel) {
@@ -124,6 +131,12 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             workDayTypeLive.observe(viewLifecycleOwner, {
                 spinner.setSelection(it.toInt())
             })
+            isReserveLive.observe(viewLifecycleOwner, {
+                binding!!.reserveCheckBox.isChecked = it
+            })
+            hasAtzLive.observe(viewLifecycleOwner, {
+                binding!!.atzCheckBox.isChecked = it
+            })
         }
 
         binding!!.saveButton.setOnClickListener { saveDay() }
@@ -135,7 +148,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         when (pos) {
             0 -> {
                 showToast("0")
-                shiftCreateViewModel.workDayType = WorkDayType.SHIFT
+                shiftCreateViewModel.onWorkDayTypeChanged(WorkDayType.SHIFT)
                 with(binding!!) {
                     etShiftName.visibility = View.VISIBLE
                     tvStartText.visibility = View.VISIBLE
@@ -144,16 +157,18 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     buttonEndTime.visibility = View.VISIBLE
                     etStartPlace.visibility = View.VISIBLE
                     etEndPlace.visibility = View.VISIBLE
+                    reserveCheckBox.visibility = View.VISIBLE
+                    atzCheckBox.visibility = View.VISIBLE
                 }
             }
             else -> {
                 with(shiftCreateViewModel) {
                     showToast(pos.toString())
                     when (pos) {
-                        1 -> workDayType = WorkDayType.WEEKEND
-                        2 -> workDayType = WorkDayType.SICK_LIST
-                        3 -> workDayType = WorkDayType.VACATION_DAY
-                        4 -> workDayType = WorkDayType.MEDIC_DAY
+                        1 -> onWorkDayTypeChanged(WorkDayType.WEEKEND)
+                        2 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST)
+                        3 -> onWorkDayTypeChanged(WorkDayType.VACATION_DAY)
+                        4 -> onWorkDayTypeChanged(WorkDayType.MEDIC_DAY)
 
                     }
                 }
@@ -165,6 +180,8 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     buttonEndTime.visibility = View.GONE
                     etStartPlace.visibility = View.GONE
                     etEndPlace.visibility = View.GONE
+                    reserveCheckBox.visibility = View.GONE
+                    atzCheckBox.visibility = View.GONE
                 }
             }
         }

@@ -15,6 +15,8 @@
     <string name="weekend_string">Выходной</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
+    <string name="reserve">Резерв</string>
+    <string name="atz">АТЗ</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

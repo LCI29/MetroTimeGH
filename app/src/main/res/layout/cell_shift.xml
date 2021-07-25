@@ -18,17 +18,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:onClick="@{() -> clickListener.onClick(day)}">
+        android:onClick="@{() -> clickListener.onClick(day)}"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/shiftName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:dayNameWithOddEven="@{day}"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
+            app:dayNameWithOddEven="@{day}"
             app:layout_constraintStart_toEndOf="@+id/dayOfWeek"
             app:layout_constraintTop_toTopOf="@+id/date" />
 
@@ -37,9 +37,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="13:16 НАГ - 21:21 АН"
-            app:descString="@{day}"
             android:textColor="@color/secondary_text"
             android:textSize="14sp"
+            app:descString="@{day}"
             app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/shiftName" />
 
@@ -71,5 +71,31 @@
             app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toStartOf="@+id/date" />
+
+        <TextView
+            android:id="@+id/label_reserve"
+            style="@style/label_shift_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/reserve"
+            android:layout_marginBottom="2dp"
+            app:showReserve="@{day}"
+            app:layout_constraintBottom_toTopOf="@+id/label_atz"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/label_atz"
+            style="@style/label_shift_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/atz"
+            app:showAtz="@{day}"
+            android:layout_marginTop="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_reserve" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

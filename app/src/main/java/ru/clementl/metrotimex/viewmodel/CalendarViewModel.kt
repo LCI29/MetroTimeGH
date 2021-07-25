@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.repositories.CalendarRepository
+import ru.clementl.metrotimex.utils.logd
 import java.lang.IllegalStateException
 
 class CalendarViewModel(private val repository: CalendarRepository) : ViewModel() {
@@ -18,8 +19,8 @@ class CalendarViewModel(private val repository: CalendarRepository) : ViewModel(
         repository.delete(dayId)
     }
 
-    private val _navigateToShiftDetail = MutableLiveData<Long>()
-    val navigateToShiftDetail: LiveData<Long>
+    private val _navigateToShiftDetail = MutableLiveData<Long?>()
+    val navigateToShiftDetail: LiveData<Long?>
         get() = _navigateToShiftDetail
 
     fun onShiftClicked(id: Long) {
@@ -28,6 +29,11 @@ class CalendarViewModel(private val repository: CalendarRepository) : ViewModel(
 
     fun onShiftDetailNavigated() {
         _navigateToShiftDetail.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        logd("CalendarViewModel onCleared")
     }
 
 

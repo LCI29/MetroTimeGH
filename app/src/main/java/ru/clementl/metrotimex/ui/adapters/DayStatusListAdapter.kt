@@ -1,8 +1,12 @@
 package ru.clementl.metrotimex.ui.adapters
 
+import android.content.Context
+import android.content.DialogInterface
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,13 +15,18 @@ import ru.clementl.metrotimex.databinding.CellShiftBinding
 import ru.clementl.metrotimex.databinding.CellWeekendBinding
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.TYPE_SHIFT
+import ru.clementl.metrotimex.model.data.descriptionString
+import ru.clementl.metrotimex.utils.asSimpleDate
+import ru.clementl.metrotimex.utils.fullDate
 import ru.clementl.metrotimex.utils.ofPattern
 import java.time.LocalDate
 
-class DayStatusListAdapter(val clickListener: DayListener) : ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder> (DayStatusComparator()){
+class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder> (DayStatusComparator()){
+
+
 
     companion object {
-        val today = LocalDate.now()
+        val today: LocalDate = LocalDate.now()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -28,10 +37,12 @@ class DayStatusListAdapter(val clickListener: DayListener) : ListAdapter<DayStat
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TYPE_SHIFT -> ShiftViewHolder(
-                CellShiftBinding.inflate(layoutInflater, parent, false)
+                CellShiftBinding.inflate(layoutInflater, parent, false),
+                parent.context
             )
             else -> NonShiftViewHolder(
-                CellWeekendBinding.inflate(layoutInflater, parent, false)
+                CellWeekendBinding.inflate(layoutInflater, parent, false),
+                parent.context
             )
         }
     }
@@ -41,18 +52,43 @@ class DayStatusListAdapter(val clickListener: DayListener) : ListAdapter<DayStat
         holder.bind(current, clickListener)
     }
 
-    abstract class DayStatusViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    abstract class DayStatusViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         open fun bind(day: DayStatus, clickListener: DayListener) {
             if (day.date == today) {
                 itemView.setBackgroundResource(R.color.light_blue_gray)
             }
-            itemView.setOnClickListener {
 
+//            setOnLongClick(day)
+        }
+
+        /**
+         * Вариант реализации контекстного меню через диалог. Чтобы активировать, нужно
+         * просто раскомментировать вызов setOnLongClick в DayStatusViewHolder.bind()
+         */
+        private fun setOnLongClick(day: DayStatus) {
+            itemView.setOnLongClickListener { view ->
+                val items = arrayOf("Редактировать", "Удалить")
+
+                val builder = AlertDialog.Builder(context)
+
+                builder.setTitle(
+                    """
+                            ${day.date.fullDate(true)}
+                            ${day.shift?.getDescriptionString(true) ?: day.workDayType?.desc}
+                        """.trimIndent()
+                )
+                    .setItems(items) { _, pos ->
+                        TODO("Make Edit and Delete options")
+                    }
+                builder.show()
+                true
             }
         }
+
+
     }
 
-    class ShiftViewHolder(val binding: CellShiftBinding) : DayStatusViewHolder(binding.root) {
+    class ShiftViewHolder(val binding: CellShiftBinding, context: Context) : DayStatusViewHolder(binding.root, context) {
 
         override fun bind(day: DayStatus, clickListener: DayListener) {
             super.bind(day, clickListener)
@@ -62,7 +98,7 @@ class DayStatusListAdapter(val clickListener: DayListener) : ListAdapter<DayStat
         }
     }
 
-    class NonShiftViewHolder(val binding: CellWeekendBinding) : DayStatusViewHolder(binding.root) {
+    class NonShiftViewHolder(val binding: CellWeekendBinding, context: Context) : DayStatusViewHolder(binding.root, context) {
 
         override fun bind(day: DayStatus, clickListener: DayListener) {
             super.bind(day, clickListener)

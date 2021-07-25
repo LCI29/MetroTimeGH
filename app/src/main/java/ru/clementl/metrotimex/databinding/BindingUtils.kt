@@ -1,8 +1,11 @@
 package ru.clementl.metrotimex.databinding
 
 import android.annotation.SuppressLint
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import ru.clementl.metrotimex.generated.callback.OnClickListener
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.utils.asSimpleDate
@@ -96,6 +99,20 @@ fun TextView.setStartLoc(day: DayStatus?) {
 fun TextView.setEndLoc(day: DayStatus?) {
     day?.shift?.endLoc?.let {
         text = it
+    }
+}
+
+@BindingAdapter("showReserve")
+fun TextView.showReserve(day: DayStatus?) {
+    day?.shift?.let {
+        if (it.isReserve == true) visibility = View.VISIBLE
+    }
+}
+
+@BindingAdapter("showAtz")
+fun TextView.showAtz(day: DayStatus?) {
+    day?.shift?.let {
+        if (it.hasAtz == true) visibility = View.VISIBLE
     }
 }
 

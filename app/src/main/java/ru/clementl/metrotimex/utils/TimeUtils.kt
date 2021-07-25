@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.utils
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Year
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -14,12 +15,17 @@ fun LocalTime.asSimpleTime(): String {
     return format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 }
 
-fun LocalDateTime.asSimpleDate(): String {
-    return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+fun LocalDateTime.asSimpleDate(withYear: Boolean = true): String {
+    return toLocalDate().asSimpleDate(withYear)
 }
 
-fun LocalDate.asSimpleDate(): String {
-    return format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+fun LocalDate.asSimpleDate(withYear: Boolean = true): String {
+    return if (withYear) format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+    else ofPattern("d.MM")
+}
+
+fun LocalDate.fullDate(withDayOfWeek: Boolean = true): String {
+    return ofPattern(if (withDayOfWeek) "d MMMM yyyy, EE" else "d MMMM yyyy")
 }
 
 private fun LocalDate.isDateEven() = dayOfMonth % 2 == 0

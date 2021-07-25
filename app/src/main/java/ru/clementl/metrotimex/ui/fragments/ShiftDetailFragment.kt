@@ -56,8 +56,10 @@ class ShiftDetailFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
+
         return binding.root
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         activity?.menuInflater?.inflate(R.menu.overflow_detail_fragment_menu, menu)

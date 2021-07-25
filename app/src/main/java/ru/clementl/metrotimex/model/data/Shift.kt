@@ -56,10 +56,18 @@ data class Shift(
     @ColumnInfo(name = "end_loc")
     val endLoc: String? = "",
 
+    @ColumnInfo(name = "is_reserve")
+    val isReserveInt: Int? = 0,
+
+    @ColumnInfo(name = "has_atz")
+    val hasAtzInt: Int? = 0
+
 ) {
     @Ignore val startTime = startTimeInt?.toTime()
     @Ignore val endTime = endTimeInt?.toTime()
     @Ignore val weekDayType = weekDayTypeString?.toWeekDayType()
+    @Ignore val isReserve: Boolean? = if (isReserveInt == null) null else isReserveInt != 0
+    @Ignore val hasAtz: Boolean? = if (hasAtzInt == null) null else hasAtzInt != 0
     val oddEvenString: String
         get() = oddEven?.let {
             when(it) {
@@ -71,13 +79,14 @@ data class Shift(
     /**
      * Returns string like "8:25 СК - 16:04 СК"
      */
-    fun getDescriptionString() =
-        "${startTime?.asSimpleTime()} ${startLoc?.toUpperCase(Locale.ROOT)}" +
+    fun getDescriptionString(withName: Boolean = false) =
+        (if (withName) "$name " else "") +
+                "${startTime?.asSimpleTime()} ${startLoc?.toUpperCase(Locale.ROOT)}" +
                 "${if (startLoc?.isEmpty() != false) "" else " "}-" +
                 " ${endTime?.asSimpleTime()} ${endLoc?.toUpperCase(Locale.ROOT)}"
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "shift_id")
     var id: String = "$name-${weekDayTypeString}$oddEven" // 85.2-Р0, М18-В2
 
 }

@@ -30,7 +30,7 @@ class CalendarFragment : Fragment() {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-    // Так создается ViewModel с репозиторием (с параметрами)
+    // Так создается SharedViewModel с репозиторием (с параметрами)
     private val calendarViewModel: CalendarViewModel by activityViewModels {
         CalendarViewModelFactory((activity?.application as MetroTimeApplication).repository)
     }
@@ -69,6 +69,7 @@ class CalendarFragment : Fragment() {
         fab.setOnClickListener { createNewShift() }
         recyclerView = view.findViewById(R.id.recycler_view)
         setupAdapter()
+        registerForContextMenu(recyclerView)
 
         calendarViewModel.allDays.observe(viewLifecycleOwner) { days ->
             days?.let { mAdapter.submitList(it) }
