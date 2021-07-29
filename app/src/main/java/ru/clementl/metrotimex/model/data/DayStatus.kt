@@ -3,10 +3,13 @@ package ru.clementl.metrotimex.model.data
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
+import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.converters.*
+import ru.clementl.metrotimex.model.states.TimePoint
 import ru.clementl.metrotimex.utils.asSimpleDate
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 
 //sealed class DayStatus (val date: LocalDate) {abstract val type: Int}
@@ -42,6 +45,28 @@ data class DayStatus(
 ) {
     @Ignore val date = dateLong.toDate()
     @Ignore val workDayType = workDayTypeInt?.toWorkDayType()
+
+    val startDateTime: LocalDateTime
+        get() {
+            when(workDayType) {
+                WorkDayType.SHIFT -> return shiftStart()!!
+                else -> return LocalDateTime.of(date, DAY_START_TIME)
+            }
+        }
+
+    val endDateTime: LocalDateTime
+        get() {
+            when(workDayType) {
+                WorkDayType.SHIFT -> return shiftEnd()!!
+                else -> return LocalDateTime.of(date.plusDays(1), DAY_START_TIME)
+            }
+        }
+
+    val startPoint: TimePoint
+        get() = TimePoint(startDateTime.toLong(), workDayType?.startPointCode ?: WorkDayType.UNKNOWN.startPointCode)
+
+    val endPoint: TimePoint
+        get() = TimePoint(endDateTime.toLong() - 1, workDayType?.endPointCode ?: WorkDayType.UNKNOWN.endPointCode)
 }
 
 /**

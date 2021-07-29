@@ -148,13 +148,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_between_elements"
                     android:ems="10"
-                    android:maxLength="6"
                     android:hint="@string/et_hint_shift_name"
                     android:inputType="textPersonName"
+                    android:maxLength="7"
+                    app:dayName="@{viewModel.editingDay}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/field_choose_date"
-                    app:dayName="@{viewModel.editingDay}"/>
+                    app:layout_constraintTop_toBottomOf="@id/field_choose_date" />
 
                 <Spinner
                     android:id="@+id/sp_day_type"

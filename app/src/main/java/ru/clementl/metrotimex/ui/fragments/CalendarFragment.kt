@@ -2,26 +2,20 @@ package ru.clementl.metrotimex.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ru.clementl.metrotimex.MetroTimeApplication
-import ru.clementl.metrotimex.NO_DAY_ID
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.SHIFT_CREATING
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.ui.adapters.DayListener
 import ru.clementl.metrotimex.ui.adapters.DayStatusListAdapter
-import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
@@ -29,6 +23,7 @@ import ru.clementl.metrotimex.viewmodel.SharedViewModel
 class CalendarFragment : Fragment() {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
+
 
     // Так создается SharedViewModel с репозиторием (с параметрами)
     private val calendarViewModel: CalendarViewModel by activityViewModels {

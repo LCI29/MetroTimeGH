@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.takisoft.preferencex.DatePickerPreference
+        android:key="on_post_since"
+        android:title="В должности с"
+        android:icon="@drawable/ic_calendar_blue_gray"
+        app:useSimpleSummaryProvider="true"
+        android:summary="Укажите дату начала работы"
+        />
+    <DropDownPreference
+        android:key="qualification_class"
+        android:title="Класс квалификации"
+        app:useSimpleSummaryProvider="true"
+        android:entries="@array/qualification_classes_entries"
+        android:entryValues="@array/qualification_classes_entry_values"
+        android:summary="Укажите ваш класс квалификации"
+        android:icon="@drawable/ic_star_blue_gray"
+        />
+    <SwitchPreference
+        android:key="is_master"
+        android:title="Старший машинист"
+        android:summary="Или исполняете обязанности"
+        android:icon="@drawable/ic_train_blue_gray"
+        />
+    <SwitchPreference
+        android:key="is_mentor"
+        android:title="Наставник"
+        android:summary="Сейчас у вас есть прикрепленный стажер"
+        android:icon="@drawable/ic_add_person_blue_gray"
+        />
+    <com.takisoft.preferencex.EditTextPreference
+        android:key="month_bonus"
+        android:title="Премия, %"
+        android:summary="Ожидаемая премия в этом месяце"
+        android:inputType="number"
+        android:maxLength="3"
+        android:icon="@drawable/ic_dollar_blue_gray"
+        app:useSimpleSummaryProvider="true"
+        />
+
+
+
 
 </PreferenceScreen>
