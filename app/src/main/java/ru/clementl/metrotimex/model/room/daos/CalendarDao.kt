@@ -27,6 +27,12 @@ interface CalendarDao {
     @Query("DELETE FROM calendar_table WHERE date = :dayId")
     suspend fun deleteDayById(dayId: Long)
 
+    @Query("SELECT * FROM calendar_table WHERE date < :dayId ORDER BY date DESC LIMIT :count")
+    suspend fun loadDaysBefore(dayId: Long, count: Int): List<DayStatus>
+
+    @Query("SELECT * FROM calendar_table WHERE date >= :dayId ORDER BY date LIMIT :count")
+    suspend fun loadDaysAfterAndThis(dayId: Long, count: Int): List<DayStatus>
+
 
 
 

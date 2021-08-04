@@ -5,6 +5,7 @@ import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.converters.toTime
 import ru.clementl.metrotimex.converters.toWeekDayType
+import ru.clementl.metrotimex.model.states.TimePoint
 import ru.clementl.metrotimex.utils.asSimpleTime
 import java.time.LocalTime
 import java.util.*
@@ -33,33 +34,33 @@ import java.util.*
 @Entity(tableName = "shifts_table")
 data class Shift(
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "name", typeAffinity = ColumnInfo.TEXT)
     val name: String? = "Смена",
 
-    @ColumnInfo(name = "week_day_type")
+    @ColumnInfo(name = "week_day_type", typeAffinity = ColumnInfo.TEXT)
     val weekDayTypeString: String?, // Р - рабочий, В - выходной, Н - неизвестный
 
-    @ColumnInfo(name = "odd_even")
+    @ColumnInfo(name = "odd_even", typeAffinity = ColumnInfo.INTEGER)
     val oddEven: Int?, // 0-без, 1-нечет, 2-чет
 
 
-    @ColumnInfo(name = "start_time")
+    @ColumnInfo(name = "start_time", typeAffinity = ColumnInfo.INTEGER)
     val startTimeInt: Int?,
 
 
-    @ColumnInfo(name = "start_loc")
+    @ColumnInfo(name = "start_loc", typeAffinity = ColumnInfo.TEXT)
     val startLoc: String? = "",
 
-    @ColumnInfo(name = "end_time")
+    @ColumnInfo(name = "end_time", typeAffinity = ColumnInfo.INTEGER)
     val endTimeInt: Int?,
 
-    @ColumnInfo(name = "end_loc")
+    @ColumnInfo(name = "end_loc", typeAffinity = ColumnInfo.TEXT)
     val endLoc: String? = "",
 
-    @ColumnInfo(name = "is_reserve")
+    @ColumnInfo(name = "is_reserve", typeAffinity = ColumnInfo.INTEGER)
     val isReserveInt: Int? = 0,
 
-    @ColumnInfo(name = "has_atz")
+    @ColumnInfo(name = "has_atz", typeAffinity = ColumnInfo.INTEGER)
     val hasAtzInt: Int? = 0
 
 ) {
@@ -88,6 +89,7 @@ data class Shift(
     @PrimaryKey
     @ColumnInfo(name = "shift_id")
     var id: String = "$name-${weekDayTypeString}$oddEven" // 85.2-Р0, М18-В2
+
 
 }
 

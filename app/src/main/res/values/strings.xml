@@ -17,6 +17,10 @@
     <string name="edit">Редактировать</string>
     <string name="reserve">Резерв</string>
     <string name="atz">АТЗ</string>
+    <string name="gap">Разрыв</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="yesterday">Вчера</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

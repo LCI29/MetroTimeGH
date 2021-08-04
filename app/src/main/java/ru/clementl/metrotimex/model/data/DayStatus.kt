@@ -11,23 +11,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-
-//sealed class DayStatus (val date: LocalDate) {abstract val type: Int}
-//
-//
-//
-//open class Workday(date: LocalDate, val shift: Shift) : DayStatus(date) {override val type = TYPE_SHIFT}
-//
-//class Weekend(date: LocalDate) : DayStatus(date) { override val type = TYPE_WEEKEND }
-//
-//class SickListDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_SICK_LIST }
-//
-//class VacationDay(date: LocalDate) : DayStatus(date) { override val type = TYPE_VACATION_DAY }
-//
-//class UnknownDay(date: LocalDate) : DayStatus(date) { override val type  = TYPE_UNKNOWN }
-//
-//class MedicDay(date: LocalDate) : DayStatus(date) {override val type = TYPE_MEDIC}
-
 /**
  * Represents a day by its date, type (workday or weekend) and shift if it has
  */
@@ -42,7 +25,7 @@ data class DayStatus(
 
     @Nullable @Embedded
     val shift: Shift?
-) {
+) : TimeSpan {
     @Ignore val date = dateLong.toDate()
     @Ignore val workDayType = workDayTypeInt?.toWorkDayType()
 
@@ -62,10 +45,10 @@ data class DayStatus(
             }
         }
 
-    val startPoint: TimePoint
+    override val startPoint: TimePoint
         get() = TimePoint(startDateTime.toLong(), workDayType?.startPointCode ?: WorkDayType.UNKNOWN.startPointCode)
 
-    val endPoint: TimePoint
+    override val endPoint: TimePoint
         get() = TimePoint(endDateTime.toLong() - 1, workDayType?.endPointCode ?: WorkDayType.UNKNOWN.endPointCode)
 }
 

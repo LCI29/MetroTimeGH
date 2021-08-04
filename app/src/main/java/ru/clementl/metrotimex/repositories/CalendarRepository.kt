@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.repositories
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.joinAll
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.room.daos.CalendarDao
 
@@ -36,6 +37,16 @@ class CalendarRepository(private val calendarDao: CalendarDao) {
     @WorkerThread
     suspend fun delete(dayId: Long) {
         calendarDao.deleteDayById(dayId)
+    }
+
+    @WorkerThread
+    suspend fun loadDaysBefore(dayId: Long, count: Int): List<DayStatus> {
+        return calendarDao.loadDaysBefore(dayId, count.coerceAtLeast(0))
+    }
+
+    @WorkerThread
+    suspend fun loadDaysAfterAndThis(dayId: Long, count: Int): List<DayStatus> {
+        return calendarDao.loadDaysAfterAndThis(dayId, count.coerceAtLeast(0))
     }
 
 

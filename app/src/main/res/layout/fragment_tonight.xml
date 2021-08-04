@@ -4,18 +4,146 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.TonightFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="ru.clementl.metrotimex.viewmodel.TonightViewModel" />
+    </data>
+
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        >
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/simple_state_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DetailFragment"
-            android:textSize="20sp"/>
+            android:background="@color/primaryColor"
+            android:padding="@dimen/padding_standard">
+
+            <ProgressBar
+                android:id="@+id/interval_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:progress="7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interval_till_text" />
+
+            <TextView
+                android:id="@+id/simple_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/icons_or_text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:simpleStateDesc="@{viewModel.simpleState}"
+                tools:text="Разрыв" />
+
+            <TextView
+                android:id="@+id/interval_till_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="48,2ч"
+                android:textColor="@color/icons_or_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/simple_status_text" />
+
+            <TextView
+                android:id="@+id/interval_time_gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2:36:05"
+                android:textColor="@color/icons_or_text"
+                app:layout_constraintStart_toStartOf="@+id/interval_progress"
+                app:layout_constraintTop_toBottomOf="@+id/interval_progress"
+                app:showLiveDataLong="@{viewModel.timeGone}" />
+
+            <TextView
+                android:id="@+id/interval_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-1д 21:06:15"
+                android:textColor="@color/icons_or_text"
+                app:layout_constraintEnd_toEndOf="@+id/interval_progress"
+                app:layout_constraintTop_toBottomOf="@+id/interval_progress" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/advanced_state_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="0dp">
+
+            <include
+                android:id="@+id/current_shift_layout"
+                layout="@layout/cell_shift"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </include>
+
+            <TextView
+                android:id="@+id/earned_now"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2450,58P"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/current_shift_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/next_shift_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:background="#20546e7a"
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Следующая смена"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/layout_cell_shift"
+                layout="@layout/cell_shift"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     </LinearLayout>
 

@@ -2,15 +2,17 @@ package ru.clementl.metrotimex.databinding
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import ru.clementl.metrotimex.generated.callback.OnClickListener
+import androidx.lifecycle.LiveData
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
+import ru.clementl.metrotimex.model.states.SimpleState
 import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.asSimpleTime
+import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.ofPattern
+import ru.clementl.metrotimex.viewmodel.TonightViewModel
 
 @BindingAdapter("dayOfMonth")
 fun TextView.setDate(day: DayStatus?) {
@@ -49,6 +51,13 @@ fun TextView.setDayName(day: DayStatus?) {
             text = day.workDayType?.desc
         }
     }
+}
+
+@BindingAdapter("shiftNameOrEmpty")
+fun TextView.setShiftNameOrEmpty(day: DayStatus?) {
+    day?.shift?.let {
+        text = "${it.name}"
+    } ?: run {text = ""}
 }
 
 @BindingAdapter("descString")
@@ -116,3 +125,21 @@ fun TextView.showAtz(day: DayStatus?) {
     }
 }
 
+@BindingAdapter("simpleStateDesc")
+fun TextView.simpleStateDesc(simpleState: LiveData<SimpleState>) {
+    logd("onStart simpleStateDesc BindingAdapter")
+    simpleState.value?.let {
+        logd("in let")
+        text = it.desc
+        logd(text.toString())
+        return
+    }
+    text = "null"
+}
+
+@BindingAdapter("showLiveDataLong")
+fun TextView.showLiveDataString(source: LiveData<String>?) {
+    source?.value?.let {
+        text = it
+    }
+}

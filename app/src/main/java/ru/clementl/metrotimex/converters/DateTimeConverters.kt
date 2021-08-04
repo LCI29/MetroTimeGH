@@ -14,9 +14,9 @@ fun Long.toDate(): LocalDate {
     return toDateTime().toLocalDate()
 }
 
-fun LocalTime.toInt() = toSecondOfDay()
+fun LocalTime.toInt() = toSecondOfDay() // for DB
 
-fun Int.toTime() = LocalTime.ofSecondOfDay(toLong())
+fun Int.toTime() = LocalTime.ofSecondOfDay(toLong()) // for DB
 
 fun LocalDateTime.toLong(): Long {
     return atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
@@ -24,6 +24,10 @@ fun LocalDateTime.toLong(): Long {
 
 fun Long.toDateTime(): LocalDateTime {
     return LocalDateTime.ofInstant(Instant.ofEpochMilli(this), ZoneId.systemDefault())
+}
+
+fun LocalTime.toLong(): Long {
+    return toSecondOfDay().toLong() * 1000
 }
 
 

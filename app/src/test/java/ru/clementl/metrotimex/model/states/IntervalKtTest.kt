@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.RepetitionInfo
+import ru.clementl.metrotimex.NIGHT_GAP_MAX_DURATION
+import ru.clementl.metrotimex.SHIFT_EP
+import ru.clementl.metrotimex.SHIFT_SP
 import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
@@ -165,5 +168,13 @@ internal class IntervalKtTest {
                 assertNull(act)
             }
         }
+    }
+
+    @Test
+    fun durationTest() {
+        val nightGapStart = LocalDateTime.of(2021,7,21,23,0)
+        val nightGapEnd = LocalDateTime.of(2021, 7, 22, 6, 0)
+        val interval = Interval(TimePoint(nightGapStart.toLong(), SHIFT_EP), TimePoint(nightGapEnd.toLong(), SHIFT_SP))
+        assertEquals(NIGHT_GAP_MAX_DURATION, interval.duration)
     }
 }

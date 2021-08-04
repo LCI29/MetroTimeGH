@@ -80,10 +80,10 @@ class ShiftCreateViewModel(
     private suspend fun getFirstFreeDateFromDb(): LocalDate {
         val offset = OffsetDateTime.now(ZoneId.systemDefault()).offset
         return withContext(Dispatchers.IO) {
-            var epochmilli =
+            val epochmilli =
                 repository.getLastDateLong()?.div(1000) ?: return@withContext LocalDate.now()
             logd("${epochmilli}, ${LocalDateTime.ofEpochSecond(epochmilli, 0, offset)}")
-            var date = LocalDateTime.ofEpochSecond(
+            val date = LocalDateTime.ofEpochSecond(
                 epochmilli, 0, offset
             ).toLocalDate().plusDays(1)
             date

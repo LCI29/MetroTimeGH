@@ -151,7 +151,7 @@
                     android:hint="@string/et_hint_shift_name"
                     android:inputType="textPersonName"
                     android:maxLength="7"
-                    app:dayName="@{viewModel.editingDay}"
+                    app:shiftNameOrEmpty="@{viewModel.editingDay}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/field_choose_date" />

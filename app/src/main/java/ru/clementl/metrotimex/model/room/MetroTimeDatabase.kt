@@ -8,7 +8,7 @@ import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.Shift
 import ru.clementl.metrotimex.model.room.daos.CalendarDao
 
-@Database(entities = arrayOf(Shift::class, DayStatus::class), version = 4, exportSchema = false)
+@Database(entities = arrayOf(Shift::class, DayStatus::class), version = 5, exportSchema = false)
 abstract class MetroTimeDatabase : RoomDatabase() {
 
     abstract fun dayStatusDao(): CalendarDao

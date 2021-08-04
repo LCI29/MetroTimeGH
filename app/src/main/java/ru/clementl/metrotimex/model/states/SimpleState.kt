@@ -10,6 +10,7 @@ object GapSimpleState : SimpleState(GAP_STRING)
 object SickSimpleState : SimpleState(SICK_DAY_STRING)
 object VacationSimpleState : SimpleState(VACATION_DAY_STRING)
 object NoDataSimpleState : SimpleState(NO_DATA_STRING)
+object NightGapSimpleState : SimpleState(NIGHT_GAP_STRING)
 
 class UnknownSimpleState private constructor(description: String) : SimpleState(description) {
 
@@ -49,7 +50,7 @@ fun Interval.simpleState(): SimpleState {
 
         SHIFT_EP -> when (afterCode) {
 
-            SHIFT_SP -> GapSimpleState
+            SHIFT_SP -> if (duration!! < NIGHT_GAP_MAX_DURATION) NightGapSimpleState else GapSimpleState
             WEEKEND_SP -> GapSimpleState
             SICK_DAY_SP -> GapSimpleState
             VACATION_DAY_SP -> GapSimpleState

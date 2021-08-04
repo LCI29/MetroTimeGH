@@ -24,6 +24,8 @@ internal class SimpleStateKtTest {
     val date05 = LocalDate.of(2021, 7, 5)
     val date06 = LocalDate.of(2021, 7, 6)
     val date07 = LocalDate.of(2021, 7, 7)
+    val date08 = LocalDate.of(2021, 7, 8)
+    val date09 = LocalDate.of(2021, 7, 9)
 
     val time_2_30 = LocalTime.of(2, 30)
     val time_3_30 = LocalTime.of(3, 30)
@@ -74,16 +76,18 @@ internal class SimpleStateKtTest {
     val day5_medic = DayStatus(date05.toLong(), WorkDayType.MEDIC_DAY.toInt(), null)
     val day6_out_night = DayStatus(date06.toLong(), WorkDayType.SHIFT.toInt(), shift_4_30_8_00)
     val day7_vacation = DayStatus(date07.toLong(), WorkDayType.VACATION_DAY.toInt(), null)
+    val day8_till_2_30 = DayStatus(date08.toLong(), WorkDayType.SHIFT.toInt(), shift_22_13_2_30_odd)
+    val day9_out_night = DayStatus(date09.toLong(), WorkDayType.SHIFT.toInt(), shift_4_30_8_00)
 
     val days = listOf(
-        day1_8_16, day2_till_2_30, day3_weekend, day4_from_1_30, day5_medic, day6_out_night, day7_vacation
+        day1_8_16, day2_till_2_30, day3_weekend, day4_from_1_30, day5_medic, day6_out_night, day7_vacation, day8_till_2_30, day9_out_night
     )
 
     @BeforeEach
     fun setUp() {
     }
 
-    @RepeatedTest(33)
+    @RepeatedTest(34)
     fun longSimpleState(repetitionInfo: RepetitionInfo) {
         val solution = listOf(
             LocalDateTime.of(2021, 7, 1, 7, 0).toLong() to GapSimpleState,
@@ -119,13 +123,25 @@ internal class SimpleStateKtTest {
             LocalDateTime.of(2021, 7, 6, 22, 0).toLong() to GapSimpleState,
             LocalDateTime.of(2021, 7, 7, 1, 0).toLong() to GapSimpleState,
             LocalDateTime.of(2021, 7, 7, 3, 0).toLong() to VacationSimpleState,
+            LocalDateTime.of(2021, 7, 9, 3, 0).toLong() to NightGapSimpleState
         )
         for (i in 0 until repetitionInfo.totalRepetitions) {
             if (repetitionInfo.currentRepetition == i) {
                 val (moment, expected) = solution[i]
-                assertEquals(moment.simpleState(days), expected)
+                assertEquals(expected, moment.simpleState(days))
             }
         }
 
+    }
+
+    @Test
+    fun tempTest() {
+        val days = listOf(
+            DayStatus(dateLong=1627592400000, workDayTypeInt=2, shift=null),
+            DayStatus(dateLong=1627678800000, workDayTypeInt=2, shift=null)
+        )
+        val exp = SickSimpleState
+        val actual = 1627735666390L.simpleState(days)
+        assertEquals(exp, actual)
     }
 }
