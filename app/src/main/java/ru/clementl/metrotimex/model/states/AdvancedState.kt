@@ -4,9 +4,9 @@ import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.data.TimeSpan
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.data.compareTo
+import ru.clementl.metrotimex.model.data.getNextShift
 
 sealed class AdvancedState(val description: String)
 
@@ -36,12 +36,18 @@ class UnknownAdvancedState constructor(description: String) : AdvancedState(desc
     }
 }
 
+/**
+ * Returns AdvancedState of the given moment in given calendar
+ */
 fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
     if (calendar == null || calendar.isEmpty()) return NoDataAdvancedState
     val interval = getInterval(calendar)
     if (interval.startPoint?.code == SHIFT_EP &&
-        (this - interval.startPoint.dateTimeLong) < AFTER_SHIFT_STATE_PRIORITY_DURATION)
+        (this - interval.startPoint.milli) < AFTER_SHIFT_STATE_PRIORITY_DURATION)
             return AfterShiftAdvancedState
+    getNextShift(calendar)?.let {
+        if (it.startPoint.milli - this < BEFORE_SHIFT_STATE_PRIORITY_DURATION) return BeforeShiftAdvancedState
+    }
     when (interval.simpleState) {
         ShiftSimpleState -> return ShiftAdvancedState
         NightGapSimpleState -> return BeforeShiftAdvancedState

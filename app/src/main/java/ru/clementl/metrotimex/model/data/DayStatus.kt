@@ -7,9 +7,7 @@ import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.states.TimePoint
 import ru.clementl.metrotimex.utils.asSimpleDate
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 /**
  * Represents a day by its date, type (workday or weekend) and shift if it has
@@ -75,3 +73,9 @@ fun DayStatus.shiftEnd(): LocalDateTime? {
 
 val DayStatus.descriptionString
     get() = "${date.asSimpleDate(false)}: ${shift?.getDescriptionString(true) ?: workDayType?.desc}"
+
+// Returns the nearest future DayStatus with WorkDayType of SHIFT, if there is not returns null
+fun Long.getNextShift(calendar: List<DayStatus>): DayStatus? {
+    return calendar.sortedBy { it.date }
+        .find { it.workDayType == WorkDayType.SHIFT && it.startPoint.milli > this }
+}

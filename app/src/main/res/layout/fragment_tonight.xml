@@ -30,11 +30,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:progress="7"
+                android:progress="@{viewModel.progress}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/interval_till_text" />
+                app:layout_constraintTop_toBottomOf="@+id/interval_duration_text" />
 
             <TextView
                 android:id="@+id/simple_status_text"
@@ -50,11 +50,11 @@
                 tools:text="Разрыв" />
 
             <TextView
-                android:id="@+id/interval_till_text"
+                android:id="@+id/interval_duration_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="48,2ч"
+                android:text="@{viewModel.duration}"
                 android:textColor="@color/icons_or_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,18 +64,18 @@
                 android:id="@+id/interval_time_gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2:36:05"
                 android:textColor="@color/icons_or_text"
                 app:layout_constraintStart_toStartOf="@+id/interval_progress"
                 app:layout_constraintTop_toBottomOf="@+id/interval_progress"
                 app:showLiveDataLong="@{viewModel.timeGone}" />
 
             <TextView
-                android:id="@+id/interval_duration"
+                android:id="@+id/interval_time_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-1д 21:06:15"
+                tools:text="1д 21:05:08"
                 android:textColor="@color/icons_or_text"
+                android:text="@{viewModel.timeLeft}"
                 app:layout_constraintEnd_toEndOf="@+id/interval_progress"
                 app:layout_constraintTop_toBottomOf="@+id/interval_progress" />
         </androidx.constraintlayout.widget.ConstraintLayout>

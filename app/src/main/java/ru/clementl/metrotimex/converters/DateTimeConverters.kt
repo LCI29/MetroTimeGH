@@ -18,6 +18,8 @@ fun LocalTime.toInt() = toSecondOfDay() // for DB
 
 fun Int.toTime() = LocalTime.ofSecondOfDay(toLong()) // for DB
 
+fun Long.toTime() = (this / 1000).toInt().toTime()
+
 fun LocalDateTime.toLong(): Long {
     return atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 }

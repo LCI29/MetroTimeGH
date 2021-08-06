@@ -13,7 +13,7 @@ data class Interval(override val startPoint: TimePoint?, override val endPoint: 
     override val duration: Long? by lazy {
         endPoint?.let {
             startPoint?.let {
-                endPoint.dateTimeLong - startPoint.dateTimeLong
+                endPoint.milli - startPoint.milli
             }
         }
     }
@@ -25,9 +25,9 @@ data class Interval(override val startPoint: TimePoint?, override val endPoint: 
  */
 fun Long.getInterval(calendar: List<DayStatus>): Interval {
     val sortedCalendar = calendar.sortedBy { it.date }
-    val lastDayBefore = sortedCalendar.findLast { it.startPoint.dateTimeLong <= this }
+    val lastDayBefore = sortedCalendar.findLast { it.startPoint.milli <= this }
     val pointBefore = getPointBeforeFrom(lastDayBefore)
-    val firstDayAfter = sortedCalendar.find { it.endPoint.dateTimeLong > this }
+    val firstDayAfter = sortedCalendar.find { it.endPoint.milli > this }
     val pointAfter = getPointAfterFrom(firstDayAfter)
     return Interval(pointBefore, pointAfter)
 }
@@ -38,8 +38,8 @@ fun Long.getInterval(calendar: List<DayStatus>): Interval {
 fun Long.getPointBeforeFrom(day: DayStatus?): TimePoint? {
     day?.let {
         return when {
-            (it.endPoint.dateTimeLong <= this) -> it.endPoint
-            (it.startPoint.dateTimeLong <= this) -> it.startPoint
+            (it.endPoint.milli <= this) -> it.endPoint
+            (it.startPoint.milli <= this) -> it.startPoint
             else -> null
         }
     }
@@ -52,8 +52,8 @@ fun Long.getPointBeforeFrom(day: DayStatus?): TimePoint? {
 fun Long.getPointAfterFrom(day: DayStatus?): TimePoint? {
     day?.let {
         return when {
-            (it.startPoint.dateTimeLong > this) -> it.startPoint
-            (it.endPoint.dateTimeLong > this) -> it.endPoint
+            (it.startPoint.milli > this) -> it.startPoint
+            (it.endPoint.milli > this) -> it.endPoint
             else -> null
         }
     }

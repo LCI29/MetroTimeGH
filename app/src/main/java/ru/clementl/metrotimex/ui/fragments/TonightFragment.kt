@@ -36,7 +36,7 @@ class TonightFragment : Fragment() {
         logd("""
             TonightFragment: ViewModel creation
             Loaded list:
-            ${tonightViewModel.getDaysList()}
+            ${tonightViewModel.getCalendar()}
         """.trimIndent())
 
         binding.viewModel = tonightViewModel

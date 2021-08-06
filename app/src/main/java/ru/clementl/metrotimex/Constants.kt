@@ -8,6 +8,9 @@ import java.time.LocalTime
 // Basic rate per hour in Metropolitan
 const val RATE_PER_HOUR = 375.41
 
+// Updating time
+const val UPDATING_DELAY = 200L
+
 // Types for ShiftCreateFragment
 const val SHIFT_CREATING = 1000
 const val SHIFT_EDITING = 2000
@@ -63,5 +66,17 @@ val DAYS_FOR_TONIGHT_AFTER = 5 // Days after today to load from db for TonightFr
 // Maximum duration of the Night Gap, millis
 val NIGHT_GAP_MAX_DURATION = LocalTime.of(7, 0).toLong()
 
+// Duration of BeforeShiftAdvancedState priority
+val BEFORE_SHIFT_STATE_PRIORITY_DURATION = LocalTime.of(2, 0).toLong()
+
 // Duration of AfterShiftAdvancedState priority
 val AFTER_SHIFT_STATE_PRIORITY_DURATION = LocalTime.of(0, 30).toLong()
+
+
+// Duration in millis
+const val SECOND_MILLI = 1000
+const val MINUTE_MILLI = 60 * SECOND_MILLI
+const val HOUR_MILLI = 60 * MINUTE_MILLI
+const val DAY_MILLI = 24 * HOUR_MILLI
+const val WEEK_MILLI = 7 * DAY_MILLI
+

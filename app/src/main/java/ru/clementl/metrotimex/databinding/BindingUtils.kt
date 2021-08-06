@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
+import ru.clementl.metrotimex.model.states.AdvancedState
 import ru.clementl.metrotimex.model.states.SimpleState
 import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.asSimpleTime
@@ -131,6 +132,17 @@ fun TextView.simpleStateDesc(simpleState: LiveData<SimpleState>) {
     simpleState.value?.let {
         logd("in let")
         text = it.desc
+        logd(text.toString())
+        return
+    }
+    text = "null"
+}
+
+@BindingAdapter("advancedStateDesc")
+fun TextView.advancedStateDesc(advancedState: LiveData<AdvancedState>) {
+    advancedState.value?.let {
+        logd("in let")
+        text = it.description
         logd(text.toString())
         return
     }
