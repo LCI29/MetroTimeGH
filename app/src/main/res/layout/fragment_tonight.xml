@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primaryColor"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:paddingTop="8dp">
 
             <ProgressBar
                 android:id="@+id/interval_progress"
@@ -90,10 +91,23 @@
             <include
                 android:id="@+id/current_shift_layout"
                 layout="@layout/cell_shift"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </include>
+
+            <include
+                android:id="@+id/current_non_shift_layout"
+                layout="@layout/cell_weekend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -108,8 +122,28 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/finished_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/current_shift_layout" />
+
+            <TextView
+                android:id="@+id/finished_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/light_blue_gray"
+                android:padding="4dp"
+                android:text="Завершено"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/icons_or_text"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/earned_now" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -132,7 +166,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <include
-                android:id="@+id/layout_cell_shift"
+                android:id="@+id/next_shift_cell"
                 layout="@layout/cell_shift"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"

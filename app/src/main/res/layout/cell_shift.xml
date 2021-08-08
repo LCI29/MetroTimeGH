@@ -16,6 +16,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(day)}"
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:text="Нет данных"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
             app:dayNameWithOddEven="@{day}"
@@ -36,7 +38,6 @@
             android:id="@+id/shift_desc_string"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13:16 НАГ - 21:21 АН"
             android:textColor="@color/secondary_text"
             android:textSize="14sp"
             app:descString="@{day}"
@@ -50,7 +51,6 @@
             android:background="@color/primaryColor"
             android:gravity="center"
             android:paddingBottom="@dimen/cell_date_bottom_padding"
-            android:text="20"
             android:textColor="@color/icons_or_text"
             android:textSize="24sp"
             app:dayOfMonth="@{day}"
@@ -64,7 +64,6 @@
             android:background="#00F1F8E9"
             android:gravity="top|center"
             android:paddingBottom="@dimen/cell_day_of_week_bottom_padding"
-            android:text="чт"
             android:textColor="@color/icons_or_text"
             android:textSize="10sp"
             app:dayOfWeek="@{day}"

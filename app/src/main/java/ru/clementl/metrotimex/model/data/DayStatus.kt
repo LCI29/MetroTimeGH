@@ -5,7 +5,9 @@ import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.converters.*
+import ru.clementl.metrotimex.model.states.ShiftSimpleState
 import ru.clementl.metrotimex.model.states.TimePoint
+import ru.clementl.metrotimex.model.states.simpleState
 import ru.clementl.metrotimex.utils.asSimpleDate
 import java.time.LocalDateTime
 
@@ -78,4 +80,20 @@ val DayStatus.descriptionString
 fun Long.getNextShift(calendar: List<DayStatus>): DayStatus? {
     return calendar.sortedBy { it.date }
         .find { it.workDayType == WorkDayType.SHIFT && it.startPoint.milli > this }
+}
+
+fun Long.getCurrentShift(calendar: List<DayStatus>): DayStatus? {
+    if (simpleState(calendar) != ShiftSimpleState) return null
+    return calendar.sortedBy { it.date }
+        .findLast { it.workDayType == WorkDayType.SHIFT && it.startPoint.milli < this}
+}
+
+fun Long.getCurrentDayStatus(calendar: List<DayStatus>): DayStatus? {
+    return when (simpleState(calendar)) {
+        is ShiftSimpleState -> getCurrentShift(calendar)
+        else -> {
+            calendar.sortedBy { it.date }
+                .findLast { it.startPoint.milli < this }
+        }
+    }
 }

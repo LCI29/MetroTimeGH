@@ -121,7 +121,7 @@ internal class SimpleStateKtTest {
             LocalDateTime.of(2021, 7, 6, 4, 30).toLong() to ShiftSimpleState,
             LocalDateTime.of(2021, 7, 6, 8, 0).toLong() to GapSimpleState,
             LocalDateTime.of(2021, 7, 6, 22, 0).toLong() to GapSimpleState,
-            LocalDateTime.of(2021, 7, 7, 1, 0).toLong() to GapSimpleState,
+            LocalDateTime.of(2021, 7, 7, 1, 0).toLong() to VacationSimpleState,
             LocalDateTime.of(2021, 7, 7, 3, 0).toLong() to VacationSimpleState,
             LocalDateTime.of(2021, 7, 9, 3, 0).toLong() to NightGapSimpleState
         )

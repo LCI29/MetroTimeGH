@@ -97,9 +97,9 @@ internal class DayStatusTest {
         val expected = listOf(
             TimePoint(LocalDateTime.of(date_26_07_21, time_16_25).toLong() - 1, WorkDayType.SHIFT.endPointCode),
             TimePoint(LocalDateTime.of(date_01_09_19.plusDays(1), time_1_59).toLong() - 1, WorkDayType.SHIFT.endPointCode),
-            TimePoint(LocalDateTime.of(date_31_12_20.plusDays(1), DAY_END_TIME).toLong(), WorkDayType.WEEKEND.endPointCode),
+            TimePoint(LocalDateTime.of(date_31_12_20.plusDays(0), DAY_END_TIME).toLong(), WorkDayType.WEEKEND.endPointCode),
             TimePoint(LocalDateTime.of(date_26_07_21, time_16_25).toLong() - 1, WorkDayType.SHIFT.endPointCode),
-            TimePoint(LocalDateTime.of(date_01_09_19.plusDays(1), DAY_END_TIME).toLong(), WorkDayType.MEDIC_DAY.endPointCode)
+            TimePoint(LocalDateTime.of(date_01_09_19.plusDays(0), DAY_END_TIME).toLong(), WorkDayType.MEDIC_DAY.endPointCode)
         )
         for (i in 0 until repetitionInfo.totalRepetitions) {
             if (repetitionInfo.currentRepetition == i) {

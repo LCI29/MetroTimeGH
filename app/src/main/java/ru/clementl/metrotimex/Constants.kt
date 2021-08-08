@@ -36,7 +36,7 @@ const val MEDIC_DAY_SP = 41
 const val MEDIC_DAY_EP = 42
 
 // Время смены суток для метро, определяется наиболее поздним возможным окончанием неночной смены
-val DAY_CHANGE_TIME: LocalTime = LocalTime.of(3, 0)
+val DAY_CHANGE_TIME: LocalTime = LocalTime.of(0, 0)
 val DAY_START_TIME: LocalTime = DAY_CHANGE_TIME
 val DAY_END_TIME: LocalTime = DAY_START_TIME.minusNanos(1)
 
@@ -60,8 +60,8 @@ val START_POINTS = setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MED
 // set of all the TimePoints types, which represent END of the interval
 val END_POINTS = setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, UNKNOWN_EP)
 
-val DAYS_FOR_TONIGHT_BEFORE = 1 // Days before today to load from db for TonightFragment
-val DAYS_FOR_TONIGHT_AFTER = 5 // Days after today to load from db for TonightFragment, today inclusive
+val DAYS_FOR_TONIGHT_BEFORE = 100 // Days before today to load from db for TonightFragment
+val DAYS_FOR_TONIGHT_AFTER = 100 // Days after today to load from db for TonightFragment, today inclusive
 
 // Maximum duration of the Night Gap, millis
 val NIGHT_GAP_MAX_DURATION = LocalTime.of(7, 0).toLong()

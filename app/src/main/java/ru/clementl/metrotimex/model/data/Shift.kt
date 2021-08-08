@@ -7,6 +7,7 @@ import ru.clementl.metrotimex.converters.toTime
 import ru.clementl.metrotimex.converters.toWeekDayType
 import ru.clementl.metrotimex.model.states.TimePoint
 import ru.clementl.metrotimex.utils.asSimpleTime
+import ru.clementl.metrotimex.utils.ofPattern
 import java.time.LocalTime
 import java.util.*
 
@@ -82,9 +83,9 @@ data class Shift(
      */
     fun getDescriptionString(withName: Boolean = false) =
         (if (withName) "$name " else "") +
-                "${startTime?.asSimpleTime()} ${startLoc?.toUpperCase(Locale.ROOT)}" +
+                "${startTime?.ofPattern("H:mm")} ${startLoc?.toUpperCase(Locale.ROOT)}" +
                 "${if (startLoc?.isEmpty() != false) "" else " "}-" +
-                " ${endTime?.asSimpleTime()} ${endLoc?.toUpperCase(Locale.ROOT)}"
+                " ${endTime?.ofPattern("H:mm")} ${endLoc?.toUpperCase(Locale.ROOT)}"
 
     @PrimaryKey
     @ColumnInfo(name = "shift_id")

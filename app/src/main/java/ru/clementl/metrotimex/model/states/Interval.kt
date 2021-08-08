@@ -2,6 +2,7 @@ package ru.clementl.metrotimex.model.states
 
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.TimeSpan
+import ru.clementl.metrotimex.utils.logd
 
 /**
  * Represents an Interval of time with nullable TimePoints. Interval has a state, determined by
@@ -19,16 +20,36 @@ data class Interval(override val startPoint: TimePoint?, override val endPoint: 
     }
 }
 
+fun Long.getUnitedInterval(calendar: List<DayStatus>): Interval {
+    val baseInterval = getInterval(calendar)
+    var start = baseInterval.startPoint ?: return baseInterval
+    var end = baseInterval.endPoint ?: return baseInterval
+
+    logd("Interval state = ${baseInterval.simpleState}, ${baseInterval.startPoint}, ${baseInterval.endPoint}")
+
+    var previousInterval = (start.milli - 2).getInterval(calendar)
+
+    while (previousInterval.simpleState == baseInterval.simpleState && previousInterval.startPoint != null) {
+        logd("PreviousInterval state = ${previousInterval.simpleState}, ${previousInterval.startPoint}, ${previousInterval.endPoint}")
+        start = previousInterval.startPoint!!
+        previousInterval = (start.milli - 2).getInterval(calendar)
+    }
+    var nextInterval = (end.milli + 2).getInterval(calendar)
+    while (nextInterval.simpleState == baseInterval.simpleState) {
+        end = nextInterval.endPoint!!
+        nextInterval = (end.milli + 2).getInterval(calendar)
+    }
+    return Interval(start, end)
+}
+
 /**
  * Returns [Interval], that this moment belongs to. Interval may have nullable TimePoints.
  * If [calendar] is empty, function returns Interval(null, null)
  */
 fun Long.getInterval(calendar: List<DayStatus>): Interval {
-    val sortedCalendar = calendar.sortedBy { it.date }
-    val lastDayBefore = sortedCalendar.findLast { it.startPoint.milli <= this }
-    val pointBefore = getPointBeforeFrom(lastDayBefore)
-    val firstDayAfter = sortedCalendar.find { it.endPoint.milli > this }
-    val pointAfter = getPointAfterFrom(firstDayAfter)
+    val allPoints = calendar.map { it.startPoint to it.endPoint }.flatMap { it.toList() }.sortedBy { it.milli }
+    val pointBefore = allPoints.findLast { it.milli <= this }
+    val pointAfter = allPoints.find { it.milli > this }
     return Interval(pointBefore, pointAfter)
 }
 

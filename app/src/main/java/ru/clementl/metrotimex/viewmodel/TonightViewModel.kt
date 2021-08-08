@@ -9,6 +9,8 @@ import ru.clementl.metrotimex.UPDATING_DELAY
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
+import ru.clementl.metrotimex.model.data.getCurrentDayStatus
+import ru.clementl.metrotimex.model.data.getNextShift
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.utils.inFloatHours
@@ -25,6 +27,10 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
         get() = System.currentTimeMillis()
     private val calendar = mutableListOf<DayStatus>()
     private var isAlive: Boolean = true
+    val today: DayStatus?
+        get() = now.getCurrentDayStatus(calendar)
+    val nextShift: DayStatus?
+        get() = now.getNextShift(calendar)
 
 
     // Current time emitter
@@ -78,6 +84,7 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
         duration.inFloatHours()
     }
 
+
     init {
         logd("TonightViewModel start initialization")
         initialize()
@@ -87,9 +94,9 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
     private fun initialize() {
         uiScope.launch {
             calendar.addAll(loadDays(DAYS_FOR_TONIGHT_BEFORE, DAYS_FOR_TONIGHT_AFTER))
+            initializeCurrentInterval()
             initializeSimpleState()
             initializeAdvancedState()
-            initializeCurrentInterval()
         }
     }
 
@@ -100,10 +107,11 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
 
     private fun initializeAdvancedState() {
         _advancedState.value = now.advancedState(getCalendar())
+        logd("Current Advanced State = ${advancedState.value}")
     }
 
     private fun initializeCurrentInterval() {
-        _currentInterval.value = now.getInterval(calendar)
+        _currentInterval.value = now.getUnitedInterval(calendar)
     }
 
 
@@ -148,6 +156,7 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
 
     override fun onCleared() {
         super.onCleared()
+        logd("TonightViewModel: onCleared()")
         isAlive = false // stops emitting time
     }
 }

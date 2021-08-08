@@ -1,5 +1,6 @@
 package ru.clementl.metrotimex.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.databinding.FragmentTonightBinding
+import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.TonightViewModel
 import ru.clementl.metrotimex.viewmodel.TonightViewModelFactory
@@ -45,6 +47,54 @@ class TonightFragment : Fragment() {
         logd("""
             SimpleState on initialize = ${tonightViewModel.simpleState.value?.desc}
         """.trimIndent())
+
+        tonightViewModel.advancedState.observe(viewLifecycleOwner) {
+            with(binding) {
+                nextShiftCell.day = tonightViewModel.nextShift
+                currentShiftLayout.day = tonightViewModel.today
+                currentNonShiftLayout.day = tonightViewModel.today
+                when (it) {
+                    is ShiftAdvancedState -> {
+                        currentNonShiftLayout.rootLayout.visibility = View.GONE
+                        currentShiftLayout.rootLayout.visibility = View.VISIBLE
+                        earnedNow.visibility = View.VISIBLE
+                        earnedNow.setTextColor(Color.BLACK)
+                        finishedText.visibility = View.GONE
+                        nextShiftLayout.visibility = View.VISIBLE
+                    }
+                    is AfterShiftAdvancedState -> {
+                        currentNonShiftLayout.rootLayout.visibility = View.GONE
+                        currentShiftLayout.rootLayout.visibility = View.VISIBLE
+                        earnedNow.visibility = View.VISIBLE
+                        earnedNow.setTextColor(Color.GRAY)
+                        finishedText.visibility = View.VISIBLE
+                        nextShiftLayout.visibility = View.VISIBLE
+                    }
+                    is BeforeShiftAdvancedState -> {
+                        currentNonShiftLayout.rootLayout.visibility = View.GONE
+                        currentShiftLayout.rootLayout.visibility = View.GONE
+                        earnedNow.visibility = View.GONE
+                        finishedText.visibility = View.GONE
+                        nextShiftLayout.visibility = View.VISIBLE
+                    }
+                    is SpecialAdvancedState -> {
+                        currentShiftLayout.rootLayout.visibility = View.GONE
+                        currentNonShiftLayout.rootLayout.visibility = View.VISIBLE
+                        earnedNow.visibility = View.GONE
+                        finishedText.visibility = View.GONE
+                        nextShiftLayout.visibility = View.VISIBLE
+                    }
+                    is NoDataAdvancedState -> {
+                        currentNonShiftLayout.rootLayout.visibility = View.GONE
+                        currentShiftLayout.rootLayout.visibility = View.GONE
+                        earnedNow.visibility = View.GONE
+                        finishedText.visibility = View.GONE
+                        nextShiftLayout.visibility = View.VISIBLE
+                    }
+
+                }
+            }
+        }
 
 
 
