@@ -58,8 +58,8 @@ fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
     return when (workDayType) {
         WorkDayType.SHIFT ->
             return when {
-                this < currentDay -> BeforeShiftAdvancedState
-                this > currentDay -> AfterShiftAdvancedState
+                this < currentDay.timeSpan -> BeforeShiftAdvancedState
+                this > currentDay.timeSpan -> AfterShiftAdvancedState
                 else -> ShiftAdvancedState
             }
         WorkDayType.WEEKEND -> WeekendAdvancedState

@@ -1,34 +1,50 @@
 package ru.clementl.metrotimex.model.data
 
 import ru.clementl.metrotimex.model.states.TimePoint
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Basic representation of any time interval
  */
-interface TimeSpan {
-    val startPoint: TimePoint?
-    val endPoint: TimePoint?
-    val duration: Long?
+open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
+
+    open val duration: Long?
         get() {
-            val a = startPoint?.milli ?: return null
-            val b = endPoint?.milli ?: return null
+            val a = startMilli ?: return null
+            val b = endMilli ?: return null
             return b - a
         }
+    open val nullable: Boolean
+        get() = startMilli == null || endMilli == null
 
     operator fun contains(timePoint: TimePoint): Boolean {
-        val a = startPoint?.milli ?: return false
-        val b = endPoint?.milli ?: return false
+        val a = startMilli ?: return false
+        val b = endMilli ?: return false
         return timePoint.milli in a..b
     }
 
-    fun fromStartTill(millis: Long): Long? {
-        val a = startPoint?.milli ?: return null
+    open fun fromStartTill(millis: Long): Long? {
+        val a = startMilli ?: return null
         return millis - a
     }
 
-    fun tillEndFrom(millis: Long): Long? {
-        val b = endPoint?.milli ?: return null
+    open fun tillEndFrom(millis: Long): Long? {
+        val b = endMilli ?: return null
         return b - millis
+    }
+
+
+
+    open fun intersect(other: TimeSpan): TimeSpan? {
+        if (listOf(this, other).any {it.nullable}) return null
+        val a = max(this.startMilli!!, other.startMilli!!)
+        val b = min(this.endMilli!!, other.endMilli!!)
+        return if (a <= b) TimeSpan(a, b) else null
+    }
+
+    override fun toString(): String {
+        return "[$startMilli, $endMilli]"
     }
 }
 
@@ -38,19 +54,25 @@ interface TimeSpan {
  * TimeSpan, then it equals
  */
 operator fun Long.compareTo(timeSpan: TimeSpan): Int {
-    timeSpan.startPoint?.let { a ->
-        timeSpan.endPoint?.let { b ->
+    timeSpan.startMilli?.let { a ->
+        timeSpan.endMilli?.let { b ->
             return when {
-                this < a.milli -> -1
-                this > b.milli -> 1
+                this < a -> -1
+                this > b -> 1
                 else -> 0
             }
         }
-        return if (this < a.milli) -1 else 0
+        return if (this < a) -1 else 0
     }
-    timeSpan.endPoint?.let { b ->
-        return if (this > b.milli) 1 else 0
+    timeSpan.endMilli?.let { b ->
+        return if (this > b) 1 else 0
     }
     return 1
 }
 
+
+fun main() {
+    val a = TimeSpan(3, 8)
+    val b = TimeSpan(0, 6)
+    println(a.intersect(b))
+}

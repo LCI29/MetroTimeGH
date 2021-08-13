@@ -32,5 +32,10 @@ fun LocalTime.toLong(): Long {
     return toSecondOfDay().toLong() * 1000
 }
 
+fun String.fromAmericanToDate(): LocalDate {
+    val (month, day, year) = split("/")
+    return LocalDate.of(year.toInt(), month.toInt(), day.toInt())
+}
+
 
 

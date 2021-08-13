@@ -8,8 +8,12 @@ import ru.clementl.metrotimex.utils.logd
  * Represents an Interval of time with nullable TimePoints. Interval has a state, determined by
  * types of its start and end TimePoints
  */
-data class Interval(override val startPoint: TimePoint?, override val endPoint: TimePoint?) :
-    TimeSpan {
+data class Interval(val startPoint: TimePoint?, val endPoint: TimePoint?) :
+    TimeSpan(startPoint?.milli, endPoint?.milli) {
+    override val startMilli: Long?
+        get() = startPoint?.milli
+    override val endMilli: Long?
+        get() = endPoint?.milli
     val simpleState: SimpleState by lazy { simpleState() }
     override val duration: Long? by lazy {
         endPoint?.let {

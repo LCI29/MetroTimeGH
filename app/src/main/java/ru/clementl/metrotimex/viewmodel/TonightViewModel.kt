@@ -9,8 +9,10 @@ import ru.clementl.metrotimex.UPDATING_DELAY
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
+import ru.clementl.metrotimex.model.data.Machinist
 import ru.clementl.metrotimex.model.data.getCurrentDayStatus
 import ru.clementl.metrotimex.model.data.getNextShift
+import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.utils.inFloatHours
@@ -20,7 +22,8 @@ import java.lang.Exception
 import java.lang.IllegalStateException
 import java.time.Duration
 
-class TonightViewModel(private val repository: CalendarRepository) : ViewModel() {
+class TonightViewModel(private val repository: CalendarRepository, val machinist: Machinist) :
+    ViewModel() {
 
     private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
     private val now: Long
@@ -31,18 +34,30 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
         get() = now.getCurrentDayStatus(calendar)
     val nextShift: DayStatus?
         get() = now.getNextShift(calendar)
+    var counter =
+        now.getCurrentDayStatus(calendar)?.let {
+            logd("counter: ${today}")
+            MachinistSalaryCounter(machinist, it)
+        }
 
 
     // Current time emitter
     private val currentTime: LiveData<Long> = flow {
         while (isAlive) {
             emit(now)
-            currentInterval.value?.endPoint?.milli?.let {
-                if (now > it) updateIntervalAndState()
+            currentInterval.value?.endPoint?.milli?.let { milliUnited ->
+                simpleInterval.value?.endPoint?.milli?.let { milliSimple ->
+                    if (now > milliUnited || now > milliSimple) updateIntervalAndState()
+                }
+
             }
             delay(UPDATING_DELAY)
         }
     }.asLiveData()
+
+    private val _simpleInterval = MutableLiveData<Interval>()
+    val simpleInterval: LiveData<Interval>
+        get() = _simpleInterval
 
     private val _currentInterval = MutableLiveData<Interval>()
     val currentInterval: LiveData<Interval>
@@ -78,10 +93,39 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
         progress
     }
 
+    val percentProgress: LiveData<String> = Transformations.map(currentTime) { _currentMilli ->
+        val currentMilli = _currentMilli ?: 0
+        val duration = currentInterval.value?.duration ?: Long.MAX_VALUE
+        val startPointMilli = _currentInterval.value?.startPoint?.milli ?: Long.MIN_VALUE
+        val gone = currentMilli - startPointMilli
+
+        val progress = (gone.toDouble() / duration.toDouble()) * 100
+        if (currentInterval.value?.simpleState == ShiftSimpleState) {
+            String.format("%.2f%%", progress)
+        } else {
+            String.format("%.2f%%", 100 - progress)
+        }
+    }
+
     val duration: LiveData<String> = Transformations.map(currentInterval) { interval ->
         val iDuration = interval.duration ?: return@map "--"
         val duration = Duration.ofMillis(iDuration)
         duration.inFloatHours()
+    }
+
+    val currentSalary: LiveData<String> = Transformations.map(currentTime) { now ->
+        if (counter == null) {
+            now.getCurrentDayStatus(calendar)?.let {
+                counter = MachinistSalaryCounter(machinist, it)
+            }
+        }
+        counter?.let { counter ->
+            now?.let { time ->
+                logd("time = $time, salary = ${counter.getSalary(time)}")
+                String.format("%.2f Р", counter.getSalary(time))
+            }
+        }
+
     }
 
 
@@ -114,7 +158,9 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
         _currentInterval.value = now.getUnitedInterval(calendar)
     }
 
-
+    private fun initializeSimpleInterval() {
+        _simpleInterval.value = now.getInterval(calendar)
+    }
 
 
     fun getCalendar(): List<DayStatus> = calendar
@@ -128,6 +174,7 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
     }
 
     private fun updateIntervalAndState() {
+        initializeSimpleInterval()
         initializeCurrentInterval()
         initializeSimpleState()
         initializeAdvancedState()
@@ -137,19 +184,15 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
      * Returns List of DayStatus with given days count before and after current day
      */
     private suspend fun loadDays(daysBeforeCount: Int, daysAfterCount: Int): List<DayStatus> {
-        logd("loadDays() start")
         val dayId = now.toDate().toLong()
         return withContext(Dispatchers.IO) {
             val list = mutableListOf<DayStatus>()
             coroutineScope {
-                logd("daysBefore coroutine start")
                 list.addAll(repository.loadDaysBefore(dayId, daysBeforeCount))
             }
             coroutineScope {
-                logd("daysAfter coroutine start")
                 list.addAll(repository.loadDaysAfterAndThis(dayId, daysAfterCount))
             }
-            logd("$list")
             list
         }
     }
@@ -162,12 +205,14 @@ class TonightViewModel(private val repository: CalendarRepository) : ViewModel()
 }
 
 
-
-class TonightViewModelFactory(private val repository: CalendarRepository) : ViewModelProvider.Factory {
+class TonightViewModelFactory(
+    private val repository: CalendarRepository,
+    val machinist: Machinist
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TonightViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return TonightViewModel(repository) as T
+            return TonightViewModel(repository, machinist) as T
         }
         throw IllegalStateException("Unknown ViewModel class")
     }

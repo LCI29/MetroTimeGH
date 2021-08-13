@@ -2,44 +2,43 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.takisoft.preferencex.DatePickerPreference
-        android:key="on_post_since"
-        android:title="В должности с"
         android:icon="@drawable/ic_calendar_blue_gray"
-        app:useSimpleSummaryProvider="true"
+        android:key="on_post_since"
         android:summary="Укажите дату начала работы"
-        />
+        android:title="В должности с"
+        app:useSimpleSummaryProvider="true" />
     <DropDownPreference
-        android:key="qualification_class"
-        android:title="Класс квалификации"
-        app:useSimpleSummaryProvider="true"
         android:entries="@array/qualification_classes_entries"
         android:entryValues="@array/qualification_classes_entry_values"
-        android:summary="Укажите ваш класс квалификации"
         android:icon="@drawable/ic_star_blue_gray"
-        />
+        android:key="qualification_class"
+        android:summary="Укажите ваш класс квалификации"
+        android:title="Класс квалификации"
+        app:useSimpleSummaryProvider="true" />
     <SwitchPreference
-        android:key="is_master"
-        android:title="Старший машинист"
-        android:summary="Или исполняете обязанности"
         android:icon="@drawable/ic_train_blue_gray"
-        />
+        android:key="is_master"
+        android:summary="Или исполняете обязанности"
+        android:title="Старший машинист" />
     <SwitchPreference
-        android:key="is_mentor"
-        android:title="Наставник"
-        android:summary="Сейчас у вас есть прикрепленный стажер"
         android:icon="@drawable/ic_add_person_blue_gray"
-        />
+        android:key="is_mentor"
+        android:summary="Сейчас у вас есть прикрепленный стажер"
+        android:title="Наставник" />
     <com.takisoft.preferencex.EditTextPreference
-        android:key="month_bonus"
-        android:title="Премия, %"
-        android:summary="Ожидаемая премия в этом месяце"
-        android:inputType="number"
-        android:maxLength="3"
         android:icon="@drawable/ic_dollar_blue_gray"
-        app:useSimpleSummaryProvider="true"
-        />
-
-
+        android:inputType="number"
+        android:key="month_bonus"
+        android:maxLength="3"
+        android:summary="Ожидаемая премия в этом месяце"
+        android:title="Премия, %"
+        app:useSimpleSummaryProvider="true" />
+    <SwitchPreference
+        android:defaultValue="true"
+        android:icon="@drawable/ic_union"
+        android:key="in_union"
+        android:summary="Состоите ли вы в профсоюзе"
+        android:title="Член профсоюза" />
 
 
 </PreferenceScreen>

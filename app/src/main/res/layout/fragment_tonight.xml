@@ -79,6 +79,18 @@
                 android:text="@{viewModel.timeLeft}"
                 app:layout_constraintEnd_toEndOf="@+id/interval_progress"
                 app:layout_constraintTop_toBottomOf="@+id/interval_progress" />
+
+            <TextView
+                android:id="@+id/percent_progress"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/label_round_corner_white"
+                android:text="@{viewModel.percentProgress}"
+                android:textAlignment="center"
+                android:textColor="@color/primary_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/interval_progress" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,7 +130,7 @@
                 android:id="@+id/earned_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2450,58P"
+                android:text="@{viewModel.currentSalary}"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="36sp"
@@ -168,7 +180,7 @@
             <include
                 android:id="@+id/next_shift_cell"
                 layout="@layout/cell_shift"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"

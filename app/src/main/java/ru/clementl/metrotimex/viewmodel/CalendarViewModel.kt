@@ -6,10 +6,14 @@ import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.utils.logd
 import java.lang.IllegalStateException
+import java.time.LocalDate
 
 class CalendarViewModel(private val repository: CalendarRepository) : ViewModel() {
 
     val allDays: LiveData<List<DayStatus>> = repository.allDays.asLiveData()
+
+    val today: LocalDate
+        get() = LocalDate.now()
 
     fun insert(dayStatus: DayStatus) = viewModelScope.launch {
         repository.insert(dayStatus)

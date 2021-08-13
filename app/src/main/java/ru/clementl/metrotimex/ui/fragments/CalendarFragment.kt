@@ -69,6 +69,13 @@ class CalendarFragment : Fragment() {
         calendarViewModel.allDays.observe(viewLifecycleOwner) { days ->
             days?.let { mAdapter.submitList(it) }
         }
+
+        calendarViewModel.allDays.value?.let { list ->
+            val d = list.find { it.date == calendarViewModel.today }
+            d?.let {
+                recyclerView.scrollToPosition(list.indexOf(d))
+            }
+        }
     }
 
     private fun setupAdapter() {

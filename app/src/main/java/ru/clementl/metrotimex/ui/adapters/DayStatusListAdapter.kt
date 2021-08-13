@@ -26,7 +26,8 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
 
 
     companion object {
-        val today: LocalDate = LocalDate.now()
+        val today: LocalDate
+            get() = LocalDate.now()
     }
 
     override fun getItemViewType(position: Int): Int {

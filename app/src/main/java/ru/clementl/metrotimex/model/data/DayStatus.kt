@@ -25,7 +25,7 @@ data class DayStatus(
 
     @Nullable @Embedded
     val shift: Shift?
-) : TimeSpan {
+) {
     @Ignore val date = dateLong.toDate()
     @Ignore val workDayType = workDayTypeInt?.toWorkDayType()
 
@@ -45,11 +45,15 @@ data class DayStatus(
             }
         }
 
-    override val startPoint: TimePoint
+    val startPoint: TimePoint
         get() = TimePoint(startDateTime.toLong(), workDayType?.startPointCode ?: WorkDayType.UNKNOWN.startPointCode)
 
-    override val endPoint: TimePoint
+    val endPoint: TimePoint
         get() = TimePoint(endDateTime.toLong() - 1, workDayType?.endPointCode ?: WorkDayType.UNKNOWN.endPointCode)
+
+    val timeSpan: TimeSpan
+        get() = TimeSpan(startPoint.milli, endPoint.milli)
+
 }
 
 /**
@@ -97,3 +101,5 @@ fun Long.getCurrentDayStatus(calendar: List<DayStatus>): DayStatus? {
         }
     }
 }
+
+
