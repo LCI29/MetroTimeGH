@@ -115,14 +115,14 @@ fun TextView.setEndLoc(day: DayStatus?) {
 @BindingAdapter("showReserve")
 fun TextView.showReserve(day: DayStatus?) {
     day?.shift?.let {
-        if (it.isReserve == true) visibility = View.VISIBLE
+        visibility = if (it.isReserve == true) View.VISIBLE else View.GONE
     }
 }
 
 @BindingAdapter("showAtz")
 fun TextView.showAtz(day: DayStatus?) {
     day?.shift?.let {
-        if (it.hasAtz == true) visibility = View.VISIBLE
+        visibility = if (it.hasAtz == true) View.VISIBLE else View.GONE
     }
 }
 

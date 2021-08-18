@@ -45,29 +45,31 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     private val currentTime: LiveData<Long> = flow {
         while (isAlive) {
             emit(now)
-            currentInterval.value?.endPoint?.milli?.let { milliUnited ->
-                simpleInterval.value?.endPoint?.milli?.let { milliSimple ->
-                    if (now > milliUnited || now > milliSimple) updateIntervalAndState()
-                }
-
-            }
             delay(UPDATING_DELAY)
         }
     }.asLiveData()
 
-    private val _simpleInterval = MutableLiveData<Interval>()
+    private val _simpleInterval = Transformations.map(currentTime) {
+        it.getInterval(calendar)
+    }
     val simpleInterval: LiveData<Interval>
         get() = _simpleInterval
 
-    private val _currentInterval = MutableLiveData<Interval>()
+    private val _currentInterval = Transformations.map(currentTime) {
+        it.getUnitedInterval(calendar)
+    }
     val currentInterval: LiveData<Interval>
         get() = _currentInterval
 
-    private val _simpleState = MutableLiveData<SimpleState>()
+    private val _simpleState = Transformations.map(currentTime) {
+        it.simpleState(calendar)
+    }
     val simpleState: LiveData<SimpleState>
         get() = _simpleState
 
-    private val _advancedState = MutableLiveData<AdvancedState>()
+    private val _advancedState = Transformations.map(currentTime) {
+        it.advancedState(calendar)
+    }
     val advancedState: LiveData<AdvancedState>
         get() = _advancedState
 
@@ -80,7 +82,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     val timeLeft: LiveData<String> = Transformations.map(currentTime) { _currentMilli ->
         val currentMilli = _currentMilli ?: return@map "..."
         val endPointMilli = _currentInterval.value?.endPoint?.milli ?: return@map "..."
-        (endPointMilli - currentMilli).ofPatternTime()
+        (endPointMilli - currentMilli).coerceAtLeast(0).ofPatternTime()
     }
 
     val progress: LiveData<Int> = Transformations.map(currentTime) { _currentMilli ->
@@ -113,20 +115,21 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
         duration.inFloatHours()
     }
 
-    val currentSalary: LiveData<String> = Transformations.map(currentTime) { now ->
-        if (counter == null) {
-            now.getCurrentDayStatus(calendar)?.let {
-                counter = MachinistSalaryCounter(machinist, it)
+    val currentSalary: LiveData<String> =
+        Transformations.map(currentTime) { now ->
+            if (counter == null) {
+                now.getCurrentDayStatus(calendar)?.let {
+                    counter = MachinistSalaryCounter(machinist, it)
+                }
             }
-        }
-        counter?.let { counter ->
-            now?.let { time ->
-                logd("time = $time, salary = ${counter.getSalary(time)}")
-                String.format("%.2f Р", counter.getSalary(time))
+            counter?.let { counter ->
+                now?.let { time ->
+                    logd("time = $time, salary = ${counter.getSalary(time)}")
+                    String.format("%.2f Р", counter.getSalary(time))
+                }
             }
-        }
 
-    }
+        }
 
 
     init {
@@ -145,21 +148,21 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     }
 
     private fun initializeSimpleState() {
-        _simpleState.value = now.simpleState(getCalendar())
-        logd("ViewModel.initializeStatus(): currents daysList size = ${calendar.size}, currentStatus = ${simpleState.value?.desc}")
+//        _simpleState.value = now.simpleState(getCalendar())
+//        logd("ViewModel.initializeStatus(): currents daysList size = ${calendar.size}, currentStatus = ${simpleState.value?.desc}")
     }
 
     private fun initializeAdvancedState() {
-        _advancedState.value = now.advancedState(getCalendar())
-        logd("Current Advanced State = ${advancedState.value}")
+//        _advancedState.value = now.advancedState(getCalendar())
+//        logd("Current Advanced State = ${advancedState.value}")
     }
 
     private fun initializeCurrentInterval() {
-        _currentInterval.value = now.getUnitedInterval(calendar)
+//        _currentInterval.value = now.getUnitedInterval(calendar)
     }
 
     private fun initializeSimpleInterval() {
-        _simpleInterval.value = now.getInterval(calendar)
+//        _simpleInterval.value = now.getInterval(calendar)
     }
 
 

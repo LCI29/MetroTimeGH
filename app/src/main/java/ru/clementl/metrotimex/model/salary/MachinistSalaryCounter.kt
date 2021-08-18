@@ -23,6 +23,10 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
     val goneDuration: Long
         get() = goneSpan.duration ?: 0L
 
+    init {
+        logd("MSC init: $day")
+    }
+
     val shift = day.shift ?: throw Exception("No shift in day to count a salary")
     val eveningFrom = LocalDateTime.of(day.date, EVENING_FROM).toLong()
     val eveningTill = LocalDateTime.of(day.date, EVENING_TILL).toLong()
