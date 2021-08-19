@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.linkdev.circleprogress.CircularProgress
+                android:id="@+id/progressCircular"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                app:innerCircleBackground="@color/icons_or_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:max="100"
+                app:outerStrokeColor="@color/light_blue_gray"
+                app:progress="10"
+                app:progressDirection="Clockwise"
+                app:progressStrokeColor="@color/dark_blue_gray"
+                app:startAngle="Bottom"
+                app:text="НОРМА"
+                app:textColor="@color/primaryColor"
+                app:textDisplay="ProgressPercentage"
+                app:textSize="12sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

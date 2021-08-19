@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.model.data
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
+import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toTime
 import ru.clementl.metrotimex.converters.toWeekDayType
 import ru.clementl.metrotimex.model.states.TimePoint
@@ -39,10 +40,10 @@ data class Shift(
     val name: String? = "Смена",
 
     @ColumnInfo(name = "week_day_type", typeAffinity = ColumnInfo.TEXT)
-    val weekDayTypeString: String?, // Р - рабочий, В - выходной, Н - неизвестный
+    val weekDayTypeString: String? = "Н", // Р - рабочий, В - выходной, Н - неизвестный
 
     @ColumnInfo(name = "odd_even", typeAffinity = ColumnInfo.INTEGER)
-    val oddEven: Int?, // 0-без, 1-нечет, 2-чет
+    val oddEven: Int? = 0, // 0-без, 1-нечет, 2-чет
 
 
     @ColumnInfo(name = "start_time", typeAffinity = ColumnInfo.INTEGER)
@@ -91,6 +92,14 @@ data class Shift(
     @ColumnInfo(name = "shift_id")
     var id: String = "$name-${weekDayTypeString}$oddEven" // 85.2-Р0, М18-В2
 
+    companion object {
+        fun of(startHours: Int, startMinutes: Int, endHours: Int, endMinutes: Int): Shift {
+            return Shift(
+                startTimeInt = LocalTime.of(startHours, startMinutes).toInt(),
+                endTimeInt = LocalTime.of(endHours, endMinutes).toInt()
+            )
+        }
+    }
 
 }
 

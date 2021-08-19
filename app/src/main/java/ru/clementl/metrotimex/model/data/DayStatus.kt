@@ -7,6 +7,7 @@ import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.asSimpleDate
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
@@ -51,6 +52,43 @@ data class DayStatus(
 
     val timeSpan: TimeSpan
         get() = TimeSpan(startPoint.milli, endPoint.milli)
+
+    val shiftTimeSpan: TimeSpan?
+        get() = if (workDayType == WorkDayType.SHIFT) timeSpan else null
+
+    companion object {
+        fun weekendOf(date: LocalDate): DayStatus {
+            return DayStatus(
+                date.toLong(),
+                WorkDayType.WEEKEND.type,
+                null
+            )
+        }
+
+        fun workdayOf(
+            date: LocalDate,
+            startHour: Int,
+            startMinute: Int,
+            endHour: Int,
+            endMinute: Int
+        ): DayStatus {
+            return DayStatus(
+                date.toLong(), WorkDayType.SHIFT.type, Shift.of(startHour, startMinute, endHour, endMinute)
+            )
+        }
+
+        fun medicDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.MEDIC_DAY.type, null)
+        }
+
+        fun vacationDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.VACATION_DAY.type, null)
+        }
+
+        fun sickListDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.SICK_LIST.type, null)
+        }
+    }
 
 }
 

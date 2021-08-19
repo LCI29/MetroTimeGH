@@ -19,9 +19,13 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
         get() = startMilli == null || endMilli == null
 
     operator fun contains(timePoint: TimePoint): Boolean {
+        return contains(timePoint.milli)
+    }
+
+    operator fun contains(moment: Long): Boolean {
         val a = startMilli ?: return false
         val b = endMilli ?: return false
-        return timePoint.milli in a..b
+        return moment in a..b
     }
 
     open fun fromStartTill(millis: Long): Long? {

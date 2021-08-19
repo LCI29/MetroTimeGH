@@ -105,4 +105,5 @@ dependencies {
     implementation 'com.takisoft.preferencex:preferencex:1.1.0'
     implementation 'com.takisoft.preferencex:preferencex-datetimepicker:1.1.0'
 
+    implementation 'com.linkdev.circleprogress:circleprogress:1.0.0'
 }
