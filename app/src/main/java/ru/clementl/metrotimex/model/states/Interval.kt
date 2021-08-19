@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.model.states
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.TimeSpan
 import ru.clementl.metrotimex.utils.logd
+import kotlin.math.absoluteValue
 
 /**
  * Represents an Interval of time with nullable TimePoints. Interval has a state, determined by
@@ -29,12 +30,12 @@ fun Long.getUnitedInterval(calendar: List<DayStatus>): Interval {
     var start = baseInterval.startPoint ?: return baseInterval
     var end = baseInterval.endPoint ?: return baseInterval
 
-    logd("Interval state = ${baseInterval.simpleState}, ${baseInterval.startPoint}, ${baseInterval.endPoint}")
+//    logd("Interval state = ${baseInterval.simpleState}, ${baseInterval.startPoint}, ${baseInterval.endPoint}")
 
     var previousInterval = (start.milli - 2).getInterval(calendar)
 
     while (previousInterval.simpleState == baseInterval.simpleState && previousInterval.startPoint != null) {
-        logd("PreviousInterval state = ${previousInterval.simpleState}, ${previousInterval.startPoint}, ${previousInterval.endPoint}")
+//        logd("PreviousInterval state = ${previousInterval.simpleState}, ${previousInterval.startPoint}, ${previousInterval.endPoint}")
         start = previousInterval.startPoint!!
         previousInterval = (start.milli - 2).getInterval(calendar)
     }
@@ -51,6 +52,7 @@ fun Long.getUnitedInterval(calendar: List<DayStatus>): Interval {
  * If [calendar] is empty, function returns Interval(null, null)
  */
 fun Long.getInterval(calendar: List<DayStatus>): Interval {
+    logd("Long.getInterval()")
     val allPoints = calendar.map { it.startPoint to it.endPoint }.flatMap { it.toList() }.sortedBy { it.milli }
     val pointBefore = allPoints.findLast { it.milli <= this }
     val pointAfter = allPoints.find { it.milli > this }
@@ -83,4 +85,13 @@ fun Long.getPointAfterFrom(day: DayStatus?): TimePoint? {
         }
     }
     return null
+}
+
+fun Long.closeTo(interval: Interval): Boolean {
+    val startMilli = interval.startMilli ?: return true
+    val endMilli = interval.endMilli ?: return true
+    val b = (this - startMilli).absoluteValue < 30000 ||
+            (this - endMilli).absoluteValue < 30000
+    logd("Long.closeTo()")
+    return b
 }

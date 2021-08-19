@@ -35,11 +35,25 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     val nextShift: DayStatus?
         get() = now.getNextShift(calendar)
     var counter =
-        now.getCurrentDayStatus(calendar)?.let {
+        fetchCounter()
+
+    private fun fetchCounter(): MachinistSalaryCounter? {
+        return now.getCurrentDayStatus(calendar)?.let {
             logd("counter: ${today}")
             MachinistSalaryCounter(machinist, it)
         }
+    }
 
+    private lateinit var fieldSimpleState: SimpleState
+    private lateinit var fieldAdvancedState: AdvancedState
+    private lateinit var fieldSimpleInterval: Interval
+    private lateinit var fieldUnitedInterval: Interval
+
+    init {
+        logd("TonightViewModel start initialization")
+        initialize()
+
+    }
 
     // Current time emitter
     private val currentTime: LiveData<Long> = flow {
@@ -132,37 +146,35 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
         }
 
 
-    init {
-        logd("TonightViewModel start initialization")
-        initialize()
 
-    }
 
     private fun initialize() {
         uiScope.launch {
             calendar.addAll(loadDays(DAYS_FOR_TONIGHT_BEFORE, DAYS_FOR_TONIGHT_AFTER))
+            initializeSimpleInterval()
             initializeCurrentInterval()
             initializeSimpleState()
             initializeAdvancedState()
+
         }
     }
 
     private fun initializeSimpleState() {
-//        _simpleState.value = now.simpleState(getCalendar())
+        fieldSimpleState = now.simpleState(getCalendar())
 //        logd("ViewModel.initializeStatus(): currents daysList size = ${calendar.size}, currentStatus = ${simpleState.value?.desc}")
     }
 
     private fun initializeAdvancedState() {
-//        _advancedState.value = now.advancedState(getCalendar())
+        fieldAdvancedState = now.advancedState(getCalendar())
 //        logd("Current Advanced State = ${advancedState.value}")
     }
 
     private fun initializeCurrentInterval() {
-//        _currentInterval.value = now.getUnitedInterval(calendar)
+        fieldUnitedInterval = now.getUnitedInterval(calendar)
     }
 
     private fun initializeSimpleInterval() {
-//        _simpleInterval.value = now.getInterval(calendar)
+        fieldSimpleInterval = now.getInterval(calendar)
     }
 
 
@@ -176,11 +188,8 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
 
     }
 
-    private fun updateIntervalAndState() {
-        initializeSimpleInterval()
-        initializeCurrentInterval()
-        initializeSimpleState()
-        initializeAdvancedState()
+    fun changeCounter() {
+        counter = fetchCounter()
     }
 
     /**

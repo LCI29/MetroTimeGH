@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
@@ -69,6 +70,8 @@ class TonightFragment : Fragment() {
         """.trimIndent())
 
         tonightViewModel.advancedState.observe(viewLifecycleOwner) {
+            tonightViewModel.changeCounter()
+            logd("AdvancedState is ............ ${it.description}")
             with(binding) {
                 nextShiftCell.day = tonightViewModel.nextShift
                 currentShiftLayout.day = tonightViewModel.today

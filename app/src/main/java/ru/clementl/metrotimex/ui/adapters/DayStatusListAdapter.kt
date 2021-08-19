@@ -57,6 +57,8 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
         open fun bind(day: DayStatus, clickListener: DayListener) {
             if (day.date == today) {
                 itemView.setBackgroundResource(R.color.light_blue_gray)
+            } else {
+                itemView.setBackgroundResource(R.color.icons_or_text)
             }
 
 //            setOnLongClick(day)

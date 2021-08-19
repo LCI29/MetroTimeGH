@@ -42,6 +42,7 @@ class UnknownAdvancedState constructor(description: String) : AdvancedState(desc
 fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
     if (calendar == null || calendar.isEmpty()) return NoDataAdvancedState
     val interval = getInterval(calendar)
+    if (interval.simpleState is ShiftSimpleState) return ShiftAdvancedState
     if (interval.startPoint?.code == SHIFT_EP &&
         (this - interval.startPoint.milli) < AFTER_SHIFT_STATE_PRIORITY_DURATION)
             return AfterShiftAdvancedState
@@ -49,7 +50,6 @@ fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
         if (it.startPoint.milli - this < BEFORE_SHIFT_STATE_PRIORITY_DURATION) return BeforeShiftAdvancedState
     }
     when (interval.simpleState) {
-        ShiftSimpleState -> return ShiftAdvancedState
         NightGapSimpleState -> return BeforeShiftAdvancedState
     }
     val dayId = toDate().toLong()

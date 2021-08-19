@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         _navController = host.navController
 
-        val topLevelDestinations = setOf(R.id.calendarFragment, R.id.tonightFragment)
+        val topLevelDestinations = setOf(R.id.calendarFragment, R.id.tonightFragment, R.id.normaFragment)
 
         // Для того, чтобы при переключении по вкладкам не появлялась UpButton
         // добавляем список top level destinations

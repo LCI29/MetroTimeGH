@@ -6,6 +6,11 @@
         android:title="@string/calendar_bnv" />
     <item
         android:id="@+id/tonightFragment"
-        android:icon="@drawable/ic_outline_today"
+        android:icon="@drawable/ic_play_blue_gray"
         android:title="@string/detail_bnv" />
+    <item
+        android:id="@+id/normaFragment"
+        android:icon="@drawable/ic_norma_blue_gray"
+        android:title="@string/norma" />
+
 </menu>
