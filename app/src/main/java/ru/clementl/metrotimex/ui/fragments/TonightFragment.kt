@@ -24,6 +24,7 @@ import ru.clementl.metrotimex.viewmodel.TonightViewModel
 import ru.clementl.metrotimex.viewmodel.TonightViewModelFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.Period
 
 class TonightFragment : Fragment() {
 
@@ -74,6 +75,7 @@ class TonightFragment : Fragment() {
             logd("AdvancedState is ............ ${it.description}")
             with(binding) {
                 nextShiftCell.day = tonightViewModel.nextShift
+                textView.text = "Следующая смена ${tonightViewModel.nextShiftTomorrowText}"
                 currentShiftLayout.day = tonightViewModel.today
                 currentNonShiftLayout.day = tonightViewModel.today
                 when (it) {

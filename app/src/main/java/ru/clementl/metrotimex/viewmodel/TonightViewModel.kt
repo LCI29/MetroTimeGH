@@ -15,12 +15,15 @@ import ru.clementl.metrotimex.model.data.getNextShift
 import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.repositories.CalendarRepository
+import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.inFloatHours
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.ofPatternTime
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.time.Duration
+import java.time.LocalDate
+import java.time.Period
 
 class TonightViewModel(private val repository: CalendarRepository, val machinist: Machinist) :
     ViewModel() {
@@ -36,6 +39,18 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
         get() = now.getNextShift(calendar)
     var counter =
         fetchCounter()
+    val nextShiftTomorrowText: String
+        get() {
+            return nextShift?.let {
+                when (Period.between(LocalDate.now(), it.date).days) {
+                     0 -> "сегодня:"
+                     1 -> "завтра:"
+                     2 -> "послезавтра:"
+                     else -> it.date.asSimpleDate(false)
+                }
+            } ?: ""
+
+        }
 
     private fun fetchCounter(): MachinistSalaryCounter? {
         return now.getCurrentDayStatus(calendar)?.let {
