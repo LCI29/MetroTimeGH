@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.preference.PreferenceManager
 import ru.clementl.metrotimex.MetroTimeApplication
@@ -16,6 +17,7 @@ import ru.clementl.metrotimex.converters.fromAmericanToDate
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.databinding.FragmentTonightBinding
+import ru.clementl.metrotimex.generated.callback.OnClickListener
 import ru.clementl.metrotimex.model.data.Machinist
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.ui.activities.MainActivity
@@ -27,7 +29,6 @@ import java.time.LocalDateTime
 import java.time.Period
 
 class TonightFragment : Fragment() {
-
 
 
     private var _binding: FragmentTonightBinding? = null
@@ -47,7 +48,8 @@ class TonightFragment : Fragment() {
         setHasOptionsMenu(true)
 
         val machinist = Machinist(
-            onPostSince = prefs.getString("on_post_since", "01/01/2021")?.fromAmericanToDate() ?: LocalDate.of(2021,1,1),
+            onPostSince = prefs.getString("on_post_since", "01/01/2021")?.fromAmericanToDate()
+                ?: LocalDate.of(2021, 1, 1),
             qualificationClass = prefs.getString("qualification_class", "4")?.toInt() ?: 4,
             isMaster = prefs.getBoolean("is_master", false),
             isMentor = prefs.getBoolean("is_mentor", false),
@@ -56,21 +58,28 @@ class TonightFragment : Fragment() {
         )
 
         val tonightViewModel: TonightViewModel by viewModels {
-            TonightViewModelFactory((requireActivity().application as MetroTimeApplication).repository, machinist)
+            TonightViewModelFactory(
+                (requireActivity().application as MetroTimeApplication).repository,
+                machinist
+            )
         }
         _binding = fragmentBinding
-        logd("""
+        logd(
+            """
             TonightFragment: ViewModel creation
             
             machinist = $machinist
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         binding.viewModel = tonightViewModel
         binding.lifecycleOwner = this
 
-        logd("""
+        logd(
+            """
             SimpleState on initialize = ${tonightViewModel.simpleState.value?.desc}
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         tonightViewModel.advancedState.observe(viewLifecycleOwner) {
             tonightViewModel.changeCounter()
@@ -121,6 +130,23 @@ class TonightFragment : Fragment() {
                 }
             }
         }
+
+        val listener = View.OnClickListener {
+            tonightViewModel.nextShift?.let {
+                findNavController().navigate(
+                    TonightFragmentDirections.actionTonightFragmentToShiftDetailFragment(
+                        it.dateLong
+                    )
+                )
+            }
+        }
+
+        binding.nextShiftCell.apply {
+            shiftName.setOnClickListener(listener)
+            date.setOnClickListener(listener)
+            shiftDescString.setOnClickListener(listener)
+        }
+        binding.textView.setOnClickListener(listener)
         return binding.root
     }
 

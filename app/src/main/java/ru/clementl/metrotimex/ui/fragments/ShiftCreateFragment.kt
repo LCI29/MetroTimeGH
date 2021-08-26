@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import ru.clementl.metrotimex.MetroTimeApplication
-import ru.clementl.metrotimex.NO_DAY_ID
-import ru.clementl.metrotimex.R
-import ru.clementl.metrotimex.SHIFT_EDITING
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
+import com.google.android.material.timepicker.TimeFormat
+import ru.clementl.metrotimex.*
+import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.converters.toStringCode
@@ -31,6 +33,7 @@ import ru.clementl.metrotimex.viewmodel.SharedViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModelFactory
 import java.lang.Exception
+import java.time.LocalTime
 
 /**
  * Shift create OR edit fragment
@@ -93,17 +96,21 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         with(binding!!) {
             buttonStartTime.setOnClickListener {
-                logd("on button current day${shiftCreateViewModel.editingDay?.date?.asSimpleDate()}")
-                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_START)
+//                logd("on button current day${shiftCreateViewModel.editingDay?.date?.asSimpleDate()}")
+//                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_START)
+                showTimePicker(TIME_PICKER_START)
+
             }
 
             buttonEndTime.setOnClickListener {
-                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_END)
+//                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_END)
+                showTimePicker(TIME_PICKER_END)
             }
 
             fieldChooseDate.setOnClickListener {
-                DatePickerFragment(shiftCreateViewModel)
-                    .show(requireActivity().supportFragmentManager, DATE_PICKER)
+//                DatePickerFragment(shiftCreateViewModel)
+//                    .show(requireActivity().supportFragmentManager, DATE_PICKER)
+                showDatePicker()
             }
             cancelButton.setOnClickListener {
                 findNavController().navigateUp()
@@ -142,6 +149,61 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding!!.saveButton.setOnClickListener { saveDay() }
 
         return fragmentBinding.root
+    }
+
+    private fun showDatePicker() {
+        val picker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText(resources.getString(R.string.choose_date))
+            .setSelection(shiftCreateViewModel.startDate.value?.plusDays(1)?.toLong())
+            .build()
+
+        picker.apply {
+            addOnPositiveButtonClickListener {
+                shiftCreateViewModel.setStartDate(it.toDate())
+            }
+        }
+        picker.show(requireActivity().supportFragmentManager, DATE_PICKER)
+    }
+
+    private fun showTimePicker(tag: String) {
+        val h = when (tag) {
+            TIME_PICKER_START -> shiftCreateViewModel.startTime.value?.hour ?: DEFAULT_START_HOUR
+            TIME_PICKER_END -> shiftCreateViewModel.endTime.value?.hour ?: DEFAULT_END_HOUR
+            else -> DEFAULT_START_HOUR
+        }
+        val m = when(tag) {
+            TIME_PICKER_START -> shiftCreateViewModel.startTime.value?.minute ?: DEFAULT_MINUTE
+            TIME_PICKER_END -> shiftCreateViewModel.endTime.value?.minute ?: DEFAULT_MINUTE
+            else -> DEFAULT_MINUTE
+        }
+        val title = when(tag) {
+            TIME_PICKER_START -> resources.getString(R.string.shift_start)
+            TIME_PICKER_END -> resources.getString(R.string.shift_end)
+            else -> ""
+        }
+        val picker = MaterialTimePicker.Builder()
+            .setInputMode(INPUT_MODE_KEYBOARD)
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setHour(h)
+            .setMinute(m)
+            .setTitleText(title)
+            .build()
+
+        picker.apply {
+            addOnPositiveButtonClickListener {
+                when(tag) {
+                    TIME_PICKER_START -> {
+                        shiftCreateViewModel.setStartTime(LocalTime.of(hour, minute))
+                    }
+                    TIME_PICKER_END -> {
+                        shiftCreateViewModel.setEndTime(LocalTime.of(hour, minute))
+                    }
+                }
+            }
+        }
+
+        picker.show(requireActivity().supportFragmentManager, tag)
+
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, p3: Long) {

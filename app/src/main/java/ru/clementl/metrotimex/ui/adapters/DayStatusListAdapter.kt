@@ -2,11 +2,13 @@ package ru.clementl.metrotimex.ui.adapters
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import ru.clementl.metrotimex.model.data.descriptionString
 import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.fullDate
 import ru.clementl.metrotimex.utils.ofPattern
+import java.time.DayOfWeek
 import java.time.LocalDate
 
 class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder> (DayStatusComparator()){
@@ -55,11 +58,11 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
 
     abstract class DayStatusViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         open fun bind(day: DayStatus, clickListener: DayListener) {
-            if (day.date == today) {
-                itemView.setBackgroundResource(R.color.light_blue_gray)
-            } else {
-                itemView.setBackgroundResource(R.color.icons_or_text)
+            when {
+                day.date == today -> itemView.setBackgroundResource(R.color.light_blue_gray)
+                else -> itemView.setBackgroundResource(R.color.icons_or_text)
             }
+
 
 //            setOnLongClick(day)
         }
@@ -98,6 +101,13 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
             binding.clickListener = clickListener
             binding.day = day
             binding.executePendingBindings()
+
+
+            if (day.date.dayOfWeek == DayOfWeek.SUNDAY) {
+                binding.weekDivider.visibility = View.VISIBLE
+            } else {
+                binding.weekDivider.visibility = View.GONE
+            }
         }
     }
 
@@ -108,6 +118,12 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
             binding.clickListener = clickListener
             binding.day = day
             binding.executePendingBindings()
+
+            if (day.date.dayOfWeek == DayOfWeek.SUNDAY) {
+                binding.weekDivider.visibility = View.VISIBLE
+            } else {
+                binding.weekDivider.visibility = View.GONE
+            }
         }
     }
 

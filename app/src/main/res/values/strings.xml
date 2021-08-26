@@ -28,6 +28,9 @@
     <string name="vacation_days_stat_name">Дней в отпуске</string>
     <string name="night_shifts_stat_name">Ночей</string>
     <string name="count_future_shifts">Учитывать будущие смены</string>
+    <string name="choose_date">Смена на</string>
+    <string name="shift_start">Начало смены</string>
+    <string name="shift_end">Конец смены</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

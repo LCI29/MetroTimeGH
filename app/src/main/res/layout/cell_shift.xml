@@ -6,14 +6,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="day"
             type="ru.clementl.metrotimex.model.data.DayStatus" />
+
         <variable
             name="clickListener"
             type="ru.clementl.metrotimex.ui.adapters.DayListener" />
 
     </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root_layout"
@@ -21,6 +24,7 @@
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClick(day)}"
         android:padding="8dp">
+
 
         <TextView
             android:id="@+id/shiftName"
@@ -77,24 +81,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="@string/reserve"
             android:layout_marginBottom="2dp"
-            app:showReserve="@{day}"
+            android:text="@string/reserve"
             app:layout_constraintBottom_toTopOf="@+id/label_atz"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:showReserve="@{day}" />
 
         <TextView
             android:id="@+id/label_atz"
             style="@style/label_shift_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="16dp"
             android:text="@string/atz"
-            app:showAtz="@{day}"
-            android:layout_marginTop="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_reserve" />
+            app:layout_constraintTop_toBottomOf="@+id/label_reserve"
+            app:showAtz="@{day}" />
+
+        <View
+            android:id="@+id/week_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/secondary_text"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

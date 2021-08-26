@@ -9,11 +9,9 @@ import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.states.AdvancedState
 import ru.clementl.metrotimex.model.states.SimpleState
-import ru.clementl.metrotimex.utils.asSimpleDate
-import ru.clementl.metrotimex.utils.asSimpleTime
-import ru.clementl.metrotimex.utils.logd
-import ru.clementl.metrotimex.utils.ofPattern
+import ru.clementl.metrotimex.utils.*
 import ru.clementl.metrotimex.viewmodel.TonightViewModel
+import java.time.Duration
 
 @BindingAdapter("dayOfMonth")
 fun TextView.setDate(day: DayStatus?) {
@@ -153,5 +151,13 @@ fun TextView.advancedStateDesc(advancedState: LiveData<AdvancedState>) {
 fun TextView.showLiveDataString(source: LiveData<String>?) {
     source?.value?.let {
         text = it
+    }
+}
+
+@BindingAdapter("durationString")
+fun TextView.showDurationString(day: DayStatus?) {
+    day?.shift?.let {
+        val dur = day.timeSpan.duration ?: 0L
+        text = "Длительность: ${(Duration.ofMillis(dur)).inFloatHours(true)}"
     }
 }

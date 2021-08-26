@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBar(_navController, appBarConfiguration)
         setupBottomNavMenu(_navController)
 
-//        toolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        toolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
     }
 
     private fun setupActionBar(

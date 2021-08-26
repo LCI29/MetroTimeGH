@@ -20,7 +20,11 @@
         android:id="@+id/tonightFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.TonightFragment"
         android:label="@string/label_fragment_tonight"
-        tools:layout="@layout/fragment_tonight" />
+        tools:layout="@layout/fragment_tonight" >
+        <action
+            android:id="@+id/action_tonightFragment_to_shiftDetailFragment"
+            app:destination="@id/shiftDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.ProfileFragment"
