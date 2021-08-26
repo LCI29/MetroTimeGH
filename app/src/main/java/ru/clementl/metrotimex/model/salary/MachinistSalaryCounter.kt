@@ -23,9 +23,6 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
     val goneDuration: Long
         get() = goneSpan.duration ?: 0L
 
-    init {
-        logd("MSC init: $day")
-    }
 
     val shift = day.shift ?: throw Exception("No shift in day to count a salary")
     val eveningFrom = LocalDateTime.of(day.date, EVENING_FROM).toLong()
@@ -74,7 +71,7 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
         get() = machinist.getMentorQ() * baseLine
 
     val gapHours: Double
-        get() = ADDING_GAP * baseSalary
+        get() = ADDING_GAP * GAP_Q *baseSalary
 
     val masterBonus: Double
         get() = machinist.getMasterQ() * baseLine
@@ -118,7 +115,7 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
     override fun getSalary(moment: Long): Double {
         this.moment = moment.coerceAtMost(day.endPoint.milli)
         if (day.workDayType != WorkDayType.SHIFT) return 0.0
-//        logd(
+//        println(
 //            """
 //            baseSalary = $baseSalary
 //
@@ -151,27 +148,27 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
 //fun main() {
 //    val machinist = Machinist(
 //        onPostSince = LocalDate.of(2013, 4, 16),
-//        qualificationClass = 1,
-//        isMaster = true,
-//        isMentor = true,
+//        qualificationClass = 2,
+//        isMaster = false,
+//        isMentor = false,
 //        monthBonus = 0.25,
 //        isInUnion = true
 //    )
 //
 //    val shift = Shift(
-//        startTimeInt = LocalTime.of(0,52).toInt(),
-//        endTimeInt = LocalTime.of(13,58).toInt(),
+//        startTimeInt = LocalTime.of(8,56).toInt(),
+//        endTimeInt = LocalTime.of(15,56).toInt(),
 //        weekDayTypeString = "Р",
 //        oddEven = 0,
 //        isReserveInt = 0,
-//        hasAtzInt = 1
+//        hasAtzInt = 0
 //    )
 //
 //    val date = LocalDate.of(2021, 8, 14)
 //
 //    val day = DayStatus(date.toLong(), WorkDayType.SHIFT.toInt(), shift)
 //
-//    val now = LocalDateTime.of(date.plusDays(0), LocalTime.of(1, 3))
+//    val now = LocalDateTime.of(date.plusDays(0), LocalTime.of(9, 56))
 //
 //    val counter = MachinistSalaryCounter(machinist, day)
 //

@@ -9,6 +9,8 @@ import ru.clementl.metrotimex.converters.toTime
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.time.format.TextStyle
+import java.util.*
 
 fun LocalDateTime.asSimpleTime(): String {
     return format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
@@ -69,8 +71,16 @@ fun Long.ofPatternTime(showDays: Boolean = false): String {
     }
 }
 
-fun Duration.inFloatHours(): String {
-    return String.format("%.1fч", toMillis().toDouble() / HOUR_MILLI)
+fun Duration.inFloatHours(withH: Boolean = true): String {
+    return String.format("%.1f${if (withH) "ч" else ""}", toMillis().toDouble() / HOUR_MILLI)
+}
+
+fun Double.inFloatHours(withH: Boolean = true, decimals: Int = 1): String {
+    return String.format("%.${decimals}f${if (withH) "ч" else ""}", this)
+}
+
+fun YearMonth.asShortString(): String {
+    return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} ${year}"
 }
 
 fun main() {

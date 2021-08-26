@@ -3,13 +3,12 @@ package ru.clementl.metrotimex.ui.fragments
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.preference.PreferenceManager
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
@@ -19,6 +18,7 @@ import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.databinding.FragmentTonightBinding
 import ru.clementl.metrotimex.model.data.Machinist
 import ru.clementl.metrotimex.model.states.*
+import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.TonightViewModel
 import ru.clementl.metrotimex.viewmodel.TonightViewModelFactory
@@ -43,6 +43,8 @@ class TonightFragment : Fragment() {
             inflater, R.layout.fragment_tonight, container, false
         )
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        setHasOptionsMenu(true)
 
         val machinist = Machinist(
             onPostSince = prefs.getString("on_post_since", "01/01/2021")?.fromAmericanToDate() ?: LocalDate.of(2021,1,1),
@@ -116,17 +118,19 @@ class TonightFragment : Fragment() {
                         finishedText.visibility = View.GONE
                         nextShiftLayout.visibility = View.VISIBLE
                     }
-
                 }
             }
         }
-
-
-
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.overflow_menu, menu)
+    }
+
+    // Подключение пунктов оверфлоу-меню к навигации. Id должны совпадать
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected((activity as MainActivity).navController)
+                || super.onOptionsItemSelected(item)
     }
 }

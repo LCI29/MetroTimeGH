@@ -1,38 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="ru.clementl.metrotimex.viewmodel.NormaViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
 
-            <com.linkdev.circleprogress.CircularProgress
-                android:id="@+id/progressCircular"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                app:innerCircleBackground="@color/icons_or_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:max="100"
-                app:outerStrokeColor="@color/light_blue_gray"
-                app:progress="10"
-                app:progressDirection="Clockwise"
-                app:progressStrokeColor="@color/dark_blue_gray"
-                app:startAngle="Bottom"
-                app:text="НОРМА"
-                app:textColor="@color/primaryColor"
-                app:textDisplay="ProgressPercentage"
-                app:textSize="12sp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/previous_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="-" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{viewModel.currentMonth.asString}"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textColor="@color/primary_text"/>
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="+" />
+        </LinearLayout>
+
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="fill"
+                    android:layout_margin="8dp"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/norma"
+                            android:layout_gravity="end"
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+
+
+                        <com.linkdev.circleprogress.CircularProgress
+                            android:id="@+id/progressCircular"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_horizontal"
+                            app:innerCircleBackground="@color/icons_or_text"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:max="100"
+                            app:outerStrokeColor="@color/light_blue_gray"
+                            app:progress="@{viewModel.currentMonth.normaProgress}"
+                            app:progressDirection="Clockwise"
+                            app:progressStrokeColor="@color/dark_blue_gray"
+                            app:startAngle="Bottom"
+                            app:outerStrokeWidth="6dp"
+                            app:progressStrokeWidth="6dp"
+                            app:text="@{viewModel.currentMonth.standardNormaHours.toString()}"
+                            app:textColor="@color/dark_blue_gray"
+                            app:textDisplay="ProgressPercentage"
+                            app:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.normaString}"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_text"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_workdays"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_weekends"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_sick_list_days"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_vacation_days"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_night_shifts"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+        </ScrollView>
+        <CheckBox
+            android:id="@+id/count_future_shifts_chb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_standard"
+            android:text="@string/count_future_shifts"
+            android:checked="false"
+            android:layout_marginBottom="8dp"/>
+    </LinearLayout>
 </layout>

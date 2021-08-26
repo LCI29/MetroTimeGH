@@ -1,5 +1,7 @@
 package ru.clementl.metrotimex.ui.activities
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
 import androidx.activity.viewModels
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBar(_navController, appBarConfiguration)
         setupBottomNavMenu(_navController)
+
+//        toolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
     }
 
     private fun setupActionBar(

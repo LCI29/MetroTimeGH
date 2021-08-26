@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_profile_white"
         android:menuCategory="secondary"
         android:title="@string/profile"
         app:showAsAction="ifRoom" />

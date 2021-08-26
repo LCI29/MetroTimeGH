@@ -154,7 +154,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
             counter?.let { counter ->
                 now?.let { time ->
                     logd("time = $time, salary = ${counter.getSalary(time)}")
-                    String.format("%.2f Р", counter.getSalary(time))
+                    String.format("%.2f \u20BD", counter.getSalary(time))
                 }
             }
 

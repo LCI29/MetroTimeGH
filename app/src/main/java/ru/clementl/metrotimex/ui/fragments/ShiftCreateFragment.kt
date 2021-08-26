@@ -147,7 +147,6 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, p3: Long) {
         when (pos) {
             0 -> {
-                showToast("0")
                 shiftCreateViewModel.onWorkDayTypeChanged(WorkDayType.SHIFT)
                 with(binding!!) {
                     etShiftName.visibility = View.VISIBLE
@@ -163,7 +162,6 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
             else -> {
                 with(shiftCreateViewModel) {
-                    showToast(pos.toString())
                     when (pos) {
                         1 -> onWorkDayTypeChanged(WorkDayType.WEEKEND)
                         2 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST)

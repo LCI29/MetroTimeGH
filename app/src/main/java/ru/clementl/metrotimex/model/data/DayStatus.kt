@@ -4,9 +4,11 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.DAY_START_TIME
+import ru.clementl.metrotimex.NIGHT_GAP_MAX_DURATION
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.asSimpleDate
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -140,6 +142,13 @@ fun Long.getCurrentDayStatus(calendar: List<DayStatus>): DayStatus? {
                 .findLast { it.startPoint.milli < this }
         }
     }
+}
+
+fun DayStatus.isA(workDayType: WorkDayType) = this.workDayType == workDayType
+fun DayStatus.isShift(): Boolean = (workDayType == WorkDayType.SHIFT && shift != null)
+
+fun DayStatus.isNightShift(calendar: List<DayStatus>): Boolean {
+    return (endPoint.milli + 5).getInterval(calendar).simpleState == NightGapSimpleState
 }
 
 

@@ -14,7 +14,12 @@
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorControlNormal">@color/icons_or_text</item>
 
+    </style>
+
+    <style name="Theme.MetroTimeX.Overflow">
+        <item name="srcCompat">@drawable/ic_overflow_white</item>
     </style>
 
 
