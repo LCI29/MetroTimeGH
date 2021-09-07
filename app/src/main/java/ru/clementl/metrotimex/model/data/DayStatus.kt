@@ -4,10 +4,12 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.DAY_START_TIME
+import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
 import ru.clementl.metrotimex.NIGHT_GAP_MAX_DURATION
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.asSimpleDate
+import ru.clementl.metrotimex.utils.logd
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -57,6 +59,9 @@ data class DayStatus(
 
     val shiftTimeSpan: TimeSpan?
         get() = if (workDayType == WorkDayType.SHIFT) timeSpan else null
+
+    val duration: Long
+        get() = timeSpan.duration ?: 0
 
     companion object {
         fun weekendOf(date: LocalDate): DayStatus {
@@ -149,6 +154,11 @@ fun DayStatus.isShift(): Boolean = (workDayType == WorkDayType.SHIFT && shift !=
 
 fun DayStatus.isNightShift(calendar: List<DayStatus>): Boolean {
     return (endPoint.milli + 5).getInterval(calendar).simpleState == NightGapSimpleState
+}
+
+fun DayStatus.isEveningShift(calendar: List<DayStatus>): Boolean {
+    return ((!isNightShift(calendar)) &&
+            startDateTime.isAfter(LocalDateTime.of(date, EARLIEST_START_OF_EVENING_SHIFT)))
 }
 
 

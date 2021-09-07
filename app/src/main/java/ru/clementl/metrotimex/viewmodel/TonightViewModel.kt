@@ -3,9 +3,7 @@ package ru.clementl.metrotimex.viewmodel
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
-import ru.clementl.metrotimex.DAYS_FOR_TONIGHT_AFTER
-import ru.clementl.metrotimex.DAYS_FOR_TONIGHT_BEFORE
-import ru.clementl.metrotimex.UPDATING_DELAY
+import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
@@ -38,26 +36,32 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     val nextShift: DayStatus?
         get() = now.getNextShift(calendar)
     var counter =
-        fetchCounter()
+        if (today?.shift != null) {
+            fetchCounter()
+        } else null
+
     val nextShiftTomorrowText: String
         get() {
             return nextShift?.let {
                 when (Period.between(LocalDate.now(), it.date).days) {
-                     0 -> "сегодня:"
-                     1 -> "завтра:"
-                     2 -> "послезавтра:"
-                     else -> it.date.asSimpleDate(false)
+                    0 -> "сегодня:"
+                    1 -> "завтра:"
+                    2 -> "послезавтра:"
+                    else -> it.date.asSimpleDate(false)
                 }
             } ?: ""
 
         }
 
     private fun fetchCounter(): MachinistSalaryCounter? {
-        return now.getCurrentDayStatus(calendar)?.let {
-            logd("counter: ${today}")
-            MachinistSalaryCounter(machinist, it)
+        return now.getCurrentDayStatus(calendar)?.let { dayStatus ->
+            dayStatus.shift?.let {
+                logd("counter: ${today}")
+                MachinistSalaryCounter(machinist, dayStatus)
+            }
         }
     }
+
 
     private lateinit var fieldSimpleState: SimpleState
     private lateinit var fieldAdvancedState: AdvancedState
@@ -105,13 +109,15 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     val timeGone: LiveData<String> = Transformations.map(currentTime) { _currentMilli ->
         val currentMilli = _currentMilli ?: return@map "..."
         val startPointMilli = _currentInterval.value?.startPoint?.milli ?: return@map "..."
-        (currentMilli - startPointMilli).ofPatternTime()
+        val tGone = currentMilli - startPointMilli
+        if (tGone < MAX_TIME_WITHOUT_DAYS) tGone.ofPatternTime() else tGone.ofPatternTime(showDays = true)
     }
 
     val timeLeft: LiveData<String> = Transformations.map(currentTime) { _currentMilli ->
         val currentMilli = _currentMilli ?: return@map "..."
         val endPointMilli = _currentInterval.value?.endPoint?.milli ?: return@map "..."
-        (endPointMilli - currentMilli).coerceAtLeast(0).ofPatternTime()
+        val tLeft = (endPointMilli - currentMilli).coerceAtLeast(0)
+        if (tLeft < MAX_TIME_WITHOUT_DAYS) tLeft.ofPatternTime() else tLeft.ofPatternTime(showDays = true)
     }
 
     val progress: LiveData<Int> = Transformations.map(currentTime) { _currentMilli ->
@@ -139,16 +145,23 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     }
 
     val duration: LiveData<String> = Transformations.map(currentInterval) { interval ->
-        val iDuration = interval.duration ?: return@map "--"
-        val duration = Duration.ofMillis(iDuration)
-        duration.inFloatHours()
+        if (interval.simpleState in setOf(GapSimpleState, ShiftSimpleState, NightGapSimpleState, NoDataSimpleState)){
+            val iDuration = interval.duration ?: return@map "--"
+            val duration = Duration.ofMillis(iDuration)
+            duration.inFloatHours()
+        } else {
+            val iPeriod = interval.period ?: return@map "--"
+            "${iPeriod.days + 1}д"
+        }
     }
 
     val currentSalary: LiveData<String> =
         Transformations.map(currentTime) { now ->
             if (counter == null) {
-                now.getCurrentDayStatus(calendar)?.let {
-                    counter = MachinistSalaryCounter(machinist, it)
+                now.getCurrentDayStatus(calendar)?.let { dayStatus ->
+                    dayStatus.shift?.let {
+                        counter = MachinistSalaryCounter(machinist, dayStatus)
+                    }
                 }
             }
             counter?.let { counter ->
@@ -159,8 +172,6 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
             }
 
         }
-
-
 
 
     private fun initialize() {

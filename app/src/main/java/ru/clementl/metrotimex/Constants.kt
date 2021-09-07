@@ -124,3 +124,15 @@ val EVENING_TILL = LocalTime.of(22, 0).minusNanos(1)
 val NIGHT_FROM = LocalTime.of(22, 0)
 val NIGHT_TILL = LocalTime.of(6, 0).minusNanos(1)
 
+// Time after those odd/even of the day changes
+val ODD_EVEN_DIFFER_AFTER = LocalTime.of(22,30)
+
+// Latest night end time
+val LATEST_NIGHT_END = LocalTime.of(4, 0)
+
+// Shift is evening only if starts after this time
+val EARLIEST_START_OF_EVENING_SHIFT = LocalTime.of(11, 0)
+
+// When duration is more that that, app shows time as "5д 2:05:07" against "122:05:07"
+const val MAX_TIME_WITHOUT_DAYS = 3 * DAY_MILLI
+

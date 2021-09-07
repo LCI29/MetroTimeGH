@@ -20,7 +20,7 @@ class NormaFragment : Fragment() {
     private var _binding: FragmentNormaBinding? = null
     private val calendarViewModel: CalendarViewModel by activityViewModels()
     private val normaViewModel: NormaViewModel by viewModels {
-        NormaViewModelFactory(calendarViewModel.allDays.value ?: listOf(), YearMonth.of(2021, 8))
+        NormaViewModelFactory(calendarViewModel.allDays.value ?: listOf(), YearMonth.now())
     }
 
     override fun onCreateView(
@@ -34,7 +34,6 @@ class NormaFragment : Fragment() {
         _binding?.lifecycleOwner = this
 
         setHasOptionsMenu(true)
-
         val binding = _binding!!
 
         binding.cellWorkdays.statName.text = stringFrom(R.string.workdays_stat_name)
@@ -62,6 +61,11 @@ class NormaFragment : Fragment() {
             binding.cellNightShifts.statValue.text = it
         }
 
+        binding.cellEveningShifts.statName.text = stringFrom(R.string.evening_shifts_stat_name)
+        normaViewModel.eveningShiftsString.observe(viewLifecycleOwner) {
+            binding.cellEveningShifts.statValue.text = it
+        }
+
         binding.countFutureShiftsChb.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 normaViewModel.onCheckedCountFuture()
@@ -81,10 +85,6 @@ class NormaFragment : Fragment() {
                 normaViewModel.setMonth(it.next())
             }
         }
-
-
-
-
         return _binding?.root
     }
 

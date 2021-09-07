@@ -1,9 +1,6 @@
 package ru.clementl.metrotimex.utils
 
-import ru.clementl.metrotimex.DAY_MILLI
-import ru.clementl.metrotimex.HOUR_MILLI
-import ru.clementl.metrotimex.MINUTE_MILLI
-import ru.clementl.metrotimex.SECOND_MILLI
+import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDateTime
 import ru.clementl.metrotimex.converters.toTime
 import java.time.*
@@ -37,9 +34,7 @@ fun LocalDate.fullDate(withDayOfWeek: Boolean = true): String {
 private fun LocalDate.isDateEven() = dayOfMonth % 2 == 0
 
 fun LocalDate.oddEven(endTime: LocalTime): Int {
-    val oddEvenDifferAfter = LocalTime.of(22,30)
-    val latestNightEnd = LocalTime.of(4,0)
-    return if (endTime.isBefore(oddEvenDifferAfter) && endTime.isAfter(latestNightEnd)) {
+    return if (endTime.isBefore(ODD_EVEN_DIFFER_AFTER) && endTime.isAfter(LATEST_NIGHT_END)) {
         0
     } else {
         if (plusDays(1).isDateEven()) 2 else 1
@@ -79,12 +74,16 @@ fun Double.inFloatHours(withH: Boolean = true, decimals: Int = 1): String {
     return String.format("%.${decimals}f${if (withH) "ч" else ""}", this)
 }
 
+
+/**
+ * Returns YearMonth as "АВГУСТ 2021"
+ */
 fun YearMonth.asShortString(): String {
     return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} ${year}"
 }
 
 fun main() {
-    val a: Long = (2 * DAY_MILLI + 2* HOUR_MILLI + 2* MINUTE_MILLI + 2* SECOND_MILLI).toLong()
-    println(a.ofPatternTime())
+
+    println(DAY_END_TIME)
 }
 

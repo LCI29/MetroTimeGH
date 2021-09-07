@@ -1,18 +1,14 @@
 package ru.clementl.metrotimex.model.norma
 
-import ru.clementl.metrotimex.CHANGED_WEEKENDS_2021
-import ru.clementl.metrotimex.HOLIDAYS_2021
-import ru.clementl.metrotimex.HOUR_MILLI
-import ru.clementl.metrotimex.NORMA_MAP
+import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.*
 import ru.clementl.metrotimex.model.data.WorkDayType.*
-import ru.clementl.metrotimex.utils.asShortString
+import ru.clementl.metrotimex.model.data.WorkDayType.MEDIC_DAY
 import ru.clementl.metrotimex.utils.asShortString
 import ru.clementl.metrotimex.utils.inFloatHours
 import java.time.*
-import kotlin.math.roundToInt
 
 data class WorkMonth(val yearMonth: YearMonth, val calendar: List<DayStatus>) : TimeSpan(
     yearMonth.atDay(1).atStartOfDay().toLong(),
@@ -22,6 +18,8 @@ data class WorkMonth(val yearMonth: YearMonth, val calendar: List<DayStatus>) : 
     val standardNormaHours = NORMA_MAP[yearMonth]
 
     val listOfDays: List<DayStatus> = calendar.filter { YearMonth.from(it.date) == this.yearMonth }.sortedBy { it.date }
+
+    val wideListOfDays = calendar.filter { containsOrNear(it, 3) }
 
     val allShifts: List<DayStatus> = listOfDays.filter { it.shift != null }
 
@@ -87,7 +85,22 @@ data class WorkMonth(val yearMonth: YearMonth, val calendar: List<DayStatus>) : 
 
     val nightShifts = listOfDays.count { it.isNightShift(calendar) }
 
+    val eveningShiftsCount = listOfDays.count { it.isEveningShift(calendar) }
+
     val normaProgress = ((workedInHours.toFloat() / (realNormaHours?.toFloat() ?: Float.MAX_VALUE)) * 100)
+
+    val baseLineTimeMillis: Long
+        get() = wideListOfDays
+            .filter { it.shift?.isReserve != true }
+            .sumOf { if (it.shift?.hasAtz == true) (it.duration * ATZ_FACTOR).toLong() else it.duration }
+
+    val baseReserveTimeMillis: Long
+        get() = wideListOfDays
+            .filter { it.shift?.isReserve == true }
+            .sumOf { it.duration }
+
+    val baseGapTimeMillis: Long
+        get() = ((baseLineTimeMillis + baseReserveTimeMillis) * ADDING_GAP).toLong()
 
 
 
@@ -106,8 +119,7 @@ data class WorkMonth(val yearMonth: YearMonth, val calendar: List<DayStatus>) : 
 
 
     fun workedInMillis(): Long {
-        return calendar
-            .filter { containsOrNear(it, 3) }
+        return wideListOfDays
             .sumOf { it.shiftTimeSpan?.intersect(this)?.duration ?: 0 }
     }
 

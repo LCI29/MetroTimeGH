@@ -44,6 +44,10 @@ class NormaViewModel(val calendar: List<DayStatus>, yearMonth: YearMonth) : View
         it.nightShifts.toString()
     }
 
+    val eveningShiftsString: LiveData<String> = Transformations.map(currentMonth) {
+        it.eveningShiftsCount.toString()
+    }
+
     fun setMonth(yearMonth: YearMonth, calendar: List<DayStatus>) {
         _currentMonth.value = WorkMonth(yearMonth, calendar)
     }

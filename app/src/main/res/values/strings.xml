@@ -27,6 +27,7 @@
     <string name="sick_list_days_stat_name">Дней на Б/Л</string>
     <string name="vacation_days_stat_name">Дней в отпуске</string>
     <string name="night_shifts_stat_name">Ночей</string>
+    <string name="evening_shifts_stat_name">Вечерок</string>
     <string name="count_future_shifts">Учитывать будущие смены</string>
     <string name="choose_date">Смена на</string>
     <string name="shift_start">Начало смены</string>

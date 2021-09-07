@@ -1,6 +1,10 @@
 package ru.clementl.metrotimex.model.data
 
+import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.model.states.TimePoint
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
 import kotlin.math.max
 import kotlin.math.min
 
@@ -14,6 +18,15 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
             val a = startMilli ?: return null
             val b = endMilli ?: return null
             return b - a
+        }
+    open val period: Period?
+        get() {
+            val a = startMilli ?: return null
+            val b = endMilli ?: return null
+            return Period.between(
+                a.toDate(),
+                b.toDate()
+            )
         }
     open val nullable: Boolean
         get() = startMilli == null || endMilli == null
@@ -39,9 +52,8 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
     }
 
 
-
     open fun intersect(other: TimeSpan): TimeSpan? {
-        if (listOf(this, other).any {it.nullable}) return null
+        if (listOf(this, other).any { it.nullable }) return null
         val a = max(this.startMilli!!, other.startMilli!!)
         val b = min(this.endMilli!!, other.endMilli!!)
         return if (a <= b) TimeSpan(a, b) else null
