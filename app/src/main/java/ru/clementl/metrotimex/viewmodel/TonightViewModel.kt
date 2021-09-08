@@ -6,24 +6,18 @@ import kotlinx.coroutines.flow.flow
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
-import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.data.Machinist
-import ru.clementl.metrotimex.model.data.getCurrentDayStatus
-import ru.clementl.metrotimex.model.data.getNextShift
+import ru.clementl.metrotimex.model.data.*
 import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.repositories.CalendarRepository
-import ru.clementl.metrotimex.utils.asSimpleDate
-import ru.clementl.metrotimex.utils.inFloatHours
-import ru.clementl.metrotimex.utils.logd
-import ru.clementl.metrotimex.utils.ofPatternTime
+import ru.clementl.metrotimex.utils.*
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.time.Duration
 import java.time.LocalDate
 import java.time.Period
 
-class TonightViewModel(private val repository: CalendarRepository, val machinist: Machinist) :
+class TonightViewModel(private val repository: CalendarRepository, val machinistStatus: MachinistStatus) :
     ViewModel() {
 
     private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
@@ -57,7 +51,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
         return now.getCurrentDayStatus(calendar)?.let { dayStatus ->
             dayStatus.shift?.let {
                 logd("counter: ${today}")
-                MachinistSalaryCounter(machinist, dayStatus)
+                MachinistSalaryCounter(machinistStatus, dayStatus)
             }
         }
     }
@@ -160,14 +154,15 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
             if (counter == null) {
                 now.getCurrentDayStatus(calendar)?.let { dayStatus ->
                     dayStatus.shift?.let {
-                        counter = MachinistSalaryCounter(machinist, dayStatus)
+                        counter = MachinistSalaryCounter(machinistStatus, dayStatus)
                     }
                 }
             }
             counter?.let { counter ->
                 now?.let { time ->
-                    logd("time = $time, salary = ${counter.getSalary(time)}")
-                    String.format("%.2f \u20BD", counter.getSalary(time))
+                    val earned = counter.getSalary(time)
+                    logd("time = $time, salary = ${earned}")
+                    earned.salaryStyle()
                 }
             }
 
@@ -245,12 +240,12 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
 
 class TonightViewModelFactory(
     private val repository: CalendarRepository,
-    val machinist: Machinist
+    val machinistStatus: MachinistStatus
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TonightViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return TonightViewModel(repository, machinist) as T
+            return TonightViewModel(repository, machinistStatus) as T
         }
         throw IllegalStateException("Unknown ViewModel class")
     }

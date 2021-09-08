@@ -7,6 +7,7 @@ import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
 import ru.clementl.metrotimex.NIGHT_GAP_MAX_DURATION
 import ru.clementl.metrotimex.converters.*
+import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.logd
@@ -147,6 +148,12 @@ fun Long.getCurrentDayStatus(calendar: List<DayStatus>): DayStatus? {
                 .findLast { it.startPoint.milli < this }
         }
     }
+}
+
+fun DayStatus.finalSalary(machinistStatus: MachinistStatus): Double {
+    if (isShift()) {
+        return MachinistSalaryCounter(machinistStatus, this).getFinalSalary()
+    } else return 0.0
 }
 
 fun DayStatus.isA(workDayType: WorkDayType) = this.workDayType == workDayType

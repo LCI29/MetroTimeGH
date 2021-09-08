@@ -1,19 +1,11 @@
 package ru.clementl.metrotimex.model.salary
 
-import android.app.Application
-import android.content.Context
-import androidx.preference.PreferenceManager
 import ru.clementl.metrotimex.*
-import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.*
-import ru.clementl.metrotimex.model.states.TimePoint
-import ru.clementl.metrotimex.utils.logd
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
-data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) : SalaryCounter {
+data class MachinistSalaryCounter(val machinistStatus: MachinistStatus, val day: DayStatus) : SalaryCounter {
 
     var moment: Long = 0L
 
@@ -41,19 +33,19 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
         get() = (goneSpan.intersect(night1)?.duration ?: 0) + (goneSpan.intersect(night2)?.duration ?: 0)
 
     val rate: Double = when {
-        shift.isReserve == true -> RATE_RESERVE_LIGHT_MILLI
-        shift.hasAtz == true -> RATE_ATZ_SHIFT_PER_MILLI
-        else -> RATE_PER_MILLI
+        shift.isReserve == true -> machinistStatus.rateReserveLightMilli
+        shift.hasAtz == true -> machinistStatus.rateAtzShiftPerMilli
+        else -> machinistStatus.ratePerMilli
     }
 
     val baseLine: Double
-        get() = goneDuration * RATE_PER_MILLI
+        get() = goneDuration * machinistStatus.ratePerMilli
 
     val baseReserve: Double
-        get() = goneDuration * RATE_RESERVE_LIGHT_MILLI
+        get() = goneDuration * machinistStatus.rateReserveLightMilli
 
     val baseATZ: Double
-        get() = goneDuration * RATE_ATZ_SHIFT_PER_MILLI
+        get() = goneDuration * machinistStatus.rateAtzShiftPerMilli
 
     val baseSalary: Double
         get() {
@@ -65,16 +57,16 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
         }
 
     val qualificationClassBonus: Double
-        get() = machinist.getClassQ() * baseLine
+        get() = machinistStatus.machinist.getClassQ() * baseLine
 
     val mentorBonus: Double
-        get() = machinist.getMentorQ() * baseLine
+        get() = machinistStatus.machinist.getMentorQ() * baseLine
 
     val gapHours: Double
-        get() = ADDING_GAP * GAP_Q *baseSalary
+        get() = ADDING_GAP * GAP_Q * baseSalary
 
     val masterBonus: Double
-        get() = machinist.getMasterQ() * baseLine
+        get() = machinistStatus.machinist.getMasterQ() * baseLine
 
     val eveningBonus: Double
         get() = rate * eveningDurationMilli * EVENING_HOURS_Q
@@ -89,10 +81,10 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
         get() = baseSalary + gapHours + masterBonus + timeBonus + qualificationClassBonus + mentorBonus
 
     val premiumBonus: Double
-        get() = machinist.monthBonus * premiumBase
+        get() = machinistStatus.machinist.monthBonus * premiumBase
 
     val stageBonus: Double
-        get() = machinist.getStageQ(moment) * baseLine
+        get() = machinistStatus.machinist.getStageQ(moment) * baseLine
 
     val income: Double
         get() {
@@ -142,6 +134,10 @@ data class MachinistSalaryCounter(val machinist: Machinist, val day: DayStatus) 
 //        )
         return income - ndflSubtraction - unionSubtraction
 
+    }
+
+    fun getFinalSalary(): Double {
+        return getSalary(day.endPoint.milli)
     }
 }
 

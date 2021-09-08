@@ -24,7 +24,7 @@
             android:paddingEnd="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
             android:textSize="34sp"
-            app:dayNameWithOddEven="@{viewModel.day}"
+            app:dayNameWithOddEven="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:textColor="@color/primary_text"
             android:textSize="20sp"
-            app:descString="@{viewModel.day}"
+            app:descString="@{viewModel.MDay}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_text"
             tools:text="10:27 СК - 19:05 СК" />
@@ -56,14 +56,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/day_name"
             tools:text="28 июля 2021"
-            app:fullDate="@{viewModel.day}"/>
+            app:fullDate="@{viewModel.MDay}"/>
 
         <TextView
             android:id="@+id/reserve_label"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/reserve"
-            app:showReserve="@{viewModel.day}"
+            app:showReserve="@{viewModel.MDay}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/desc_string"
             style="@style/label_shift_style" />
@@ -77,7 +77,7 @@
             android:layout_marginTop="8dp"
             android:padding="4dp"
             android:text="@string/atz"
-            app:showAtz="@{viewModel.day}"
+            app:showAtz="@{viewModel.MDay}"
             app:layout_constraintStart_toEndOf="@+id/reserve_label"
             app:layout_constraintTop_toBottomOf="@+id/desc_string"
             app:layout_goneMarginStart="16dp" />
@@ -88,9 +88,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             tools:text="Длительность: 6,1ч"
-            durationString="@{viewModel.day}"
+            durationString="@{viewModel.MDay}"
             app:layout_constraintStart_toStartOf="@+id/desc_string"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/earned_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/duration_tv"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
@@ -16,13 +15,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
-import ru.clementl.metrotimex.converters.fromAmericanToDate
-import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.ui.fragments.machinist
 import ru.clementl.metrotimex.ui.fragments.ratePerHour
 import ru.clementl.metrotimex.viewmodel.*
-import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Job() + Dispatchers.IO).launch {
             if (machinistStatusRepository.getAll().isEmpty()) {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
-                machinistStatusRepository.insert(MachinistStatus.from(
+                machinistStatusRepository.insert(MachinistStatus.create(
                     prefs.machinist(),
                     ratePerHour = prefs.ratePerHour()
                 ))

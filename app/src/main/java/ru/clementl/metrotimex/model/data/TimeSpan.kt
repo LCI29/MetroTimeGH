@@ -1,6 +1,7 @@
 package ru.clementl.metrotimex.model.data
 
 import ru.clementl.metrotimex.converters.toDate
+import ru.clementl.metrotimex.converters.toDateTime
 import ru.clementl.metrotimex.model.states.TimePoint
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -84,6 +85,11 @@ operator fun Long.compareTo(timeSpan: TimeSpan): Int {
         return if (this > b) 1 else 0
     }
     return 1
+}
+
+fun TimeSpan.isFinished(): Boolean {
+    val end = endMilli ?: return false
+    return LocalDateTime.now().isAfter(end.toDateTime())
 }
 
 

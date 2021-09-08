@@ -1,5 +1,6 @@
 package ru.clementl.metrotimex.model.room.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,9 +14,15 @@ interface MachinistStatusChangeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(machinistStatus: MachinistStatus)
 
+
     @Query("SELECT * FROM machinist_status_change_table ORDER BY date")
     fun getAllAsFlow(): Flow<List<MachinistStatus>>
 
     @Query("SELECT * FROM machinist_status_change_table ORDER BY date")
+    fun getAllAsLiveData(): LiveData<List<MachinistStatus>>
+
+    @Query("SELECT * FROM machinist_status_change_table ORDER BY date")
     suspend fun getAll(): List<MachinistStatus>
+
+
 }

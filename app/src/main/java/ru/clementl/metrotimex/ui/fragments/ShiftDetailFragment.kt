@@ -11,12 +11,16 @@ import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.SHIFT_EDITING
 import ru.clementl.metrotimex.databinding.FragmentShiftDetailBinding
-import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.room.MetroTimeDatabase
+import ru.clementl.metrotimex.model.data.finalSalary
+import ru.clementl.metrotimex.model.data.isFinished
+import ru.clementl.metrotimex.model.data.isShift
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.salaryStyle
+import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModelFactory
+import java.lang.Exception
 
 class ShiftDetailFragment : Fragment() {
 
@@ -25,6 +29,7 @@ class ShiftDetailFragment : Fragment() {
     private lateinit var shiftDetailViewModel: ShiftDetailViewModel
     private lateinit var arguments: ShiftDetailFragmentArgs
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val calendarViewModel: CalendarViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,19 +44,31 @@ class ShiftDetailFragment : Fragment() {
         arguments = ShiftDetailFragmentArgs.fromBundle(requireArguments())
 
         // Create an instance of the ViewModel Factory
-        val dataSource = (application as MetroTimeApplication).repository
-        val viewModelFactory = ShiftDetailViewModelFactory(arguments.dayId, dataSource)
+        val calendarRepository = (application as MetroTimeApplication).repository
+        val machinistStatusRepository = application.machinistStatusRepository
+
+
+        val viewModelFactory =
+            ShiftDetailViewModelFactory(arguments.dayId, calendarRepository, machinistStatusRepository)
 
         // Get a reference to the ViewModel associated with this fragment
         shiftDetailViewModel =
             ViewModelProvider(
-                this, viewModelFactory).get(ShiftDetailViewModel::class.java)
+                this, viewModelFactory
+            ).get(ShiftDetailViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.viewModel = shiftDetailViewModel
 
-        shiftDetailViewModel.getDay().observe(viewLifecycleOwner, Observer {
-            sharedViewModel.currentDay = it
+        shiftDetailViewModel.getDay().observe(viewLifecycleOwner, { day ->
+            sharedViewModel.currentDay = day
+            shiftDetailViewModel.getStatus().observe(viewLifecycleOwner) { status ->
+                if (day.isShift() && day.timeSpan.isFinished()) {
+                    binding.earnedText.text = day.finalSalary(status).salaryStyle()
+                } else {
+                    binding.earnedText.visibility = View.GONE
+                }
+            }
         })
 
         setHasOptionsMenu(true)
@@ -88,10 +105,6 @@ class ShiftDetailFragment : Fragment() {
             ShiftDetailFragmentDirections.actionShiftDetailFragmentToCalendarFragment()
         )
     }
-
-
-
-
 
 
 }

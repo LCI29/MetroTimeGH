@@ -3,8 +3,13 @@ package ru.clementl.metrotimex.model.data
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import ru.clementl.metrotimex.ATZ_FACTOR
+import ru.clementl.metrotimex.HOUR_MILLI
 import ru.clementl.metrotimex.RATE_PER_HOUR_DEFAULT
+import ru.clementl.metrotimex.RESERVE_LIGHT_Q
+import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
 import java.time.LocalDate
 
@@ -20,7 +25,7 @@ data class MachinistStatus(
     @NonNull @ColumnInfo(name = "rate_per_hour") val ratePerHour: Double
 ) {
     companion object {
-        fun from(
+        fun create(
             machinist: Machinist,
             date: Long = LocalDate.now().toLong(),
             ratePerHour: Double = RATE_PER_HOUR_DEFAULT
@@ -37,4 +42,20 @@ data class MachinistStatus(
             )
         }
     }
+
+    @Ignore val machinist: Machinist = Machinist(
+            onPostSince.toDate(),
+            qualificationClass,
+            isMaster != 0,
+            isMentor != 0,
+            monthBonus / 100.0,
+            inUnion != 0
+        )
+
+    @Ignore val ratePerMilli = ratePerHour / HOUR_MILLI
+    @Ignore val rateReserveLight = RESERVE_LIGHT_Q * ratePerHour
+    @Ignore val rateReserveLightMilli = rateReserveLight / HOUR_MILLI
+    @Ignore val rateAtzShift = ATZ_FACTOR * (ratePerHour - rateReserveLight) + rateReserveLight
+    @Ignore val rateAtzShiftPerMilli = rateAtzShift / HOUR_MILLI
+
 }

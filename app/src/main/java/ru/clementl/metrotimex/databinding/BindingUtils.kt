@@ -5,12 +5,11 @@ import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
-import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.data.WorkDayType
+import ru.clementl.metrotimex.model.data.*
 import ru.clementl.metrotimex.model.states.AdvancedState
 import ru.clementl.metrotimex.model.states.SimpleState
 import ru.clementl.metrotimex.utils.*
-import ru.clementl.metrotimex.viewmodel.TonightViewModel
+import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel
 import java.time.Duration
 
 @BindingAdapter("dayOfMonth")
@@ -161,3 +160,5 @@ fun TextView.showDurationString(day: DayStatus?) {
         text = "Длительность: ${(Duration.ofMillis(dur)).inFloatHours(true)}"
     }
 }
+
+

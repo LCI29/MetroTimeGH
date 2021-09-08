@@ -16,6 +16,7 @@ import ru.clementl.metrotimex.SHIFT_CREATING
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.ui.adapters.DayListener
 import ru.clementl.metrotimex.ui.adapters.DayStatusListAdapter
+import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.CalendarViewModelFactory
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
@@ -44,6 +45,7 @@ class CalendarFragment : Fragment() {
 //        binding = fragmentBinding
 //        return binding?.root
         //        view?.findViewById<RecyclerView>(R.id.recycler_view)
+
         calendarViewModel.navigateToShiftDetail.observe(viewLifecycleOwner, Observer { dayId ->
             dayId?.let {
                 findNavController().navigate(

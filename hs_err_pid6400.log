@@ -1,0 +1,201 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 134217728 bytes for Failed to commit area from 0x0000000081600000 to 0x0000000089600000 of length 134217728.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (./src/hotspot/os/windows/os_windows.cpp:3303), pid=6400, tid=9392
+#
+# JRE version:  (11.0.8+10) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.8+10-b944.6842174, mixed mode, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: org.jetbrains.git4idea.http.GitAskPassApp Username for 'https://github.com': 
+
+Host: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz, 8 cores, 7G,  Windows 10 , 64 bit Build 17763 (10.0.17763.2090)
+Time: Wed Sep  8 16:24:30 2021 RTZ 2 (ceia) elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001e1b0629000):  JavaThread "Unknown thread" [_thread_in_vm, id=9392, stack(0x0000005eab200000,0x0000005eab300000)]
+
+Stack: [0x0000005eab200000,0x0000005eab300000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x5de50a]
+V  [jvm.dll+0x7122f5]
+V  [jvm.dll+0x71384d]
+V  [jvm.dll+0x713f03]
+V  [jvm.dll+0x23e728]
+V  [jvm.dll+0x5db9a4]
+V  [jvm.dll+0x5d0ae5]
+V  [jvm.dll+0x2fb20b]
+V  [jvm.dll+0x2fb17a]
+V  [jvm.dll+0x2fb052]
+V  [jvm.dll+0x2fff16]
+V  [jvm.dll+0x348743]
+V  [jvm.dll+0x348e46]
+V  [jvm.dll+0x348843]
+V  [jvm.dll+0x2d5d68]
+V  [jvm.dll+0x2d6f07]
+V  [jvm.dll+0x6f11f7]
+V  [jvm.dll+0x6f29ec]
+V  [jvm.dll+0x355cb9]
+V  [jvm.dll+0x6d4ade]
+V  [jvm.dll+0x3bdfe3]
+V  [jvm.dll+0x3c0201]
+C  [jli.dll+0x5373]
+C  [ucrtbase.dll+0x2268a]
+C  [KERNEL32.DLL+0x17974]
+C  [ntdll.dll+0x5a2f1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x000001e1ae484f80, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001e1b063f800 GCTaskThread "GC Thread#0" [stack: 0x0000005eab300000,0x0000005eab400000] [id=5592]
+  0x000001e1b0673800 ConcurrentGCThread "G1 Main Marker" [stack: 0x0000005eab400000,0x0000005eab500000] [id=6360]
+  0x000001e1b0676000 ConcurrentGCThread "G1 Conc#0" [stack: 0x0000005eab500000,0x0000005eab600000] [id=9104]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007fff0e266357]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000001e1b0627090] Heap_lock - owner thread: 0x000001e1b0629000
+
+Heap address: 0x0000000081600000, size: 2026 MB, Compressed Oops mode: Non-zero based: 0x0000000081600000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (1 events):
+Event: 0.420 Loaded shared library F:\Android\Android Studio\jre\bin\zip.dll
+
+
+Dynamic libraries:
+0x00007ff7d1470000 - 0x00007ff7d147a000 	F:\Android\Android Studio\jre\bin\java.exe
+0x00007fff425a0000 - 0x00007fff4278d000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007fff42040000 - 0x00007fff420f3000 	C:\Windows\System32\KERNEL32.DLL
+0x00007fff3e9d0000 - 0x00007fff3ec65000 	C:\Windows\System32\KERNELBASE.dll
+0x00007fff3e7b0000 - 0x00007fff3e8aa000 	C:\Windows\System32\ucrtbase.dll
+0x00007fff31730000 - 0x00007fff31749000 	F:\Android\Android Studio\jre\bin\jli.dll
+0x00007fff41e40000 - 0x00007fff41fd8000 	C:\Windows\System32\USER32.dll
+0x00007fff3e790000 - 0x00007fff3e7b0000 	C:\Windows\System32\win32u.dll
+0x00007fff3faa0000 - 0x00007fff3fac9000 	C:\Windows\System32\GDI32.dll
+0x00007fff3f630000 - 0x00007fff3f7cc000 	C:\Windows\System32\gdi32full.dll
+0x00007fff3e930000 - 0x00007fff3e9d0000 	C:\Windows\System32\msvcp_win.dll
+0x00007fff31010000 - 0x00007fff31027000 	F:\Android\Android Studio\jre\bin\VCRUNTIME140.dll
+0x00007fff28a20000 - 0x00007fff28c99000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.17763.2114_none_de6e8966534dbac6\COMCTL32.dll
+0x00007fff40150000 - 0x00007fff401ee000 	C:\Windows\System32\msvcrt.dll
+0x00007fff3fe20000 - 0x00007fff4014d000 	C:\Windows\System32\combase.dll
+0x00007fff3fc90000 - 0x00007fff3fdaf000 	C:\Windows\System32\RPCRT4.dll
+0x00007fff3e700000 - 0x00007fff3e782000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007fff3fc60000 - 0x00007fff3fc8e000 	C:\Windows\System32\IMM32.DLL
+0x00007fff13b90000 - 0x00007fff13c2d000 	F:\Android\Android Studio\jre\bin\msvcp140.dll
+0x00007fff0df80000 - 0x00007fff0ea3c000 	F:\Android\Android Studio\jre\bin\server\jvm.dll
+0x00007fff424c0000 - 0x00007fff42564000 	C:\Windows\System32\ADVAPI32.dll
+0x00007fff401f0000 - 0x00007fff4028e000 	C:\Windows\System32\sechost.dll
+0x00007fff42380000 - 0x00007fff42388000 	C:\Windows\System32\PSAPI.DLL
+0x00007fff39e60000 - 0x00007fff39e69000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007fff3fdb0000 - 0x00007fff3fe1d000 	C:\Windows\System32\WS2_32.dll
+0x00007fff3c6a0000 - 0x00007fff3c6c4000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007fff39d80000 - 0x00007fff39d8a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007fff3c670000 - 0x00007fff3c69d000 	C:\Windows\SYSTEM32\WINMMBASE.dll
+0x00007fff3e8e0000 - 0x00007fff3e92a000 	C:\Windows\System32\cfgmgr32.dll
+0x00007fff3e580000 - 0x00007fff3e591000 	C:\Windows\System32\kernel.appcore.dll
+0x00007fff38450000 - 0x00007fff38461000 	F:\Android\Android Studio\jre\bin\verify.dll
+0x00007fff2b810000 - 0x00007fff2b9fd000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007fff2b7a0000 - 0x00007fff2b7ca000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007fff38420000 - 0x00007fff38449000 	F:\Android\Android Studio\jre\bin\java.dll
+0x00007fff39e50000 - 0x00007fff39e5b000 	F:\Android\Android Studio\jre\bin\jimage.dll
+0x00007fff38400000 - 0x00007fff38418000 	F:\Android\Android Studio\jre\bin\zip.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;F:\Android\Android Studio\jre\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.17763.2114_none_de6e8966534dbac6;F:\Android\Android Studio\jre\bin\server
+
+VM Arguments:
+java_command: org.jetbrains.git4idea.http.GitAskPassApp Username for 'https://github.com': 
+java_class_path (initial): F:/Android/Android Studio/plugins/git4idea/lib/git4idea-rt.jar;F:/Android/Android Studio/lib/xmlrpc-2.0.1.jar;F:/Android/Android Studio/lib/commons-codec-1.14.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 134217728                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 2124414976                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5836300                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122910970                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122910970                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_91\bin
+CLASSPATH=C:\Program Files\Java\jdk1.8.0_91\bin
+PATH=C:\Program Files\Git\mingw64\libexec\git-core;C:\Program Files\Git\mingw64\libexec\git-core;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Clement\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\ia32\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\Java\jdk1.8.0_91\bin;C:\Program Files\Git\cmd;C:\Users\Clement\AppData\Local\Microsoft\WindowsApps;ANDROID_HOME\tools;ANDROID_HOME\platform-tools;F:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.1.3\bin
+USERNAME=Clement
+DISPLAY=:0.0
+LC_ALL=en_US.UTF-8
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 17763 (10.0.17763.2090)
+OS uptime: 0 days 22:44 hours
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx, fma
+
+Memory: 4k page, system-wide physical 8101M (909M free)
+TotalPageFile size 8901M (AvailPageFile size 65M)
+current process WorkingSet (physical memory assigned to process): 10M, peak: 10M
+current process commit charge ("private bytes"): 60M, peak: 188M
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.8+10-b944.6842174) for windows-amd64 JRE (11.0.8+10-b944.6842174), built on Sep 19 2020 01:11:42 by "builder" with MS VC++ 14.0 (VS2015)
+
+END.

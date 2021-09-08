@@ -16,6 +16,7 @@ import ru.clementl.metrotimex.RATE_PER_HOUR_DEFAULT
 import ru.clementl.metrotimex.converters.fromAmericanToDate
 import ru.clementl.metrotimex.databinding.FragmentTonightBinding
 import ru.clementl.metrotimex.model.data.Machinist
+import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.utils.logd
@@ -39,16 +40,17 @@ class TonightFragment : Fragment() {
         val fragmentBinding: FragmentTonightBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_tonight, container, false
         )
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
         setHasOptionsMenu(true)
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
         val machinist = prefs.machinist()
+        val machinistStatus = MachinistStatus.create(machinist, ratePerHour = prefs.ratePerHour())
 
         val tonightViewModel: TonightViewModel by viewModels {
             TonightViewModelFactory(
                 (requireActivity().application as MetroTimeApplication).repository,
-                machinist
+                machinistStatus
             )
         }
         _binding = fragmentBinding
