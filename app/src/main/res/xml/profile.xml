@@ -39,6 +39,15 @@
         android:key="in_union"
         android:summary="Состоите ли вы в профсоюзе"
         android:title="Член профсоюза" />
+    <com.takisoft.preferencex.EditTextPreference
+        android:icon="@drawable/ic_rate_hour_blue_gray"
+        android:inputType="numberDecimal"
+        android:key="rate_per_hour"
+        android:maxLength="7"
+        android:summary="Базовая ставка за час"
+        android:title="Тарифная ставка, Р"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="390.43" />
 
 
 </PreferenceScreen>

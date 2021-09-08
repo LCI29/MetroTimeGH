@@ -1,32 +1,28 @@
 package ru.clementl.metrotimex.ui.fragments
 
-import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.preference.PreferenceManager
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.RATE_PER_HOUR_DEFAULT
 import ru.clementl.metrotimex.converters.fromAmericanToDate
-import ru.clementl.metrotimex.converters.toDate
-import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.databinding.FragmentTonightBinding
-import ru.clementl.metrotimex.generated.callback.OnClickListener
 import ru.clementl.metrotimex.model.data.Machinist
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.TonightViewModel
 import ru.clementl.metrotimex.viewmodel.TonightViewModelFactory
+import java.lang.Exception
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Period
 
 class TonightFragment : Fragment() {
 
@@ -47,15 +43,7 @@ class TonightFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        val machinist = Machinist(
-            onPostSince = prefs.getString("on_post_since", "01/01/2021")?.fromAmericanToDate()
-                ?: LocalDate.of(2021, 1, 1),
-            qualificationClass = prefs.getString("qualification_class", "4")?.toInt() ?: 4,
-            isMaster = prefs.getBoolean("is_master", false),
-            isMentor = prefs.getBoolean("is_mentor", false),
-            monthBonus = prefs.getString("month_bonus", "0.25")?.toDouble()?.div(100) ?: 0.25,
-            isInUnion = prefs.getBoolean("in_union", true)
-        )
+        val machinist = prefs.machinist()
 
         val tonightViewModel: TonightViewModel by viewModels {
             TonightViewModelFactory(
@@ -150,6 +138,8 @@ class TonightFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
     }
@@ -160,3 +150,16 @@ class TonightFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 }
+
+fun SharedPreferences.machinist(): Machinist = Machinist(
+    onPostSince = getString("on_post_since", "01/01/2021")?.fromAmericanToDate()
+        ?: LocalDate.of(2021, 1, 1),
+    qualificationClass = getString("qualification_class", "4")?.toInt() ?: 4,
+    isMaster = getBoolean("is_master", false),
+    isMentor = getBoolean("is_mentor", false),
+    monthBonus = getString("month_bonus", "0.25")?.toDouble()?.div(100) ?: 0.25,
+    isInUnion = getBoolean("in_union", true)
+)
+
+fun SharedPreferences.ratePerHour(): Double =
+    getString("rate_per_hour", RATE_PER_HOUR_DEFAULT.toFloat().toString())?.toDouble() ?: throw Exception("No rate set")

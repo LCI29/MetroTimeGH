@@ -11,10 +11,18 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.*
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
+import ru.clementl.metrotimex.converters.fromAmericanToDate
+import ru.clementl.metrotimex.converters.toLong
+import ru.clementl.metrotimex.model.data.MachinistStatus
+import ru.clementl.metrotimex.ui.fragments.machinist
+import ru.clementl.metrotimex.ui.fragments.ratePerHour
 import ru.clementl.metrotimex.viewmodel.*
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         _navController = host.navController
 
-        val topLevelDestinations = setOf(R.id.calendarFragment, R.id.tonightFragment, R.id.normaFragment)
+        val topLevelDestinations =
+            setOf(R.id.calendarFragment, R.id.tonightFragment, R.id.normaFragment)
 
         // Для того, чтобы при переключении по вкладкам не появлялась UpButton
         // добавляем список top level destinations
@@ -52,6 +61,19 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavMenu(_navController)
 
         toolbar.overflowIcon?.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+
+        val machinistStatusRepository =
+            (application as MetroTimeApplication).machinistStatusRepository
+        CoroutineScope(Job() + Dispatchers.IO).launch {
+            if (machinistStatusRepository.getAll().isEmpty()) {
+                val prefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
+                machinistStatusRepository.insert(MachinistStatus.from(
+                    prefs.machinist(),
+                    ratePerHour = prefs.ratePerHour()
+                ))
+            }
+        }
+
     }
 
     private fun setupActionBar(
@@ -82,8 +104,6 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.null_menu, menu)
         return true
     }
-
-
 
 
 }

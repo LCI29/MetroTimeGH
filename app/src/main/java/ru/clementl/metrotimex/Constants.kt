@@ -1,8 +1,6 @@
 package ru.clementl.metrotimex
 
-import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 // Factors
@@ -37,15 +35,15 @@ const val DAY_MILLI = 24 * HOUR_MILLI
 const val WEEK_MILLI = 7 * DAY_MILLI
 
 // Basic rate per hour in Metropolitan
-const val RATE_PER_HOUR = 390.43
-const val RATE_PER_MILLI = RATE_PER_HOUR / HOUR_MILLI
-const val RATE_RESERVE_LIGHT = 348.60
+const val RATE_PER_HOUR_DEFAULT = 390.43
+const val RATE_PER_MILLI = RATE_PER_HOUR_DEFAULT / HOUR_MILLI
+const val RATE_RESERVE_LIGHT = 348.60 //  RPH * 0.8929
 const val RATE_RESERVE_LIGHT_MILLI = RATE_RESERVE_LIGHT / HOUR_MILLI
-const val RATE_GAP = GAP_Q * RATE_PER_HOUR
+const val RATE_GAP = GAP_Q * RATE_PER_HOUR_DEFAULT
 const val RATE_GAP_MILLI = RATE_GAP / HOUR_MILLI
 
 const val ATZ_FACTOR = 0.75
-const val RATE_ATZ_SHIFT = ATZ_FACTOR * (RATE_PER_HOUR - RATE_RESERVE_LIGHT) + RATE_RESERVE_LIGHT
+const val RATE_ATZ_SHIFT = ATZ_FACTOR * (RATE_PER_HOUR_DEFAULT - RATE_RESERVE_LIGHT) + RATE_RESERVE_LIGHT
 const val RATE_ATZ_SHIFT_PER_MILLI = RATE_ATZ_SHIFT / HOUR_MILLI
 
 
