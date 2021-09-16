@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/primary_text"
             android:textSize="20sp"
             app:descString="@{viewModel.MDay}"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,12 +95,12 @@
             android:id="@+id/earned_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
-            android:textStyle="bold"
+            android:layout_marginEnd="16dp"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/duration_tv"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/duration_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="6458.65 P" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

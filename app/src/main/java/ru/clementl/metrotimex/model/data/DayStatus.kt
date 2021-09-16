@@ -5,13 +5,10 @@ import androidx.annotation.Nullable
 import androidx.room.*
 import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
-import ru.clementl.metrotimex.NIGHT_GAP_MAX_DURATION
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.utils.asSimpleDate
-import ru.clementl.metrotimex.utils.logd
-import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -78,10 +75,12 @@ data class DayStatus(
             startHour: Int,
             startMinute: Int,
             endHour: Int,
-            endMinute: Int
+            endMinute: Int,
+            reserve: Boolean = false,
+            atz: Boolean = false
         ): DayStatus {
             return DayStatus(
-                date.toLong(), WorkDayType.SHIFT.type, Shift.of(startHour, startMinute, endHour, endMinute)
+                date.toLong(), WorkDayType.SHIFT.type, Shift.of(startHour, startMinute, endHour, endMinute, reserve, atz)
             )
         }
 
@@ -167,5 +166,30 @@ fun DayStatus.isEveningShift(calendar: List<DayStatus>): Boolean {
     return ((!isNightShift(calendar)) &&
             startDateTime.isAfter(LocalDateTime.of(date, EARLIEST_START_OF_EVENING_SHIFT)))
 }
+
+fun DayStatus.isFinishedShift() = isShift() && timeSpan.isFinished()
+
+fun DayStatus.asMentor(statusChangeList: List<MachinistStatus>) = dateLong.asMentor(statusChangeList)
+
+fun DayStatus.asMaster(statusChangeList: List<MachinistStatus>) = dateLong.asMaster(statusChangeList)
+
+fun DayStatus.eveningSpan(): TimeSpan? {
+    if (!isShift()) return null
+    return timeSpan.intersect(TimeSpan.eveningOf(date))
+}
+
+fun DayStatus.nightSpans(): List<TimeSpan?> {
+    if (!isShift()) return listOf(null, null)
+    return listOf(
+        timeSpan.intersect(TimeSpan.nightEarlyOf(date)),
+        timeSpan.intersect(TimeSpan.nightLateOf(date))
+    )
+}
+
+fun DayStatus.getClassQ(statusChangeList: List<MachinistStatus>) = dateLong.getClassQ(statusChangeList)
+
+fun DayStatus.getStageQ(statusChangeList: List<MachinistStatus>) = dateLong.getStageQ(statusChangeList)
+
+fun DayStatus.getUnionQ(statusChangeList: List<MachinistStatus>) = dateLong.getUnionQ(statusChangeList)
 
 

@@ -52,7 +52,7 @@ fun Long.getUnitedInterval(calendar: List<DayStatus>): Interval {
  * If [calendar] is empty, function returns Interval(null, null)
  */
 fun Long.getInterval(calendar: List<DayStatus>): Interval {
-    logd("Long.getInterval()")
+//    logd("Long.getInterval()")
     val allPoints = calendar.map { it.startPoint to it.endPoint }.flatMap { it.toList() }.sortedBy { it.milli }
     val pointBefore = allPoints.findLast { it.milli <= this }
     val pointAfter = allPoints.find { it.milli > this }

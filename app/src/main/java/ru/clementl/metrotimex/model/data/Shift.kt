@@ -93,10 +93,19 @@ data class Shift(
     var id: String = "$name-${weekDayTypeString}$oddEven" // 85.2-Р0, М18-В2
 
     companion object {
-        fun of(startHours: Int, startMinutes: Int, endHours: Int, endMinutes: Int): Shift {
+        fun of(
+            startHours: Int,
+            startMinutes: Int,
+            endHours: Int,
+            endMinutes: Int,
+            reserve: Boolean = false,
+            atz: Boolean = false
+        ): Shift {
             return Shift(
                 startTimeInt = LocalTime.of(startHours, startMinutes).toInt(),
-                endTimeInt = LocalTime.of(endHours, endMinutes).toInt()
+                endTimeInt = LocalTime.of(endHours, endMinutes).toInt(),
+                isReserveInt = if (reserve) 1 else 0,
+                hasAtzInt = if (atz) 1 else 0
             )
         }
     }

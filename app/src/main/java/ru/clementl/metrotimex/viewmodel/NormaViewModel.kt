@@ -5,18 +5,35 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import ru.clementl.metrotimex.model.data.DayStatus
+import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.norma.WorkMonth
+import ru.clementl.metrotimex.utils.inFloatHours
+import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.salaryStyle
 import java.lang.IllegalStateException
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.YearMonth
+import java.util.concurrent.TimeUnit
+import kotlin.time.toDuration
 
-class NormaViewModel(val calendar: List<DayStatus>, yearMonth: YearMonth) : ViewModel() {
+class NormaViewModel(
+    val calendar: List<DayStatus>,
+    val statusList: LiveData<List<MachinistStatus>>,
+    yearMonth: YearMonth
+) : ViewModel() {
+
+
+
+    init {
+        logd("NVM: StatusList = ${statusList.value}")
+    }
 
     private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
 
     private val _currentMonth = MutableLiveData<WorkMonth>(WorkMonth.of(yearMonth,
-        calendar.filter { it.endDateTime.isBefore(LocalDateTime.now()) }))
+        calendar.filter { it.endDateTime.isBefore(LocalDateTime.now()) }, statusList.value ?: listOf()))
     val currentMonth: LiveData<WorkMonth>
         get() = _currentMonth
 
@@ -48,8 +65,28 @@ class NormaViewModel(val calendar: List<DayStatus>, yearMonth: YearMonth) : View
         it.eveningShiftsCount.toString()
     }
 
+    val nightHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.nightMillis).inFloatHours(false)
+    }
+
+    val eveningHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.eveningMillis).inFloatHours(false)
+    }
+
+    val masterHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.asMasterMillis).inFloatHours()
+    }
+
+    val mentorHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.asMentorMillis).inFloatHours()
+    }
+
+    val totalSalaryString: LiveData<String> = Transformations.map(currentMonth) {
+        it.totalSalary.salaryStyle()
+    }
+
     fun setMonth(yearMonth: YearMonth, calendar: List<DayStatus>) {
-        _currentMonth.value = WorkMonth(yearMonth, calendar)
+        _currentMonth.value = WorkMonth(yearMonth, calendar, statusList.value ?: listOf())
     }
 
     fun setMonth(workMonth: WorkMonth) {
@@ -69,12 +106,18 @@ class NormaViewModel(val calendar: List<DayStatus>, yearMonth: YearMonth) : View
 
 class NormaViewModelFactory(
     private val calendar: List<DayStatus>,
+    private val statusList: LiveData<List<MachinistStatus>>,
     private val yearMonth: YearMonth
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NormaViewModel::class.java)) {
+            logd("""
+                NVMFactory
+                Calendar === ${calendar.size}
+                Statuses === $statusList
+            """.trimIndent())
             @Suppress("UNCHECKED_CAST")
-            return NormaViewModel(calendar, yearMonth) as T
+            return NormaViewModel(calendar, statusList, yearMonth) as T
         }
         throw IllegalStateException("Unknown ViewModel class")
     }

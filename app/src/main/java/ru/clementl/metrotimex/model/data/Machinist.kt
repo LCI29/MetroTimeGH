@@ -21,7 +21,7 @@ fun Machinist.getClassQ(): Double {
         1 -> FIRST_CLASS_Q
         2 -> SECOND_CLASS_Q
         3 -> THIRD_CLASS_Q
-        else -> 0.0
+        else -> NO_CLASS_Q
     }
 }
 

@@ -148,6 +148,18 @@
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
 
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_evening_shifts"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
@@ -164,8 +176,69 @@
                     >
 
                     <include
-                        android:id="@+id/cell_evening_shifts"
+                        android:id="@+id/cell_evening_hours"
                         layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_night_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_as_master_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_as_mentor_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="fill"
+                    android:layout_margin="8dp"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/salary_stat_name"
+                            android:layout_gravity="end"
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.totalSalaryString}"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/primary_text"
+                            android:textSize="32sp"
+                            android:textStyle="normal"
+                            android:layout_marginTop="16dp"
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>

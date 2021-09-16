@@ -11,10 +11,12 @@ import java.lang.IllegalStateException
 import java.time.LocalDate
 
 class CalendarViewModel(
-    private val repository: CalendarRepository
+    private val repository: CalendarRepository,
+    private val machinistStatusRepository: MachinistStatusRepository
 ) : ViewModel() {
 
     val allDays: LiveData<List<DayStatus>> = repository.allDays.asLiveData()
+    val allStatus: LiveData<List<MachinistStatus>> = machinistStatusRepository.allStatusFlow.asLiveData()
 
     val today: LocalDate
         get() = LocalDate.now()
@@ -48,12 +50,13 @@ class CalendarViewModel(
 }
 
 class CalendarViewModelFactory(
-    private val repository: CalendarRepository
+    private val repository: CalendarRepository,
+    private val machinistStatusRepository: MachinistStatusRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return CalendarViewModel(repository) as T
+            return CalendarViewModel(repository, machinistStatusRepository) as T
         }
         throw IllegalStateException("Unknown ViewModel class")
     }

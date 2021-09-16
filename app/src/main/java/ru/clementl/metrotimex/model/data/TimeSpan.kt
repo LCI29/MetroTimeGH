@@ -1,10 +1,13 @@
 package ru.clementl.metrotimex.model.data
 
+import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toDateTime
+import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.states.TimePoint
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.Period
 import kotlin.math.max
 import kotlin.math.min
@@ -58,6 +61,28 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
         val a = max(this.startMilli!!, other.startMilli!!)
         val b = min(this.endMilli!!, other.endMilli!!)
         return if (a <= b) TimeSpan(a, b) else null
+    }
+
+    fun intersectionDuration(other: TimeSpan): Long = this.intersect(other)?.duration ?: 0
+
+    companion object {
+        fun eveningOf(date: LocalDate): TimeSpan =
+            TimeSpan(
+                LocalDateTime.of(date, EVENING_FROM).toLong(),
+                LocalDateTime.of(date, EVENING_TILL).toLong()
+            )
+
+        fun nightEarlyOf(date: LocalDate): TimeSpan =
+            TimeSpan(
+                LocalDateTime.of(date.plusDays(1), LocalTime.MIN).toLong(),
+                LocalDateTime.of(date.plusDays(1), NIGHT_TILL).toLong()
+            )
+
+        fun nightLateOf(date: LocalDate): TimeSpan =
+            TimeSpan(
+                LocalDateTime.of(date, NIGHT_FROM).toLong(),
+                LocalDateTime.of(date, LocalTime.MAX).toLong()
+            )
     }
 
     override fun toString(): String {

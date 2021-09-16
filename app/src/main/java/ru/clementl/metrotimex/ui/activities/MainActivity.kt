@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +19,7 @@ import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.ui.fragments.machinist
 import ru.clementl.metrotimex.ui.fragments.ratePerHour
+import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +29,18 @@ class MainActivity : AppCompatActivity() {
     val navController: NavController
         get() = _navController
 
+    lateinit var statuses: LiveData<List<MachinistStatus>>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        statuses = (application as MetroTimeApplication).machinistStatusRepository.getAllAsLiveData()
+        statuses.observe(this) {
+            logd("""
+                statuses MA = ${statuses.value}
+            """.trimIndent())
+        }
 
 //        shiftCreateViewModel = ViewModelProvider(this).get(ShiftCreateViewModel::class.java)
 

@@ -28,10 +28,13 @@ class CalendarFragment : Fragment() {
 
     // Так создается SharedViewModel с репозиторием (с параметрами)
     private val calendarViewModel: CalendarViewModel by activityViewModels {
-        CalendarViewModelFactory((activity?.application as MetroTimeApplication).repository)
+        CalendarViewModelFactory(
+            (activity?.application as MetroTimeApplication).repository,
+            (activity?.application as MetroTimeApplication).machinistStatusRepository
+        )
     }
 
-//    private var binding: FragmentCalendarBinding? = null
+    //    private var binding: FragmentCalendarBinding? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
     private lateinit var mAdapter: DayStatusListAdapter
@@ -81,11 +84,11 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        mAdapter = DayStatusListAdapter(DayListener {
-            dateId ->
+        mAdapter = DayStatusListAdapter(DayListener { dateId ->
             calendarViewModel.onShiftClicked(dateId)
         })
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = mAdapter
     }
@@ -93,7 +96,9 @@ class CalendarFragment : Fragment() {
     private fun createNewShift() {
         sharedViewModel.currentDay = null
         findNavController().navigate(
-            CalendarFragmentDirections.actionCalendarFragmentToShiftEditDialogFragment(SHIFT_CREATING)
+            CalendarFragmentDirections.actionCalendarFragmentToShiftEditDialogFragment(
+                SHIFT_CREATING
+            )
         )
     }
 
@@ -106,7 +111,6 @@ class CalendarFragment : Fragment() {
         return item.onNavDestinationSelected((activity as MainActivity).navController)
                 || super.onOptionsItemSelected(item)
     }
-
 
 
 }

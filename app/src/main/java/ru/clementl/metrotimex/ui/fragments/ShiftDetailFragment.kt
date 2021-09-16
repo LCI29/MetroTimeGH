@@ -13,6 +13,7 @@ import ru.clementl.metrotimex.SHIFT_EDITING
 import ru.clementl.metrotimex.databinding.FragmentShiftDetailBinding
 import ru.clementl.metrotimex.model.data.finalSalary
 import ru.clementl.metrotimex.model.data.isFinished
+import ru.clementl.metrotimex.model.data.isFinishedShift
 import ru.clementl.metrotimex.model.data.isShift
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.salaryStyle
@@ -63,7 +64,7 @@ class ShiftDetailFragment : Fragment() {
         shiftDetailViewModel.getDay().observe(viewLifecycleOwner, { day ->
             sharedViewModel.currentDay = day
             shiftDetailViewModel.getStatus().observe(viewLifecycleOwner) { status ->
-                if (day.isShift() && day.timeSpan.isFinished()) {
+                if (day.isFinishedShift()) {
                     binding.earnedText.text = day.finalSalary(status).salaryStyle()
                 } else {
                     binding.earnedText.visibility = View.GONE

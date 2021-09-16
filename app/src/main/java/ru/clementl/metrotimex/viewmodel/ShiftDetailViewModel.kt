@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.finalSalary
+import ru.clementl.metrotimex.model.data.getMachinistStatus
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.repositories.MachinistStatusRepository
 import ru.clementl.metrotimex.utils.logd
@@ -35,13 +36,13 @@ class ShiftDetailViewModel(
         val d = calendarRepository.getLiveDayByDate(dayId)
         mDay.addSource(d, mDay::setValue)
         val liveStatus = machinistStatusRepository.getAllAsLiveData().switchMap { list ->
-            MutableLiveData<MachinistStatus>(list.findLast {
-                it.date <= mDay.value?.dateLong ?: 0
-            } ?: list.get(0) ?: throw Exception("No machinistStatus found"))
+            MutableLiveData<MachinistStatus>(mDay.value?.dateLong.getMachinistStatus(list))
         }
         mStatus.addSource(liveStatus, mStatus::setValue)
 
     }
+
+
 
     val finalSalary: LiveData<Double>
         get() = MutableLiveData(mStatus.value?.let { mDay.value?.finalSalary(it) ?: 0.0 } ?: 0.0)

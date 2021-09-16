@@ -32,6 +32,7 @@
             android:textSize="24sp"
             android:textColor="@color/primary_text"
             android:textStyle="normal"
+            android:layout_marginTop="@dimen/cell_paddingBtwElements"
             app:layout_constraintEnd_toEndOf="@+id/stat_name"
             app:layout_constraintTop_toBottomOf="@+id/stat_name"
             android:text="5" />

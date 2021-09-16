@@ -28,6 +28,11 @@
     <string name="vacation_days_stat_name">Дней в отпуске</string>
     <string name="night_shifts_stat_name">Ночей</string>
     <string name="evening_shifts_stat_name">Вечерок</string>
+    <string name="evening_hours_stat_name">Вечерних часов</string>
+    <string name="night_hours_stat_name">Ночных часов</string>
+    <string name="as_master_hours_stat_name">Ст. машинист</string>
+    <string name="as_mentor_hours_stat_name">Наставник</string>
+    <string name="salary_stat_name">Заработано</string>
     <string name="count_future_shifts">Учитывать будущие смены</string>
     <string name="choose_date">Смена на</string>
     <string name="shift_start">Начало смены</string>

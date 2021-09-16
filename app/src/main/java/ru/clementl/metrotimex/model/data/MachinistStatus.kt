@@ -59,3 +59,26 @@ data class MachinistStatus(
     @Ignore val rateAtzShiftPerMilli = rateAtzShift / HOUR_MILLI
 
 }
+
+fun Long.asMentor(statusChangeList: List<MachinistStatus>): Boolean {
+    return getMachinistStatus(statusChangeList).isMentor == 1
+}
+
+fun Long.asMaster(statusChangeList: List<MachinistStatus>): Boolean {
+    return getMachinistStatus(statusChangeList).isMaster == 1
+}
+
+fun Long.getClassQ(statusChangeList: List<MachinistStatus>): Double {
+    return getMachinistStatus(statusChangeList).machinist.getClassQ()
+}
+
+fun Long.getStageQ(statusChangeList: List<MachinistStatus>): Double {
+    return getMachinistStatus(statusChangeList).machinist.getStageQ(this)
+}
+
+fun Long.getUnionQ(statusChangeList: List<MachinistStatus>) = getMachinistStatus(statusChangeList).machinist.getUnionQ()
+
+fun Long?.getMachinistStatus(list: List<MachinistStatus>) =
+    list.findLast {
+        it.date <= this ?: 0
+    } ?: list.get(0) ?: throw Exception("No machinistStatus found")
