@@ -85,6 +85,14 @@ class NormaViewModel(
         it.totalSalary.salaryStyle()
     }
 
+    val lineHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.baseLineTimeMillis).inFloatHours()
+    }
+
+    val reserveHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        Duration.ofMillis(it.baseReserveTimeMillis).inFloatHours()
+    }
+
     fun setMonth(yearMonth: YearMonth, calendar: List<DayStatus>) {
         _currentMonth.value = WorkMonth(yearMonth, calendar, statusList.value ?: listOf())
     }

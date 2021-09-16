@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.model.data
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
+import ru.clementl.metrotimex.ALWAYS_NIGHT_AFTER
 import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
 import ru.clementl.metrotimex.converters.*
@@ -159,7 +160,8 @@ fun DayStatus.isA(workDayType: WorkDayType) = this.workDayType == workDayType
 fun DayStatus.isShift(): Boolean = (workDayType == WorkDayType.SHIFT && shift != null)
 
 fun DayStatus.isNightShift(calendar: List<DayStatus>): Boolean {
-    return (endPoint.milli + 5).getInterval(calendar).simpleState == NightGapSimpleState
+    return (endPoint.milli + 5).getInterval(calendar).simpleState == NightGapSimpleState ||
+            startDateTime.isAfter(LocalDateTime.of(date, ALWAYS_NIGHT_AFTER))
 }
 
 fun DayStatus.isEveningShift(calendar: List<DayStatus>): Boolean {

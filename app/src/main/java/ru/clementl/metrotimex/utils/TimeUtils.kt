@@ -60,7 +60,8 @@ fun Long.ofPatternTime(showDays: Boolean = false): String {
     val hours = this / HOUR_MILLI
     val noHoursTime = this % HOUR_MILLI
     return if (showDays) {
-        "${if (days > 0) "${days}д " else ""}${noDaysTime.toTime().ofPattern("h:mm:ss")}"
+        "${if (days > 0) "${days}д " else ""}${noDaysTime.toTime().ofPattern("H" +
+                ":mm:ss")}"
     } else {
         "${hours}:${noHoursTime.toTime().ofPattern("mm:ss")}"
     }
@@ -84,6 +85,6 @@ fun YearMonth.asShortString(): String {
 
 fun main() {
 
-    println(DAY_END_TIME)
+    println((DAY_MILLI + 14 * HOUR_MILLI).ofPatternTime(true))
 }
 

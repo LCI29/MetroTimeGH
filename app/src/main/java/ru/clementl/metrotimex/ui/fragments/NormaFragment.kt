@@ -75,6 +75,16 @@ class NormaFragment : Fragment() {
             binding.cellEveningShifts.statValue.text = it
         }
 
+        binding.cellLineHours.statName.text = stringFrom(R.string.line_hours_stat_name)
+        normaViewModel.lineHoursString.observe(viewLifecycleOwner) {
+            binding.cellLineHours.statValue.text = it
+        }
+
+        binding.cellReserveHours.statName.text = stringFrom(R.string.reserve_hours_stat_name)
+        normaViewModel.reserveHoursString.observe(viewLifecycleOwner) {
+            binding.cellReserveHours.statValue.text = it
+        }
+
         binding.cellEveningHours.statName.text = stringFrom(R.string.evening_hours_stat_name)
         normaViewModel.eveningHoursString.observe(viewLifecycleOwner) {
             binding.cellEveningHours.statValue.text = it

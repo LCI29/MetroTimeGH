@@ -28,6 +28,8 @@
     <string name="vacation_days_stat_name">Дней в отпуске</string>
     <string name="night_shifts_stat_name">Ночей</string>
     <string name="evening_shifts_stat_name">Вечерок</string>
+    <string name="line_hours_stat_name">Линия</string>
+    <string name="reserve_hours_stat_name">Резерв</string>
     <string name="evening_hours_stat_name">Вечерних часов</string>
     <string name="night_hours_stat_name">Ночных часов</string>
     <string name="as_master_hours_stat_name">Ст. машинист</string>

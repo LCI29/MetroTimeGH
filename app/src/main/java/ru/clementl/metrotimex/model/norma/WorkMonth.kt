@@ -20,6 +20,8 @@ data class WorkMonth(
 ) {
 
     val standardNormaHours = NORMA_MAP[yearMonth]
+    val progressString: String
+        get() = "${normaProgress.toInt()}%"
 
     val listOfDays: List<DayStatus> =
         calendar.filter { YearMonth.from(it.date) == this.yearMonth }.sortedBy { it.date }

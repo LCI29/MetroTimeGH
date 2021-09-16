@@ -127,6 +127,8 @@ val EVENING_TILL = LocalTime.of(22, 0).minusNanos(1)
 val NIGHT_FROM = LocalTime.of(22, 0)
 val NIGHT_TILL = LocalTime.of(6, 0).minusNanos(1)
 
+val ALWAYS_NIGHT_AFTER = LocalTime.of(19, 0)
+
 // Time after those odd/even of the day changes
 val ODD_EVEN_DIFFER_AFTER = LocalTime.of(22,30)
 

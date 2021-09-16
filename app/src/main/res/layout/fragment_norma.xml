@@ -176,6 +176,26 @@
                     >
 
                     <include
+                        android:id="@+id/cell_line_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_reserve_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
                         android:id="@+id/cell_evening_hours"
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
@@ -209,6 +229,8 @@
                         android:id="@+id/cell_as_mentor_hours"
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
+
+
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_columnSpan="2"
