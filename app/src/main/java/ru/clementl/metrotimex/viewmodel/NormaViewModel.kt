@@ -93,6 +93,10 @@ class NormaViewModel(
         Duration.ofMillis(it.baseReserveTimeMillis).inFloatHours()
     }
 
+    val progressPercentageString: LiveData<String> = Transformations.map(currentMonth) {
+        it.progressString
+    }
+
     fun setMonth(yearMonth: YearMonth, calendar: List<DayStatus>) {
         _currentMonth.value = WorkMonth(yearMonth, calendar, statusList.value ?: listOf())
     }

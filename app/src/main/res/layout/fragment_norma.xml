@@ -77,6 +77,17 @@
                             android:layout_gravity="end"
                             android:paddingEnd="@dimen/cell_paddingBtwElements"/>
 
+                        <TextView
+                            android:id="@+id/progress_percentage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.progressPercentageString}"
+                            android:textColor="@color/dark_blue_gray"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:textAlignment="center" />
+
 
                         <com.linkdev.circleprogress.CircularProgress
                             android:id="@+id/progressCircular"
@@ -99,6 +110,8 @@
                             app:textColor="@color/dark_blue_gray"
                             app:textDisplay="ProgressPercentage"
                             app:textSize="18sp" />
+
+
 
                         <TextView
                             android:layout_width="match_parent"

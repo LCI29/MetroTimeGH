@@ -10,7 +10,6 @@ import ru.clementl.metrotimex.model.data.Shift
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.data.weekDayType
 import ru.clementl.metrotimex.repositories.CalendarRepository
-import ru.clementl.metrotimex.utils.asSimpleDate
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.oddEven
 import java.lang.IllegalStateException
@@ -38,6 +37,10 @@ class ShiftCreateViewModel(
     val startDate: LiveData<LocalDate>
         get() = _startDate
 
+    private var _endDate = MutableLiveData<LocalDate>()
+    val endDate: LiveData<LocalDate>
+        get() = _endDate
+
     private var _startTime = MutableLiveData<LocalTime>()
     val startTime: LiveData<LocalTime>
         get() = _startTime
@@ -63,15 +66,16 @@ class ShiftCreateViewModel(
     init {
         _startTime.value = initialStartTime
         _endTime.value = initialEndTime
-        initializeStartDate()
+        initializeStartAndEndDate()
         _workDayTypeLive.value = editingDay?.workDayType ?: WorkDayType.SHIFT
         _isReserveLive.value = editingDay?.shift?.isReserve ?: false
         _hasAtzLive.value = editingDay?.shift?.hasAtz ?: false
     }
 
-    fun initializeStartDate() {
+    fun initializeStartAndEndDate() {
         uiScope.launch {
             _startDate.value = editingDay?.date ?: getFirstFreeDateFromDb()
+            _endDate.value = startDate.value?.plusDays(1)
         }
     }
 
@@ -93,6 +97,10 @@ class ShiftCreateViewModel(
 
     fun setStartDate(date: LocalDate) {
         _startDate.value = date
+    }
+
+    fun setEndDate(date: LocalDate) {
+        _endDate.value = date
     }
 
     fun setStartTime(time: LocalTime) {
@@ -144,6 +152,23 @@ class ShiftCreateViewModel(
             null
         }
         return DayStatus(date.toLong(), wdt.toInt(), shift)
+    }
+
+    fun createDaysInRange(): List<DayStatus> {
+        val list = mutableListOf<DayStatus>()
+        val wdt = workDayTypeLive.value ?: return list
+        if (wdt !in setOf(WorkDayType.VACATION_DAY, WorkDayType.SICK_LIST)) return list
+        val dateFrom = startDate.value ?: throw IllegalStateException("startDate not set")
+        val dateTo = endDate.value ?: throw IllegalStateException("startDate not set")
+        var d = LocalDate.from(dateFrom)
+        while (!d.isAfter(dateTo)) {
+            list.add(DayStatus(d.toLong(), wdt.toInt(), null))
+            d = d.plusDays(1)
+        }
+        logd("""
+            LIST = $list
+        """.trimIndent())
+        return list
     }
 
     fun onWorkDayTypeChanged(workDayType: WorkDayType) {

@@ -142,6 +142,17 @@
                     app:layout_constraintTop_toBottomOf="@id/sp_day_type"
                      />
 
+                <Button
+                    android:id="@+id/field_choose_date_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/button_choose_date"
+                    android:textAllCaps="false"
+                    android:textColor="@color/icons_or_text"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toBottomOf="@id/sp_day_type" />
+
                 <EditText
                     android:id="@+id/et_shift_name"
                     android:layout_width="0dp"

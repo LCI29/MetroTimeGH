@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MetroTimeX</string>
     <string name="calendar_bnv">Календарь</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="detail_bnv">Сегодня</string>
     <string name="label_fragment_calendar">Список смен</string>
     <string name="label_fragment_tonight">Сегодня</string>
@@ -39,6 +41,7 @@
     <string name="choose_date">Смена на</string>
     <string name="shift_start">Начало смены</string>
     <string name="shift_end">Конец смены</string>
+    <string name="delete_queston">Удалить?</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

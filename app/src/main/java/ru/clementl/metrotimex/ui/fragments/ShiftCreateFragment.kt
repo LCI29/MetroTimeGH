@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -19,20 +20,14 @@ import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toInt
 import ru.clementl.metrotimex.converters.toLong
-import ru.clementl.metrotimex.converters.toStringCode
 import ru.clementl.metrotimex.databinding.FragmentShiftCreateBinding
-import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.data.Shift
 import ru.clementl.metrotimex.model.data.WorkDayType
-import ru.clementl.metrotimex.model.data.weekDayType
-import ru.clementl.metrotimex.ui.fragments.pickers.DatePickerFragment
-import ru.clementl.metrotimex.ui.fragments.pickers.TimePickerFragment
 import ru.clementl.metrotimex.utils.*
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.SharedViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel
 import ru.clementl.metrotimex.viewmodel.ShiftCreateViewModelFactory
-import java.lang.Exception
+import java.time.LocalDate
 import java.time.LocalTime
 
 /**
@@ -55,6 +50,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     companion object {
         const val DATE_PICKER = "date_picker"
+        const val DATE_RANGE_PICKER = "date_range_picker"
         const val TIME_PICKER_START = "time_picker_start"
         const val TIME_PICKER_END = "time_picker_end"
     }
@@ -112,6 +108,10 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //                    .show(requireActivity().supportFragmentManager, DATE_PICKER)
                 showDatePicker()
             }
+
+            fieldChooseDateRange.setOnClickListener {
+                showDateRangePicker()
+            }
             cancelButton.setOnClickListener {
                 findNavController().navigateUp()
             }
@@ -125,9 +125,13 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         with (shiftCreateViewModel) {
-            initializeStartDate()
+            initializeStartAndEndDate()
             startDate.observe(viewLifecycleOwner) {
                 binding!!.fieldChooseDate.text = it.ofPattern("d MMMM yyyy, EE")
+                binding!!.fieldChooseDateRange.text = "c ${it.ofPattern("dd.MM")} по ${endDate.value?.ofPattern("dd.MM")}"
+            }
+            endDate.observe(viewLifecycleOwner) {
+                binding!!.fieldChooseDateRange.text = "c ${startDate.value?.ofPattern("dd.MM")} по ${it.ofPattern("dd.MM")}"
             }
             startTime.observe(viewLifecycleOwner) {
                 binding!!.buttonStartTime.text = it.asSimpleTime()
@@ -146,7 +150,9 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             })
         }
 
-        binding!!.saveButton.setOnClickListener { saveDay() }
+        binding!!.saveButton.setOnClickListener {
+            save()
+        }
 
         return fragmentBinding.root
     }
@@ -163,6 +169,24 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         }
         picker.show(requireActivity().supportFragmentManager, DATE_PICKER)
+    }
+
+    private fun showDateRangePicker() {
+        val start = shiftCreateViewModel.startDate.value?.plusDays(1) ?: LocalDate.now()
+        val picker = MaterialDatePicker.Builder.dateRangePicker()
+            .setTitleText("Выберите период")
+            .setSelection(
+                Pair.create(start.toLong(), start.plusDays(1).toLong())
+            )
+            .build()
+
+        picker.apply {
+            addOnPositiveButtonClickListener {
+                shiftCreateViewModel.setStartDate(it.first.toDate())
+                shiftCreateViewModel.setEndDate(it.second.toDate())
+            }
+        }
+        picker.show(requireActivity().supportFragmentManager, DATE_RANGE_PICKER)
     }
 
     private fun showTimePicker(tag: String) {
@@ -211,6 +235,8 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             0 -> {
                 shiftCreateViewModel.onWorkDayTypeChanged(WorkDayType.SHIFT)
                 with(binding!!) {
+                    fieldChooseDate.visibility = View.VISIBLE
+                    fieldChooseDateRange.visibility = View.INVISIBLE
                     etShiftName.visibility = View.VISIBLE
                     tvStartText.visibility = View.VISIBLE
                     tvEndText.visibility = View.VISIBLE
@@ -222,17 +248,38 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     atzCheckBox.visibility = View.VISIBLE
                 }
             }
+            2, 3 -> {
+                with(shiftCreateViewModel) {
+                    when (pos) {
+                        2 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST)
+                        3 -> onWorkDayTypeChanged(WorkDayType.VACATION_DAY)
+                    }
+                }
+                with(binding!!) {
+                    fieldChooseDateRange.visibility = View.VISIBLE
+                    fieldChooseDate.visibility = View.INVISIBLE
+                    etShiftName.visibility = View.GONE
+                    tvStartText.visibility = View.GONE
+                    tvEndText.visibility = View.GONE
+                    buttonStartTime.visibility = View.GONE
+                    buttonEndTime.visibility = View.GONE
+                    etStartPlace.visibility = View.GONE
+                    etEndPlace.visibility = View.GONE
+                    reserveCheckBox.visibility = View.GONE
+                    atzCheckBox.visibility = View.GONE
+                }
+            }
             else -> {
                 with(shiftCreateViewModel) {
                     when (pos) {
                         1 -> onWorkDayTypeChanged(WorkDayType.WEEKEND)
-                        2 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST)
-                        3 -> onWorkDayTypeChanged(WorkDayType.VACATION_DAY)
                         4 -> onWorkDayTypeChanged(WorkDayType.MEDIC_DAY)
 
                     }
                 }
                 with(binding!!) {
+                    fieldChooseDate.visibility = View.VISIBLE
+                    fieldChooseDateRange.visibility = View.INVISIBLE
                     etShiftName.visibility = View.GONE
                     tvStartText.visibility = View.GONE
                     tvEndText.visibility = View.GONE
@@ -256,6 +303,13 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         shiftCreateViewModel.reset()
     }
 
+    private fun save() {
+        when (shiftCreateViewModel.workDayTypeLive.value) {
+            WorkDayType.SICK_LIST, WorkDayType.VACATION_DAY -> saveDays()
+            else -> saveDay()
+        }
+    }
+
     /**
      * Saves day and shift in db.
      */
@@ -271,6 +325,22 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             endLoc = binding.etEndPlace.text.toString()
         )
         calendarViewModel.insert(day)
+        findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
+    }
+
+    /**
+     * Saves vacation or sick list days in db.
+     */
+    private fun saveDays() {
+        if (arguments.mode == SHIFT_EDITING) {
+            calendarViewModel.delete(shiftCreateViewModel.editingDay?.dateLong ?: NO_DAY_ID)
+        }
+
+        val binding = binding!!
+        val days = shiftCreateViewModel.createDaysInRange()
+        for (day in days) {
+            calendarViewModel.insert(day)
+        }
         findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)
     }
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.SHIFT_EDITING
@@ -85,7 +86,7 @@ class ShiftDetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.delete_option -> deleteDay(arguments.dayId)
+            R.id.delete_option -> showDeleteDialog(arguments.dayId)
             android.R.id.home -> findNavController().navigateUp()
             R.id.edit_option -> editDay()
         }
@@ -105,6 +106,17 @@ class ShiftDetailFragment : Fragment() {
         findNavController().navigate(
             ShiftDetailFragmentDirections.actionShiftDetailFragmentToCalendarFragment()
         )
+    }
+
+    private fun showDeleteDialog(dayId: Long) {
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setMessage(resources.getString(R.string.delete_queston))
+            .setNegativeButton(resources.getString(R.string.no)) { dialog, which ->
+            }
+            .setPositiveButton(resources.getString(R.string.yes)) { dialog, which ->
+                deleteDay(dayId)
+            }
+            .show()
     }
 
 
