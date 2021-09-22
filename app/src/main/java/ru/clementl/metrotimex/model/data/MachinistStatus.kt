@@ -81,4 +81,4 @@ fun Long.getUnionQ(statusChangeList: List<MachinistStatus>) = getMachinistStatus
 fun Long?.getMachinistStatus(list: List<MachinistStatus>) =
     list.findLast {
         it.date <= this ?: 0
-    } ?: list.get(0) ?: throw Exception("No machinistStatus found")
+    } ?: list[0]

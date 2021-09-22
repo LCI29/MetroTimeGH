@@ -80,7 +80,7 @@ fun Double.inFloatHours(withH: Boolean = true, decimals: Int = 1): String {
  * Returns YearMonth as "АВГУСТ 2021"
  */
 fun YearMonth.asShortString(): String {
-    return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} ${year}"
+    return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} $year"
 }
 
 fun main() {

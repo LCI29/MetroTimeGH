@@ -122,21 +122,21 @@ val AFTER_SHIFT_STATE_PRIORITY_DURATION = LocalTime.of(0, 30).toLong()
 
 
 
-val EVENING_FROM = LocalTime.of(16, 0)
-val EVENING_TILL = LocalTime.of(22, 0).minusNanos(1)
-val NIGHT_FROM = LocalTime.of(22, 0)
-val NIGHT_TILL = LocalTime.of(6, 0).minusNanos(1)
+val EVENING_FROM: LocalTime = LocalTime.of(16, 0)
+val EVENING_TILL: LocalTime = LocalTime.of(22, 0).minusNanos(1)
+val NIGHT_FROM: LocalTime = LocalTime.of(22, 0)
+val NIGHT_TILL: LocalTime = LocalTime.of(6, 0).minusNanos(1)
 
-val ALWAYS_NIGHT_AFTER = LocalTime.of(19, 0)
+val ALWAYS_NIGHT_AFTER: LocalTime = LocalTime.of(19, 0)
 
 // Time after those odd/even of the day changes
-val ODD_EVEN_DIFFER_AFTER = LocalTime.of(22,30)
+val ODD_EVEN_DIFFER_AFTER: LocalTime = LocalTime.of(22,30)
 
 // Latest night end time
-val LATEST_NIGHT_END = LocalTime.of(4, 0)
+val LATEST_NIGHT_END: LocalTime = LocalTime.of(4, 0)
 
 // Shift is evening only if starts after this time
-val EARLIEST_START_OF_EVENING_SHIFT = LocalTime.of(11, 0)
+val EARLIEST_START_OF_EVENING_SHIFT: LocalTime = LocalTime.of(11, 0)
 
 // When duration is more that that, app shows time as "5д 2:05:07" against "122:05:07"
 const val MAX_TIME_WITHOUT_DAYS = 3 * DAY_MILLI

@@ -50,7 +50,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
     private fun fetchCounter(): MachinistSalaryCounter? {
         return now.getCurrentDayStatus(calendar)?.let { dayStatus ->
             dayStatus.shift?.let {
-                logd("counter: ${today}")
+//                logd("counter: $today")
                 MachinistSalaryCounter(machinistStatus, dayStatus)
             }
         }
@@ -161,7 +161,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
             counter?.let { counter ->
                 now?.let { time ->
                     val earned = counter.getSalary(time)
-                    logd("time = $time, salary = ${earned}")
+//                    logd("time = $time, salary = $earned")
                     earned.salaryStyle()
                 }
             }

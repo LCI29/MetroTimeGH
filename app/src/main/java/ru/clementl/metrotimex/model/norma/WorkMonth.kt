@@ -85,7 +85,7 @@ data class WorkMonth(
             "${workedInHours.inFloatHours(false)} / ${realNormaHours?.inFloatHours(false)}"
 
     val weekendString: String
-        get() = "${countOf(WEEKEND)} / ${realNormaWeekend}"
+        get() = "${countOf(WEEKEND)} / $realNormaWeekend"
 
     val workdayString: String
         get() = "${countOf(SHIFT)} / $realNormaDays"
