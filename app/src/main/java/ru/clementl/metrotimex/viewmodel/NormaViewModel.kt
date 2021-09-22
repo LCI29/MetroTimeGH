@@ -26,9 +26,9 @@ class NormaViewModel(
 
 
 
-    init {
-        logd("NVM: StatusList = ${statusList.value}")
-    }
+//    init {
+//        logd("NVM: StatusList = ${statusList.value}")
+//    }
 
     private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -123,11 +123,11 @@ class NormaViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NormaViewModel::class.java)) {
-            logd("""
-                NVMFactory
-                Calendar === ${calendar.size}
-                Statuses === $statusList
-            """.trimIndent())
+//            logd("""
+//                NVMFactory
+//                Calendar === ${calendar.size}
+//                Statuses === $statusList
+//            """.trimIndent())
             @Suppress("UNCHECKED_CAST")
             return NormaViewModel(calendar, statusList, yearMonth) as T
         }

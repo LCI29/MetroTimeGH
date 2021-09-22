@@ -15,16 +15,19 @@ import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.NormaViewModel
 import ru.clementl.metrotimex.viewmodel.NormaViewModelFactory
+import ru.clementl.metrotimex.viewmodel.StatusViewModel
 import java.time.YearMonth
 
 class NormaFragment : Fragment() {
 
     private var _binding: FragmentNormaBinding? = null
     private val calendarViewModel: CalendarViewModel by activityViewModels()
+    private val statusViewModel: StatusViewModel by activityViewModels()
     private val normaViewModel: NormaViewModel by viewModels {
         NormaViewModelFactory(
             calendarViewModel.allDays.value ?: listOf(),
-            (activity as MainActivity).statuses,
+            statusViewModel.liveStatusList,
+//            (activity as MainActivity).statuses,
 //            (activity?.application as MetroTimeApplication).machinistStatusRepository,
             YearMonth.now()
         )

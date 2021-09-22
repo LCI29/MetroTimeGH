@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,18 +31,34 @@ class MainActivity : AppCompatActivity() {
     val navController: NavController
         get() = _navController
 
-    lateinit var statuses: LiveData<List<MachinistStatus>>
+//    lateinit var statuses: LiveData<List<MachinistStatus>>
+
+    private lateinit var statusViewModel: StatusViewModel
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        statuses = (application as MetroTimeApplication).machinistStatusRepository.getAllAsLiveData()
-        statuses.observe(this) {
-            logd("""
-                statuses MA = ${statuses.value}
-            """.trimIndent())
+
+        // against statuses
+        val repository = (application as MetroTimeApplication).machinistStatusRepository
+        val statusViewModelFactory = StatusViewModelFactory(repository)
+        statusViewModel = ViewModelProvider(
+            this, statusViewModelFactory).get(StatusViewModel::class.java)
+        statusViewModel.liveStatusList.observe(this) {
+//                        logd("""
+//                statuses MA = ${it}
+//            """.trimIndent())
         }
+//        statuses = (application as MetroTimeApplication).machinistStatusRepository.getAllAsLiveData()
+//        statuses.observe(this) {
+//            logd("""
+//                statuses MA = ${statuses.value}
+//            """.trimIndent())
+//        }
 
 //        shiftCreateViewModel = ViewModelProvider(this).get(ShiftCreateViewModel::class.java)
 
@@ -70,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         val machinistStatusRepository =
             (application as MetroTimeApplication).machinistStatusRepository
-        CoroutineScope(Job() + Dispatchers.IO).launch {
+        CoroutineScope(Job() + Dispatchers.Main).launch {
             if (machinistStatusRepository.getAll().isEmpty()) {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
                 machinistStatusRepository.insert(MachinistStatus.create(

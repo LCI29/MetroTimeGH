@@ -8,4 +8,5 @@ class SharedViewModel : ViewModel() {
     var currentDay: DayStatus? = null
 
 
+
 }
