@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:key="theme_pref"
+        app:useSimpleSummaryProvider="true"
+        android:title="Тема"
+        android:entryValues="@array/values_array_3"
+        android:entries="@array/theme_entries"
+        android:defaultValue="2"/>
 
 </PreferenceScreen>

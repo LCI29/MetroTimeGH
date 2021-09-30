@@ -84,7 +84,7 @@ class TonightFragment : Fragment() {
                         currentNonShiftLayout.rootLayout.visibility = View.GONE
                         currentShiftLayout.rootLayout.visibility = View.VISIBLE
                         earnedNow.visibility = View.VISIBLE
-                        earnedNow.setTextColor(Color.BLACK)
+                        earnedNow.setTextColor(resources.getColor(R.color.primary_text))
                         finishedText.visibility = View.GONE
                         nextShiftLayout.visibility = View.VISIBLE
                     }

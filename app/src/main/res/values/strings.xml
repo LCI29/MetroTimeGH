@@ -43,6 +43,8 @@
     <string name="shift_end">Конец смены</string>
     <string name="delete_queston">Удалить?</string>
 
+    <string name="change_theme_toast_message">Тема будет изменена после перезапуска приложения</string>
+
     <string-array name="day_status_types">
         <item>Смена</item>
         <item>Выходной</item>
@@ -62,5 +64,15 @@
         <item>3</item>
         <item>2</item>
         <item>1</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>Светлая</item>
+        <item>Темная</item>
+        <item>По умолчанию</item>
+    </string-array>
+    <string-array name="values_array_3">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 </resources>

@@ -96,7 +96,7 @@
                 android:background="@drawable/label_round_corner_white"
                 android:text="@{viewModel.percentProgress}"
                 android:textAlignment="center"
-                android:textColor="@color/primary_text"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/interval_progress" />
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.currentSalary}"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/primary_text"
                 android:textSize="36sp"
                 app:layout_constraintBottom_toTopOf="@+id/finished_text"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -151,14 +151,16 @@
 
             <TextView
                 android:id="@+id/finished_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/light_blue_gray"
+                android:background="@drawable/label_finished_rounded"
                 android:padding="4dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:text="Завершено"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="@color/icons_or_text"
+                android:textColor="@color/finished_color"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -173,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:background="#20546e7a"
+            android:background="@color/light_blue_gray_20"
             >
 
             <TextView

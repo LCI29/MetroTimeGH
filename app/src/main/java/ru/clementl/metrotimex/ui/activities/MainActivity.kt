@@ -4,11 +4,9 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.Menu
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -22,7 +20,7 @@ import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.ui.fragments.machinist
 import ru.clementl.metrotimex.ui.fragments.ratePerHour
-import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.showToast
 import ru.clementl.metrotimex.viewmodel.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 //    lateinit var statuses: LiveData<List<MachinistStatus>>
 
     private lateinit var statusViewModel: StatusViewModel
+    private lateinit var calendarViewModel: CalendarViewModel
 
 
 
@@ -45,8 +44,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // against statuses
-        val repository = (application as MetroTimeApplication).machinistStatusRepository
-        val statusViewModelFactory = StatusViewModelFactory(repository)
+        val statusRepository = (application as MetroTimeApplication).machinistStatusRepository
+        val calendarRepo = (application as MetroTimeApplication).repository
+        val statusViewModelFactory = StatusViewModelFactory(statusRepository)
         statusViewModel = ViewModelProvider(
             this, statusViewModelFactory).get(StatusViewModel::class.java)
         statusViewModel.liveStatusList.observe(this) {
@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() {
 //                statuses MA = ${it}
 //            """.trimIndent())
         }
+        val calendarViewModelFactory = CalendarViewModelFactory(calendarRepo, statusRepository)
+        calendarViewModel = ViewModelProvider(
+            this, calendarViewModelFactory).get(CalendarViewModel::class.java)
+        calendarViewModel.allDays.observe(this) {  }
 //        statuses = (application as MetroTimeApplication).machinistStatusRepository.getAllAsLiveData()
 //        statuses.observe(this) {
 //            logd("""
@@ -66,7 +70,13 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_NO
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        delegate.localNightMode = when (prefs.getString("theme_pref", "2")) {
+            "0" -> AppCompatDelegate.MODE_NIGHT_NO
+            "1" -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -93,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             (application as MetroTimeApplication).machinistStatusRepository
         CoroutineScope(Job() + Dispatchers.Main).launch {
             if (machinistStatusRepository.getAll().isEmpty()) {
-                val prefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
+//                val prefs = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
                 machinistStatusRepository.insert(MachinistStatus.create(
                     prefs.machinist(),
                     ratePerHour = prefs.ratePerHour()
@@ -131,6 +141,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.null_menu, menu)
         return true
     }
+
 
 
 }

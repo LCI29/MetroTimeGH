@@ -1,14 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MetroTimeX" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.MetroTimeX" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_gray</item>
         <item name="colorPrimaryVariant">@color/dark_blue_gray</item>
-        <item name="colorOnPrimary">@color/icons_or_text</item>
+        <item name="colorOnPrimary">@color/primary_text_inverse_when_activated_material</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange</item>
         <item name="colorSecondaryVariant">@color/orange</item>
-        <item name="colorOnSecondary">@color/primary_text</item>
+        <item name="colorOnSecondary">@color/icons_or_text</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

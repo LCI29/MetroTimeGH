@@ -59,8 +59,8 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
     abstract class DayStatusViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         open fun bind(day: DayStatus, clickListener: DayListener) {
             when {
-                day.date == today -> itemView.setBackgroundResource(R.color.light_blue_gray)
-                else -> itemView.setBackgroundResource(R.color.icons_or_text)
+                day.date == today -> itemView.setBackgroundResource(R.color.today_calendar_color)
+                else -> itemView.setBackgroundResource(R.color.transparent)
             }
 
 

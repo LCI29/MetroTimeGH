@@ -6,16 +6,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="light_black">#AA000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="transparent">#00000000</color>
-    <color name="light_blue_gray_20">#20546e7a</color>
 
     <color name="blue_gray">#607D8B</color>
     <color name="dark_blue_gray">#455A64</color>
     <color name="light_blue_gray">#CFD8DC</color>
     <color name="orange">#FF9800</color>
-    <color name="primary_text">#212121</color>
+    <color name="primary_text">#FFFFFF</color>
     <color name="secondary_text">#757575</color>
     <color name="divider_color">#BDBDBD</color>
     <color name="icons_or_text">#FFFFFF</color>
@@ -28,10 +25,8 @@
     <color name="secondaryDarkColor">#c77800</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
-
     <color name="progressCircleColor">@color/orange</color>
-    <color name="today_calendar_color">@color/light_blue_gray</color>
-    <color name="label_round_background">@color/white</color>
-    <color name="finished_color">@color/icons_or_text</color>
-
+    <color name="today_calendar_color">@color/light_blue_gray_20</color>
+    <color name="label_round_background">@color/icons_or_text</color>
+    <color name="finished_color">@color/light_black</color>
 </resources>
