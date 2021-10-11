@@ -20,6 +20,7 @@ import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.states.*
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.toDoubleEmptyZero
 import ru.clementl.metrotimex.viewmodel.TonightViewModel
 import ru.clementl.metrotimex.viewmodel.TonightViewModelFactory
 import java.lang.Exception
@@ -159,9 +160,9 @@ fun SharedPreferences.machinist(): Machinist = Machinist(
     qualificationClass = getString("qualification_class", "4")?.toInt() ?: 4,
     isMaster = getBoolean("is_master", false),
     isMentor = getBoolean("is_mentor", false),
-    monthBonus = getString("month_bonus", "0.25")?.toDouble()?.div(100) ?: 0.25,
+    monthBonus = getString("month_bonus", "0.25")?.toDoubleEmptyZero()?.div(100) ?: 0.25,
     isInUnion = getBoolean("in_union", true)
 )
 
 fun SharedPreferences.ratePerHour(): Double =
-    getString("rate_per_hour", RATE_PER_HOUR_DEFAULT.toFloat().toString())?.toDouble() ?: throw Exception("No rate set")
+    getString("rate_per_hour", RATE_PER_HOUR_DEFAULT.toFloat().toString())?.toDoubleEmptyZero() ?: throw Exception("No rate set")

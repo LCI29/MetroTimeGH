@@ -15,6 +15,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
+<!--        Trying to fix materialDatePicker issue -->
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar</item>
+
     </style>
 
     <style name="Theme.MetroTimeX.Overflow">
