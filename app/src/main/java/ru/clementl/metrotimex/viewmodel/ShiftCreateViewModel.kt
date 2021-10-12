@@ -129,7 +129,7 @@ class ShiftCreateViewModel(
         logd("ShiftCreateViewModel cleared")
     }
 
-    fun createDay(name: String, startLoc: String, endLoc: String): DayStatus {
+    fun createDay(name: String, startLoc: String, endLoc: String, notes: String?): DayStatus {
         val date = startDate.value ?: throw IllegalStateException("startDate not set")
         val startTime = startTime.value ?: throw IllegalStateException("startTime not set")
         val endTime = endTime.value ?: throw IllegalStateException("endTime not set")
@@ -151,7 +151,7 @@ class ShiftCreateViewModel(
         } else {
             null
         }
-        return DayStatus(date.toLong(), wdt.toInt(), shift)
+        return DayStatus(date.toLong(), wdt.toInt(), shift, notes)
     }
 
     fun createDaysInRange(): List<DayStatus> {

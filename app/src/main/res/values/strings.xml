@@ -44,6 +44,7 @@
     <string name="delete_queston">Удалить?</string>
 
     <string name="change_theme_toast_message">Тема будет изменена после перезапуска приложения</string>
+    <string name="notes">Примечания</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

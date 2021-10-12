@@ -24,8 +24,8 @@ import ru.clementl.metrotimex.utils.ofPattern
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder> (DayStatusComparator()){
-
+class DayStatusListAdapter(private val clickListener: DayListener) :
+    ListAdapter<DayStatus, DayStatusListAdapter.DayStatusViewHolder>(DayStatusComparator()) {
 
 
     companion object {
@@ -56,7 +56,8 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
         holder.bind(current, clickListener)
     }
 
-    abstract class DayStatusViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
+    abstract class DayStatusViewHolder(itemView: View, val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
         open fun bind(day: DayStatus, clickListener: DayListener) {
             when {
                 day.date == today -> itemView.setBackgroundResource(R.color.today_calendar_color)
@@ -94,7 +95,8 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
 
     }
 
-    class ShiftViewHolder(val binding: CellShiftBinding, context: Context) : DayStatusViewHolder(binding.root, context) {
+    class ShiftViewHolder(val binding: CellShiftBinding, context: Context) :
+        DayStatusViewHolder(binding.root, context) {
 
         override fun bind(day: DayStatus, clickListener: DayListener) {
             super.bind(day, clickListener)
@@ -102,16 +104,19 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
             binding.day = day
             binding.executePendingBindings()
 
-
+            // Showing or hiding weekly divider
             if (day.date.dayOfWeek == DayOfWeek.SUNDAY) {
                 binding.weekDivider.visibility = View.VISIBLE
             } else {
                 binding.weekDivider.visibility = View.GONE
             }
+
+
         }
     }
 
-    class NonShiftViewHolder(val binding: CellWeekendBinding, context: Context) : DayStatusViewHolder(binding.root, context) {
+    class NonShiftViewHolder(val binding: CellWeekendBinding, context: Context) :
+        DayStatusViewHolder(binding.root, context) {
 
         override fun bind(day: DayStatus, clickListener: DayListener) {
             super.bind(day, clickListener)
@@ -119,11 +124,14 @@ class DayStatusListAdapter(private val clickListener: DayListener) : ListAdapter
             binding.day = day
             binding.executePendingBindings()
 
+            // Showing or hiding weekly divider
             if (day.date.dayOfWeek == DayOfWeek.SUNDAY) {
                 binding.weekDivider.visibility = View.VISIBLE
             } else {
                 binding.weekDivider.visibility = View.GONE
             }
+
+
         }
     }
 

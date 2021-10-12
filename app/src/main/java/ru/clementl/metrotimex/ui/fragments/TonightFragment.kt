@@ -122,7 +122,7 @@ class TonightFragment : Fragment() {
             }
         }
 
-        val listener = View.OnClickListener {
+        val nextShiftClickListener = View.OnClickListener {
             tonightViewModel.nextShift?.let {
                 findNavController().navigate(
                     TonightFragmentDirections.actionTonightFragmentToShiftDetailFragment(
@@ -132,12 +132,28 @@ class TonightFragment : Fragment() {
             }
         }
 
-        binding.nextShiftCell.apply {
-            shiftName.setOnClickListener(listener)
-            date.setOnClickListener(listener)
-            shiftDescString.setOnClickListener(listener)
+        val currentShiftClickListener = View.OnClickListener {
+            tonightViewModel.today?.let {
+                findNavController().navigate(
+                    TonightFragmentDirections.actionTonightFragmentToShiftDetailFragment(
+                        it.dateLong
+                    )
+                )
+            }
         }
-        binding.textView.setOnClickListener(listener)
+
+        binding.nextShiftCell.apply {
+            shiftName.setOnClickListener(nextShiftClickListener)
+            date.setOnClickListener(nextShiftClickListener)
+            shiftDescString.setOnClickListener(nextShiftClickListener)
+        }
+
+        binding.currentShiftLayout.apply {
+            shiftName.setOnClickListener(currentShiftClickListener)
+            date.setOnClickListener(currentShiftClickListener)
+            shiftDescString.setOnClickListener(currentShiftClickListener)
+        }
+        binding.textView.setOnClickListener(nextShiftClickListener)
         return binding.root
     }
 

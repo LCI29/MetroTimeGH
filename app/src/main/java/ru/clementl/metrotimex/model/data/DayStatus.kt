@@ -26,7 +26,11 @@ data class DayStatus(
     val workDayTypeInt: Int?,
 
     @Nullable @Embedded
-    val shift: Shift?
+    val shift: Shift?,
+
+    @ColumnInfo(name = "day_notes", typeAffinity = ColumnInfo.TEXT)
+    val notes: String? = null
+
 ) {
     @Ignore val date = dateLong.toDate()
     @Ignore val workDayType = workDayTypeInt?.toWorkDayType()

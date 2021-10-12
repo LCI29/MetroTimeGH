@@ -268,6 +268,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     etEndPlace.visibility = View.VISIBLE
                     reserveCheckBox.visibility = View.VISIBLE
                     atzCheckBox.visibility = View.VISIBLE
+                    notesTextInputLayout.visibility = View.VISIBLE
                 }
             }
             2, 3 -> {
@@ -278,8 +279,15 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     }
                 }
                 with(binding!!) {
-                    fieldChooseDateRange.visibility = View.VISIBLE
-                    fieldChooseDate.visibility = View.INVISIBLE
+                    if (shiftCreateViewModel.mode == SHIFT_EDITING) {
+                        fieldChooseDate.visibility = View.VISIBLE
+                        fieldChooseDateRange.visibility = View.INVISIBLE
+                        notesTextInputLayout.visibility = View.VISIBLE
+                    } else {
+                        fieldChooseDateRange.visibility = View.VISIBLE
+                        fieldChooseDate.visibility = View.INVISIBLE
+                        notesTextInputLayout.visibility = View.INVISIBLE
+                    }
                     etShiftName.visibility = View.GONE
                     tvStartText.visibility = View.GONE
                     tvEndText.visibility = View.GONE
@@ -311,6 +319,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     etEndPlace.visibility = View.GONE
                     reserveCheckBox.visibility = View.GONE
                     atzCheckBox.visibility = View.GONE
+                    notesTextInputLayout.visibility = View.VISIBLE
                 }
             }
         }
@@ -327,7 +336,9 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun save() {
         when (shiftCreateViewModel.workDayTypeLive.value) {
-            WorkDayType.SICK_LIST, WorkDayType.VACATION_DAY -> saveDays()
+            WorkDayType.SICK_LIST, WorkDayType.VACATION_DAY -> {
+                if (shiftCreateViewModel.mode == SHIFT_EDITING) saveDay() else saveDays()
+            }
             else -> saveDay()
         }
     }
@@ -344,7 +355,8 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val day = shiftCreateViewModel.createDay(
             name = binding.etShiftName.text.toString(),
             startLoc = binding.etStartPlace.text.toString(),
-            endLoc = binding.etEndPlace.text.toString()
+            endLoc = binding.etEndPlace.text.toString(),
+            notes = binding.notesTextInputEditText.text?.toString()
         )
         calendarViewModel.insert(day)
         findNavController().navigate(R.id.action_shiftEditDialogFragment_to_calendarFragment)

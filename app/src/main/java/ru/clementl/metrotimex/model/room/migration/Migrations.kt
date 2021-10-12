@@ -18,3 +18,11 @@ val MIGRATION_6_7: Migration = object : Migration(6, 7) {
         )
     }
 }
+
+val MIGRATION_7_8: Migration = object : Migration(7, 8) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "ALTER TABLE 'calendar_table' ADD COLUMN 'day_notes' TEXT"
+        )
+    }
+}

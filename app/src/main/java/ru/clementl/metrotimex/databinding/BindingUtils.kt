@@ -2,6 +2,7 @@ package ru.clementl.metrotimex.databinding
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
@@ -159,6 +160,14 @@ fun TextView.showDurationString(day: DayStatus?) {
         val dur = day.timeSpan.duration ?: 0L
         text = "Длительность: ${(Duration.ofMillis(dur)).inFloatHours(true)}"
     }
+}
+
+@BindingAdapter("notesLabel")
+fun ImageView.notesLabelVisibility(day: DayStatus?) {
+    day?.notes?.let {
+        if (it.isNotEmpty()) visibility = View.VISIBLE else visibility = View.GONE
+    }
+    if (day?.notes == null) visibility = View.GONE
 }
 
 

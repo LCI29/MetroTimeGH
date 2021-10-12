@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -110,6 +111,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date" />
+
+        <ImageView
+            android:id="@+id/notes_label_shift"
+            notesLabel="@{day}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/shiftName"
+            app:layout_constraintStart_toEndOf="@+id/shiftName"
+            app:layout_constraintTop_toTopOf="@+id/shiftName"
+            app:srcCompat="@drawable/ic_notes" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
