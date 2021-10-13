@@ -70,6 +70,8 @@ class ShiftDetailFragment : Fragment() {
                 } else {
                     binding.earnedText.visibility = View.GONE
                 }
+                if (day.hasNotes()) binding.notesLayout.visibility = View.VISIBLE
+                else binding.notesLayout.visibility = View.GONE
             }
         })
 

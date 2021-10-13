@@ -102,6 +102,8 @@ data class DayStatus(
         }
     }
 
+    fun hasNotes() = (notes != null && notes.isNotEmpty())
+
 }
 
 /**

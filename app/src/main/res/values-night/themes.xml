@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_gray</item>
         <item name="colorPrimaryVariant">@color/dark_blue_gray</item>
-        <item name="colorOnPrimary">@color/primary_text_inverse_when_activated_material</item>
+        <item name="colorOnPrimary">@color/icons_or_text</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange</item>
         <item name="colorSecondaryVariant">@color/orange</item>

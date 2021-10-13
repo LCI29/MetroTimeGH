@@ -111,19 +111,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="6458.65 P" />
 
-        <TextView
-            android:id="@+id/notes_textView"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/notes_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{viewModel.MDay.notes}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/duration_tv"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facilisis pretium libero ac feugiat. Phasellus tincidunt nibh consequat arcu pharetra, eu aliquet ligula malesuada. Proin egestas, risus sed tincidunt consequat, justo nibh imperdiet diam, quis pharetra odio metus vitae lorem. Vivamus vel maximus odio, nec fringilla tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vel consequat tellus, ut efficitur erat. Vivamus ornare justo at neque suscipit pharetra. Praesent nec ris" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:hint="@string/notes"
+            android:visibility="invisible"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/notes_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:focusable="false"
+
+                android:text="@{viewModel.MDay.notes}"
+
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facue suscipit pharetra. Praesent nec ris" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

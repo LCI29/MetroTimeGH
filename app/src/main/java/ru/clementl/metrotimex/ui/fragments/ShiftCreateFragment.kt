@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.codetroopers.betterpickers.timepicker.TimePickerBuilder
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_KEYBOARD
@@ -95,13 +94,13 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             buttonStartTime.setOnClickListener {
 //                logd("on button current day${shiftCreateViewModel.editingDay?.date?.asSimpleDate()}")
 //                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_START)
-                showAlternativeTimePicker(TIME_PICKER_START)
+                showTimePicker(TIME_PICKER_START)
 
             }
 
             buttonEndTime.setOnClickListener {
 //                TimePickerFragment(shiftCreateViewModel).show(requireActivity().supportFragmentManager, TIME_PICKER_END)
-                showAlternativeTimePicker(TIME_PICKER_END)
+                showTimePicker(TIME_PICKER_END)
             }
 
             fieldChooseDate.setOnClickListener {
@@ -232,25 +231,25 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     // call to show BetterPickers Time Picker Dialog
-    private fun showAlternativeTimePicker(tag: String) {
-        val tpb = TimePickerBuilder()
-            .setFragmentManager(requireActivity().supportFragmentManager)
-            .setStyleResId(R.style.BetterPickersDialogFragment)
-
-        tpb.addTimePickerDialogHandler { reference, hourOfDay, minute ->
-            when (tag) {
-                TIME_PICKER_START -> {
-                    shiftCreateViewModel.setStartTime(LocalTime.of(hourOfDay, minute))
-                }
-                TIME_PICKER_END -> {
-                    shiftCreateViewModel.setEndTime(LocalTime.of(hourOfDay, minute))
-                }
-            }
-        }
-
-
-        tpb.show()
-    }
+//    private fun showAlternativeTimePicker(tag: String) {
+//        val tpb = TimePickerBuilder()
+//            .setFragmentManager(requireActivity().supportFragmentManager)
+//            .setStyleResId(R.style.BetterPickersDialogFragment)
+//
+//        tpb.addTimePickerDialogHandler { reference, hourOfDay, minute ->
+//            when (tag) {
+//                TIME_PICKER_START -> {
+//                    shiftCreateViewModel.setStartTime(LocalTime.of(hourOfDay, minute))
+//                }
+//                TIME_PICKER_END -> {
+//                    shiftCreateViewModel.setEndTime(LocalTime.of(hourOfDay, minute))
+//                }
+//            }
+//        }
+//
+//
+//        tpb.show()
+//    }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, p3: Long) {
         when (pos) {
