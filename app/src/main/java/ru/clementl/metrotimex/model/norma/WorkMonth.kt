@@ -54,7 +54,8 @@ data class WorkMonth(
                 it.workDayType in setOf(
                     MEDIC_DAY,
                     SICK_LIST,
-                    VACATION_DAY
+                    VACATION_DAY,
+                    DONOR_DAY
                 ) && it.date.dayOfWeek != DayOfWeek.SUNDAY
             }
         }
@@ -72,6 +73,7 @@ data class WorkMonth(
     val realNormaWeekend: Int = standardNormaWeekend - listOfDays.count {
         it.workDayType in setOf(
             MEDIC_DAY,
+            DONOR_DAY,
             SICK_LIST,
             VACATION_DAY
         ) && it.date.dayOfWeek == DayOfWeek.SUNDAY

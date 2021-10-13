@@ -259,6 +259,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     fieldChooseDate.visibility = View.VISIBLE
                     fieldChooseDateRange.visibility = View.INVISIBLE
                     etShiftName.visibility = View.VISIBLE
+                    etShiftNameLayout.visibility = View.VISIBLE
                     tvStartText.visibility = View.VISIBLE
                     tvEndText.visibility = View.VISIBLE
                     buttonStartTime.visibility = View.VISIBLE
@@ -288,6 +289,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         notesTextInputLayout.visibility = View.INVISIBLE
                     }
                     etShiftName.visibility = View.GONE
+                    etShiftNameLayout.visibility = View.GONE
                     tvStartText.visibility = View.GONE
                     tvEndText.visibility = View.GONE
                     buttonStartTime.visibility = View.GONE
@@ -303,6 +305,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     when (pos) {
                         1 -> onWorkDayTypeChanged(WorkDayType.WEEKEND)
                         4 -> onWorkDayTypeChanged(WorkDayType.MEDIC_DAY)
+                        5 -> onWorkDayTypeChanged(WorkDayType.DONOR_DAY)
 
                     }
                 }
@@ -310,6 +313,7 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     fieldChooseDate.visibility = View.VISIBLE
                     fieldChooseDateRange.visibility = View.INVISIBLE
                     etShiftName.visibility = View.GONE
+                    etShiftNameLayout.visibility = View.GONE
                     tvStartText.visibility = View.GONE
                     tvEndText.visibility = View.GONE
                     buttonStartTime.visibility = View.GONE

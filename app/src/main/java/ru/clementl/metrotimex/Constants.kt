@@ -79,6 +79,8 @@ const val VACATION_DAY_SP = 31
 const val VACATION_DAY_EP = 32
 const val MEDIC_DAY_SP = 41
 const val MEDIC_DAY_EP = 42
+const val DONOR_DAY_SP = 51
+const val DONOR_DAY_EP = 52
 
 // Время смены суток для метро, определяется наиболее поздним возможным окончанием неночной смены
 val DAY_CHANGE_TIME: LocalTime = LocalTime.of(0, 0)
@@ -101,10 +103,11 @@ const val NO_DATA_STRING = "Нет данных"
 
 // set of all the TimePoints types, which represent START of the interval
 val START_POINTS =
-    setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MEDIC_DAY_SP, UNKNOWN_SP)
+    setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MEDIC_DAY_SP, DONOR_DAY_SP, UNKNOWN_SP)
 
 // set of all the TimePoints types, which represent END of the interval
-val END_POINTS = setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, UNKNOWN_EP)
+val END_POINTS =
+    setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, DONOR_DAY_EP, UNKNOWN_EP)
 
 val DAYS_FOR_TONIGHT_BEFORE = 100 // Days before today to load from db for TonightFragment
 val DAYS_FOR_TONIGHT_AFTER =

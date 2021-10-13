@@ -55,6 +55,7 @@ fun Interval.simpleState(): SimpleState {
             SICK_DAY_SP -> GapSimpleState
             VACATION_DAY_SP -> GapSimpleState
             MEDIC_DAY_SP -> GapSimpleState
+            DONOR_DAY_SP -> GapSimpleState
             UNKNOWN_SP -> GapSimpleState
 
             SHIFT_EP -> unknown
@@ -62,6 +63,7 @@ fun Interval.simpleState(): SimpleState {
             SICK_DAY_EP -> SickSimpleState
             VACATION_DAY_EP -> VacationSimpleState
             MEDIC_DAY_EP -> GapSimpleState
+            DONOR_DAY_EP -> GapSimpleState
             UNKNOWN_EP -> GapSimpleState
 
             null -> NoDataSimpleState
@@ -138,6 +140,25 @@ fun Interval.simpleState(): SimpleState {
         }
 
         MEDIC_DAY_EP -> when (afterCode) {
+            in START_POINTS -> GapSimpleState
+
+            SHIFT_EP -> ShiftSimpleState
+
+            null -> NoDataSimpleState
+            else -> unknown
+        }
+
+        DONOR_DAY_SP -> when (afterCode) {
+            SHIFT_SP -> GapSimpleState
+
+            SHIFT_EP -> ShiftSimpleState
+            DONOR_DAY_EP -> GapSimpleState
+
+            null -> unknown
+            else -> unknown
+        }
+
+        DONOR_DAY_EP -> when (afterCode) {
             in START_POINTS -> GapSimpleState
 
             SHIFT_EP -> ShiftSimpleState

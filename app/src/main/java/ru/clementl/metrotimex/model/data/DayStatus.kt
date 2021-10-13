@@ -100,6 +100,10 @@ data class DayStatus(
         fun sickListDayOf(date: LocalDate): DayStatus {
             return DayStatus(date.toLong(), WorkDayType.SICK_LIST.type, null)
         }
+
+        fun donorDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.DONOR_DAY.type, null)
+        }
     }
 
     fun hasNotes() = (notes != null && notes.isNotEmpty())

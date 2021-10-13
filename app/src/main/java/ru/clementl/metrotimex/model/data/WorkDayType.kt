@@ -14,6 +14,8 @@ const val TYPE_VACATION_DAY = 3
 const val DESC_VACATION_DAY = "Отпуск"
 const val TYPE_MEDIC = 4
 const val DESC_MEDIC = "Медкомиссия"
+const val TYPE_DONOR_DAY = 5
+const val DESC_DONOR_DAY = "Донорский день"
 
 enum class WorkDayType(val type: Int, val desc: String, val startPointCode: Int, val endPointCode: Int) {
     UNKNOWN(TYPE_UNKNOWN, DESC_UNKNOWN, UNKNOWN_SP, UNKNOWN_EP),
@@ -21,5 +23,6 @@ enum class WorkDayType(val type: Int, val desc: String, val startPointCode: Int,
     WEEKEND(TYPE_WEEKEND, DESC_WEEKEND, WEEKEND_SP, WEEKEND_EP),
     SICK_LIST(TYPE_SICK_LIST, DESC_SICK_LIST, SICK_DAY_SP, SICK_DAY_EP),
     VACATION_DAY(TYPE_VACATION_DAY, DESC_VACATION_DAY, VACATION_DAY_SP, VACATION_DAY_EP),
-    MEDIC_DAY(TYPE_MEDIC, DESC_MEDIC, MEDIC_DAY_SP, MEDIC_DAY_EP)
+    MEDIC_DAY(TYPE_MEDIC, DESC_MEDIC, MEDIC_DAY_SP, MEDIC_DAY_EP),
+    DONOR_DAY(TYPE_DONOR_DAY, DESC_DONOR_DAY, DONOR_DAY_SP, DONOR_DAY_EP)
 }

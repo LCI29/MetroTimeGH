@@ -52,6 +52,7 @@
         <item>Больничный</item>
         <item>Отпуск</item>
         <item>Медкомиссия</item>
+        <item>Донорский день</item>
     </string-array>
 
     <string-array name="qualification_classes_entries">
