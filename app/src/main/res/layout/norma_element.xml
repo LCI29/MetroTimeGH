@@ -19,6 +19,7 @@
             android:layout_marginEnd="8dp"
             android:text="Выходных"
             android:textColor="@color/secondary_text"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,13 +29,13 @@
             android:id="@+id/stat_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textColor="@color/primary_text"
-            android:textStyle="normal"
             android:layout_marginTop="@dimen/cell_paddingBtwElements"
+            android:text="5"
+            android:textColor="@color/primary_text"
+            android:textSize="24dp"
+            android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="@+id/stat_name"
-            app:layout_constraintTop_toBottomOf="@+id/stat_name"
-            android:text="5" />
+            app:layout_constraintTop_toBottomOf="@+id/stat_name" />
 
         <com.linkdev.circleprogress.CircularProgress
             android:id="@+id/stat_progress"

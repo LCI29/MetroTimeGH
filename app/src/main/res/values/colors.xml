@@ -19,6 +19,7 @@
     <color name="secondary_text">#757575</color>
     <color name="divider_color">#BDBDBD</color>
     <color name="icons_or_text">#FFFFFF</color>
+    <color name="transparent_white">#66FFFFFF</color>
 
     <color name="primaryColor">#546e7a</color>
     <color name="primaryLightColor">#819ca9</color>

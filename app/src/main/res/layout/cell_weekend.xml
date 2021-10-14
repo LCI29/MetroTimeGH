@@ -29,7 +29,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/weekend_string"
             android:textColor="@color/primary_text"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:dayName="@{day}"
             app:layout_constraintStart_toEndOf="@+id/dayOfWeek"
             app:layout_constraintTop_toTopOf="@+id/date" />
@@ -43,7 +43,7 @@
             android:paddingBottom="@dimen/cell_date_bottom_padding"
             android:text="20"
             android:textColor="@color/icons_or_text"
-            android:textSize="24sp"
+            android:textSize="24dp"
             app:dayOfMonth="@{day}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,7 @@
             android:paddingBottom="@dimen/cell_day_of_week_bottom_padding"
             android:text="чт"
             android:textColor="@color/icons_or_text"
-            android:textSize="10sp"
+            android:textSize="10dp"
             app:dayOfWeek="@{day}"
             app:layout_constraintBottom_toBottomOf="@+id/date"
             app:layout_constraintEnd_toEndOf="@+id/date"

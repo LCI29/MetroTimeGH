@@ -36,8 +36,8 @@
                 android:layout_weight="1"
                 android:text="@{viewModel.currentMonth.asString}"
                 android:textAlignment="center"
-                android:textSize="18sp"
-                android:textColor="@color/primary_text"/>
+                android:textColor="@color/primary_text"
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/next_button"
@@ -74,20 +74,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/norma"
                             android:layout_gravity="end"
-                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"
+                            android:text="@string/norma"
+                            android:textSize="14dp" />
 
                         <TextView
                             android:id="@+id/progress_percentage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.progressPercentageString}"
-                            android:textColor="@color/primary_text"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
                             android:layout_marginTop="8dp"
-                            android:textAlignment="center" />
+                            android:text="@{viewModel.progressPercentageString}"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_text"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
 
 
                         <com.linkdev.circleprogress.CircularProgress
@@ -100,17 +101,16 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:max="100"
                             app:outerStrokeColor="@color/light_blue_gray"
+                            app:outerStrokeWidth="6dp"
                             app:progress="@{viewModel.currentMonth.normaProgress}"
                             app:progressDirection="Clockwise"
                             app:progressStrokeColor="@color/progressCircleColor"
-                            app:startAngle="Bottom"
-                            app:outerStrokeWidth="6dp"
                             app:progressStrokeWidth="6dp"
+                            app:startAngle="Bottom"
                             app:text="@{viewModel.currentMonth.standardNormaHours.toString()}"
                             app:textColor="@color/primary_text"
                             app:textDisplay="ProgressPercentage"
-                            app:textSize="18sp" />
-
+                            app:textSize="18dp" />
 
 
                         <TextView
@@ -119,7 +119,7 @@
                             android:text="@{viewModel.normaString}"
                             android:textAlignment="center"
                             android:textColor="@color/primary_text"
-                            android:textSize="24sp"
+                            android:textSize="24dp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -259,32 +259,35 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/salary_stat_name"
                             android:layout_gravity="end"
-                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"
+                            android:text="@string/salary_stat_name"
+                            android:textSize="14dp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"
                             android:text="@{viewModel.totalSalaryString}"
                             android:textAlignment="textEnd"
                             android:textColor="@color/primary_text"
-                            android:textSize="32sp"
-                            android:textStyle="normal"
-                            android:layout_marginTop="16dp"
-                            android:paddingEnd="@dimen/cell_paddingBtwElements"/>
+                            android:textSize="32dp"
+                            android:textStyle="normal" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>
         </ScrollView>
+
         <CheckBox
             android:id="@+id/count_future_shifts_chb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_standard"
-            android:text="@string/count_future_shifts"
+            android:layout_marginBottom="8dp"
             android:checked="false"
-            android:layout_marginBottom="8dp"/>
+            android:text="@string/count_future_shifts"
+            android:textSize="14dp" />
     </LinearLayout>
 </layout>

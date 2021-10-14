@@ -158,7 +158,7 @@ fun TextView.showLiveDataString(source: LiveData<String>?) {
 fun TextView.showDurationString(day: DayStatus?) {
     day?.shift?.let {
         val dur = day.timeSpan.duration ?: 0L
-        text = "Длительность: ${(Duration.ofMillis(dur)).inFloatHours(true)}"
+        text = (Duration.ofMillis(dur)).inFloatHours(false)
     }
 }
 

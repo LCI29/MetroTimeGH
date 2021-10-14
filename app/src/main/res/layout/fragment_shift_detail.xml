@@ -23,7 +23,7 @@
             android:paddingTop="120dp"
             android:paddingEnd="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
-            android:textSize="34sp"
+            android:textSize="34dp"
             app:dayNameWithOddEven="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/primary_text"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="normal"
             app:descString="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,17 +56,19 @@
             android:paddingEnd="@dimen/padding_standard"
             android:paddingBottom="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
+            android:textSize="14dp"
+            app:fullDate="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/day_name"
-            tools:text="28 июля 2021"
-            app:fullDate="@{viewModel.MDay}"/>
+            tools:text="28 июля 2021" />
 
         <TextView
             android:id="@+id/reserve_label"
             style="@style/label_shift_style"
             android:layout_marginStart="16dp"
             android:text="@string/reserve"
+            android:textSize="14dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/desc_string"
             app:layout_constraintStart_toStartOf="parent"
             app:showReserve="@{viewModel.MDay}"
@@ -80,6 +82,7 @@
             android:layout_marginStart="8dp"
             android:padding="4dp"
             android:text="@string/atz"
+            android:textSize="14dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/desc_string"
             app:layout_constraintStart_toEndOf="@+id/reserve_label"
             app:layout_goneMarginStart="16dp"
@@ -91,13 +94,14 @@
             durationString="@{viewModel.MDay}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/transparent_white"
+            android:textSize="64dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/date_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/desc_string"
-            tools:text="Длительность: 6,1ч" />
+            tools:text="6,1" />
 
         <TextView
             android:id="@+id/earned_text"
@@ -105,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,13 +123,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/duration_tv"
+            app:layout_constraintTop_toBottomOf="@+id/desc_string"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/notes"
             android:visibility="invisible"
             >
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/notes_textView"
                 android:layout_width="match_parent"
@@ -135,6 +140,7 @@
 
                 android:text="@{viewModel.MDay.notes}"
 
+                android:textSize="18dp"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facue suscipit pharetra. Praesent nec ris" />
         </com.google.android.material.textfield.TextInputLayout>
 
