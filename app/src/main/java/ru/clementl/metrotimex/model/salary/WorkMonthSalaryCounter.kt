@@ -46,9 +46,13 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
                         classBonus +
                         masterBonus +
                         mentorBonus)
+
+    val techUch: Double
+        get() = if (workMonth.wasTechUch) TECH_UCH_Q * rate * 2 * HOUR_MILLI else 0.0
+
     val totalIncome: Double
         get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
-                classBonus + masterBonus + mentorBonus + premia + stageBonus
+                classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch
 
     val ndflSub: Double
         get() = totalIncome * NDFL
@@ -76,7 +80,7 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
             Доплата за вечернее время | ${eveningMillis.inFloatHours()} | ${eveningBonus.salaryStyle()}
             Доплата за ночное время   | ${nightMillis.inFloatHours()} | ${nightBonus.salaryStyle()}
             Надбавка за класс квалиф  | ${endMilli?.getClassQ(statusChangeList)?.times(100)}% | ${classBonus.salaryStyle()}
-            Техническая учеба         | 
+            Техническая учеба         | 2,0ч | ${techUch.salaryStyle()}
             Допл.за практ.обуч.маш.   | ${asMentorMillis.inFloatHours()} | ${mentorBonus.salaryStyle()}
             Допл.за рук-во лок. бр.   | ${asMasterMillis.inFloatHours()} | ${masterBonus.salaryStyle()}
             Выслуга лет               | ${endMilli?.getStageQ(statusChangeList)?.times(100)}% | ${stageBonus.salaryStyle()}

@@ -26,3 +26,11 @@ val MIGRATION_7_8: Migration = object : Migration(7, 8) {
         )
     }
 }
+
+val MIGRATION_8_9: Migration = object : Migration(8, 9) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "ALTER TABLE 'calendar_table' ADD COLUMN 'tech' INTEGER"
+        )
+    }
+}

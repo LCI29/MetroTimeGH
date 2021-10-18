@@ -80,28 +80,44 @@
             style="@style/label_shift_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/reserve"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/label_atz"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:showReserve="@{day}" />
+            android:layout_marginStart="8dp"
+            android:text="@string/reserve_short_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/shiftName"
+            app:layout_constraintStart_toEndOf="@+id/notes_label_shift"
+            app:layout_constraintTop_toTopOf="@+id/shiftName"
+            app:layout_goneMarginEnd="16dp"
+            app:showReserve="@{day}"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/label_atz"
             style="@style/label_shift_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/atz"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/label_reserve"
-            app:showAtz="@{day}" />
+            android:layout_marginStart="8dp"
+            android:text="@string/atz_short_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/shiftName"
+            app:layout_constraintStart_toEndOf="@+id/label_reserve"
+            app:layout_constraintTop_toTopOf="@+id/shiftName"
+            app:layout_goneMarginEnd="16dp"
+            app:showAtz="@{day}"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/label_tech"
+            style="@style/label_shift_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/tech_ucheba_short_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/shiftName"
+            app:layout_constraintStart_toEndOf="@+id/label_atz"
+            app:layout_constraintTop_toTopOf="@+id/shiftName"
+            app:showTech="@{day}"
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/week_divider"

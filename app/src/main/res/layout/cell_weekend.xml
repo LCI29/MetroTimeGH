@@ -84,5 +84,19 @@
             app:layout_constraintStart_toEndOf="@+id/shiftName"
             app:layout_constraintTop_toTopOf="@+id/shiftName"
             app:srcCompat="@drawable/ic_notes" />
+
+        <TextView
+            android:id="@+id/label_tech"
+            style="@style/label_shift_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/tech_ucheba_short_text"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/shiftName"
+            app:layout_constraintStart_toEndOf="@+id/notes_label_weekend"
+            app:layout_constraintTop_toTopOf="@+id/shiftName"
+            app:showTech="@{day}"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

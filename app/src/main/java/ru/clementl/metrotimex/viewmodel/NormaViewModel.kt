@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
@@ -84,7 +85,7 @@ class NormaViewModel(
     }
 
     val totalSalaryString: LiveData<String> = Transformations.map(currentMonth) {
-        it.totalSalary.salaryStyle()
+        WorkMonthSalaryCounter(it).getSalary(LocalDateTime.now().toLong()).salaryStyle()
     }
 
     val lineHoursString: LiveData<String> = Transformations.map(currentMonth) {
@@ -97,6 +98,10 @@ class NormaViewModel(
 
     val progressPercentageString: LiveData<String> = Transformations.map(currentMonth) {
         it.progressString
+    }
+
+    val wasTechUch: LiveData<Boolean> = Transformations.map(currentMonth) {
+        it.wasTechUch
     }
 
     fun setMonth(yearMonth: YearMonth, calendar: List<DayStatus>) {

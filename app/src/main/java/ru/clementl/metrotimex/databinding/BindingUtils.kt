@@ -124,6 +124,13 @@ fun TextView.showAtz(day: DayStatus?) {
     }
 }
 
+@BindingAdapter("showTech")
+fun TextView.showTech(day: DayStatus?) {
+    day?.let {
+        visibility = if (it.hasTechUch) View.VISIBLE else View.GONE
+    }
+}
+
 @BindingAdapter("simpleStateDesc")
 fun TextView.simpleStateDesc(simpleState: LiveData<SimpleState>) {
     logd("onStart simpleStateDesc BindingAdapter")

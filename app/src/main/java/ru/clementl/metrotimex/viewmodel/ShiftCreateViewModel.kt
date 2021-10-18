@@ -61,6 +61,10 @@ class ShiftCreateViewModel(
     val hasAtzLive: LiveData<Boolean>
         get() = _hasAtzLive
 
+    private var _hasTechLive = MutableLiveData<Boolean>()
+    val hasTechLive: LiveData<Boolean>
+        get() = _hasTechLive
+
     private val _startLocsList = MutableLiveData<List<String>>(listOf())
     val startLocList: LiveData<List<String>>
         get() = _startLocsList
@@ -70,7 +74,6 @@ class ShiftCreateViewModel(
         get() = _endLocsList
 
 
-
     init {
         _startTime.value = initialStartTime
         _endTime.value = initialEndTime
@@ -78,6 +81,7 @@ class ShiftCreateViewModel(
         _workDayTypeLive.value = editingDay?.workDayType ?: WorkDayType.SHIFT
         _isReserveLive.value = editingDay?.shift?.isReserve ?: false
         _hasAtzLive.value = editingDay?.shift?.hasAtz ?: false
+        _hasTechLive.value = editingDay?.hasTechUch ?: false
         initializeLocLists()
     }
 
@@ -94,7 +98,6 @@ class ShiftCreateViewModel(
             _endDate.value = startDate.value?.plusDays(1)
         }
     }
-
 
 
     private suspend fun getFirstFreeDateFromDb(): LocalDate {
@@ -140,6 +143,10 @@ class ShiftCreateViewModel(
         _hasAtzLive.value = isChecked
     }
 
+    fun onTechChecked(isChecked: Boolean) {
+        _hasTechLive.value = isChecked
+    }
+
     override fun onCleared() {
         super.onCleared()
         logd("ShiftCreateViewModel cleared")
@@ -152,6 +159,7 @@ class ShiftCreateViewModel(
         val wdt = workDayTypeLive.value ?: throw IllegalStateException("workDayType not set")
         val isReserve = isReserveLive.value ?: throw IllegalStateException("isReserve not set")
         val hasAtz = hasAtzLive.value ?: throw IllegalStateException("hasAtz not set")
+        val hasTech = hasTechLive.value ?: throw IllegalStateException("hasTech not set")
         val shift = if (workDayTypeLive.value == WorkDayType.SHIFT) {
             Shift(
                 name = if (name.isEmpty()) "Смена" else name,
@@ -167,7 +175,10 @@ class ShiftCreateViewModel(
         } else {
             null
         }
-        return DayStatus(date.toLong(), wdt.toInt(), shift, notes)
+        return DayStatus(
+            date.toLong(), wdt.toInt(), shift, notes,
+            hasTechUchInt = if (hasTech) 1 else 0
+        )
     }
 
     fun createDaysInRange(): List<DayStatus> {
@@ -181,15 +192,19 @@ class ShiftCreateViewModel(
             list.add(DayStatus(d.toLong(), wdt.toInt(), null))
             d = d.plusDays(1)
         }
-        logd("""
+        logd(
+            """
             LIST = $list
-        """.trimIndent())
+        """.trimIndent()
+        )
         return list
     }
 
     fun onWorkDayTypeChanged(workDayType: WorkDayType) {
         _workDayTypeLive.value = workDayType
     }
+
+
 }
 
 class ShiftCreateViewModelFactory(

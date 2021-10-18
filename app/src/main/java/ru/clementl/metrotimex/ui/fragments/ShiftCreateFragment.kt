@@ -137,6 +137,9 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             atzCheckBox.setOnClickListener {
                 shiftCreateViewModel.onAtzChecked(atzCheckBox.isChecked)
             }
+            techCheckBox.setOnClickListener {
+                shiftCreateViewModel.onTechChecked(techCheckBox.isChecked)
+            }
             shiftCreateViewModel.startLocList.observe(viewLifecycleOwner) {
                 etStartPlace.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listStartLocs))
             }
@@ -179,6 +182,9 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             })
             hasAtzLive.observe(viewLifecycleOwner, {
                 binding!!.atzCheckBox.isChecked = it
+            })
+            hasTechLive.observe(viewLifecycleOwner, {
+                binding!!.techCheckBox.isChecked = it
             })
 //            startLocList.observe(viewLifecycleOwner, {
 //                binding!!.etStartPlace.setAdapter(ArrayAdapter<String>(

@@ -108,6 +108,12 @@ class NormaFragment : Fragment() {
             binding.cellAsMentorHours.statValue.text = it
         }
 
+        normaViewModel.wasTechUch.observe(viewLifecycleOwner) { was ->
+            binding.cellTechUcheba.statValue.setImageResource(
+                if (was) R.drawable.ic_checked_green else R.drawable.ic_x_gray
+            )
+        }
+
         binding.countFutureShiftsChb.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 normaViewModel.onCheckedCountFuture()
@@ -128,6 +134,7 @@ class NormaFragment : Fragment() {
             }
         }
 
+        // Logging salary list of chosen month
         normaViewModel.currentMonth.observe(viewLifecycleOwner) {
             normaViewModel.logWorkMonth(it)
         }

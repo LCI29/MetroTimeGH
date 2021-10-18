@@ -28,7 +28,7 @@
                 android:layout_marginEnd="@dimen/margin_between_elements"
                 android:layout_weight="1"
                 android:text="@string/button_cancel"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/save_button"
@@ -37,7 +37,7 @@
                 android:layout_marginStart="@dimen/margin_between_elements"
                 android:layout_weight="1"
                 android:text="@string/button_save"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Смена/Выходной"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/sp_day_type" />
 
@@ -69,7 +69,7 @@
                     android:inputType="textPersonName"
                     android:completionThreshold="0"
                     android:maxLength="5"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     app:endLoc="@{viewModel.editingDay}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -87,7 +87,7 @@
                     android:completionThreshold="0"
                     android:inputType="textPersonName"
                     android:maxLength="5"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/et_end_place"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +101,7 @@
                     android:layout_marginStart="8dp"
                     android:text="16:00"
                     android:textColor="@color/icons_or_text"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/button_start_time"
@@ -115,7 +115,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="8:00"
                     android:textColor="@color/icons_or_text"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@+id/button_end_time"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Окончание"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/button_end_time"
                     app:layout_constraintTop_toBottomOf="@+id/et_shift_name_layout" />
 
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Начало"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/button_start_time"
                     app:layout_constraintTop_toBottomOf="@+id/et_shift_name_layout" />
 
@@ -150,7 +150,7 @@
                     android:text="@string/button_choose_date"
                     android:textAllCaps="false"
                     android:textColor="@color/icons_or_text"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/sp_day_type" />
 
                 <Button
@@ -161,7 +161,7 @@
                     android:text="@string/button_choose_date"
                     android:textAllCaps="false"
                     android:textColor="@color/icons_or_text"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:visibility="invisible"
                     app:layout_constraintTop_toBottomOf="@id/sp_day_type" />
 
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:maxLength="7"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reserve"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_start_place" />
 
@@ -215,9 +215,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/atz"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/reserve_check_box"
                     app:layout_constraintTop_toBottomOf="@+id/reserve_check_box" />
+
+                <CheckBox
+                    android:id="@+id/tech_check_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tech_ucheba"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/atz_check_box"
+                    app:layout_constraintTop_toBottomOf="@+id/atz_check_box" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -228,7 +237,7 @@
                     app:endIconMode="clear_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/atz_check_box">
+                    app:layout_constraintTop_toBottomOf="@+id/tech_check_box">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/notes_textInputEditText"
@@ -236,7 +245,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.editingDay.notes}"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

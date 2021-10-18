@@ -243,6 +243,26 @@
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_premia"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    >
+
+                    <include
+                        android:id="@+id/cell_tech_ucheba"
+                        layout="@layout/tu_element" />
+                </com.google.android.material.card.MaterialCardView>
+
 
 
                 <com.google.android.material.card.MaterialCardView

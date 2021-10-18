@@ -33,6 +33,8 @@ data class WorkMonth(
 
     val allShifts: List<DayStatus> = listOfDays.filter { it.shift != null }
 
+    val wasTechUch: Boolean = listOfDays.any { it.hasTechUch }
+
     val sundaysAndHolidaysCount = countSundaysAndHolidays()
     private fun countSundaysAndHolidays(): Int {
         var sundays = 0

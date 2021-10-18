@@ -29,11 +29,15 @@ data class DayStatus(
     val shift: Shift?,
 
     @ColumnInfo(name = "day_notes", typeAffinity = ColumnInfo.TEXT)
-    val notes: String? = null
+    val notes: String? = null,
+
+    @ColumnInfo(name = "tech", typeAffinity = ColumnInfo.INTEGER)
+    val hasTechUchInt: Int? = 0
 
 ) {
     @Ignore val date = dateLong.toDate()
     @Ignore val workDayType = workDayTypeInt?.toWorkDayType()
+    @Ignore val hasTechUch: Boolean = hasTechUchInt == 1
 
     val startDateTime: LocalDateTime
         get() {

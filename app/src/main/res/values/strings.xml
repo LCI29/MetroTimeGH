@@ -47,6 +47,10 @@
     <string name="notes">Примечания</string>
     <string name="end_place">Место окончания</string>
     <string name="start_place">Место начала</string>
+    <string name="tech_ucheba">Техучеба</string>
+    <string name="reserve_short_text">РЕЗ</string>
+    <string name="atz_short_text">АТЗ</string>
+    <string name="tech_ucheba_short_text">ТУ</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>
