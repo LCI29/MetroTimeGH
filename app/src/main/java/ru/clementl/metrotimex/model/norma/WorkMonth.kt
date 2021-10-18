@@ -8,6 +8,7 @@ import ru.clementl.metrotimex.model.data.WorkDayType.*
 import ru.clementl.metrotimex.model.data.WorkDayType.MEDIC_DAY
 import ru.clementl.metrotimex.utils.asShortString
 import ru.clementl.metrotimex.utils.inFloatHours
+import ru.clementl.metrotimex.utils.salaryStyle
 import java.time.*
 
 data class WorkMonth(
@@ -20,6 +21,8 @@ data class WorkMonth(
 ) {
 
     val standardNormaHours = NORMA_MAP[yearMonth]
+    val endStatus: MachinistStatus
+        get() = endMilli.getMachinistStatus(statusChangeList)
     val progressString: String
         get() = "${normaProgress.toInt()}%"
 
@@ -135,8 +138,10 @@ data class WorkMonth(
     val nightMillis: Long
         get() = wideListOfDays
             .sumOf {
-                (it.nightSpans()[0]?.intersect(this)?.duration ?: 0) +
-                        (it.nightSpans()[1]?.intersect(this)?.duration ?: 0)
+                val nightSpans = it.nightSpans()
+                (nightSpans[0]?.intersect(this)?.duration ?: 0) +
+                        (nightSpans[1]?.intersect(this)?.duration ?: 0) +
+                        (nightSpans[2]?.intersect(this)?.duration ?: 0)
             }
 
     val totalSalary: Double
@@ -181,6 +186,8 @@ data class WorkMonth(
 
 
     val asString = yearMonth.asShortString()
+
+
 
     companion object {
         fun of(

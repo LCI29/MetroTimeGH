@@ -3,6 +3,7 @@ package ru.clementl.metrotimex.model.salary
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.*
+import ru.clementl.metrotimex.utils.logd
 import java.time.LocalDateTime
 
 data class MachinistSalaryCounter(val machinistStatus: MachinistStatus, val day: DayStatus) : SalaryCounter {
@@ -31,7 +32,7 @@ data class MachinistSalaryCounter(val machinistStatus: MachinistStatus, val day:
         get() = goneSpan.intersect(evening)?.duration ?: 0
     val nightDurationMilli: Long
         get() = (goneSpan.intersect(night1)?.duration ?: 0) + (goneSpan.intersect(night2)?.duration ?: 0)
-
+//        get() = day.date.nightSpansOf().mapNotNull { it.intersect(goneSpan)?.duration }.sum()
     val rate: Double = when {
         shift.isReserve == true -> machinistStatus.rateReserveLightMilli
         shift.hasAtz == true -> machinistStatus.rateAtzShiftPerMilli
@@ -107,7 +108,7 @@ data class MachinistSalaryCounter(val machinistStatus: MachinistStatus, val day:
     override fun getSalary(moment: Long): Double {
         this.moment = moment.coerceAtMost(day.endPoint.milli)
         if (day.workDayType != WorkDayType.SHIFT) return 0.0
-//        println(
+//        logd(
 //            """
 //            baseSalary = $baseSalary
 //
@@ -130,6 +131,8 @@ data class MachinistSalaryCounter(val machinistStatus: MachinistStatus, val day:
 //
 //            NDFL = -$ndflSubtraction
 //            PROFSOUZ = -$unionSubtraction
+//
+//            SALARY = ${income - ndflSubtraction - unionSubtraction}
 //        """.trimIndent()
 //        )
         return income - ndflSubtraction - unionSubtraction

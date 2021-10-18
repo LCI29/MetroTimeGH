@@ -33,6 +33,12 @@ interface CalendarDao {
     @Query("SELECT * FROM calendar_table WHERE date >= :dayId ORDER BY date LIMIT :count")
     suspend fun loadDaysAfterAndThis(dayId: Long, count: Int): List<DayStatus>
 
+    @Query("SELECT start FROM (SELECT start_loc as start, COUNT(start_loc) as count FROM calendar_table GROUP BY start_loc order by count desc)")
+    suspend fun getAllStartLocations(): List<String>
+
+    @Query("SELECT endloc FROM (SELECT end_loc as endloc, COUNT(start_loc) as count FROM calendar_table GROUP BY end_loc order by count desc)")
+    suspend fun getAllEndLocations(): List<String>
+
 
 
 

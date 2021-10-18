@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel" />
@@ -23,7 +24,7 @@
             android:paddingTop="120dp"
             android:paddingEnd="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
-            android:textSize="34dp"
+            android:textSize="34sp"
             app:dayNameWithOddEven="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +39,11 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:textColor="@color/primary_text"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="normal"
             app:descString="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/date_text"
             tools:text="10:27 СК - 19:05 СК" />
@@ -56,7 +57,7 @@
             android:paddingEnd="@dimen/padding_standard"
             android:paddingBottom="@dimen/padding_standard"
             android:textColor="@color/icons_or_text"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:fullDate="@{viewModel.MDay}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,10 +68,11 @@
             android:id="@+id/reserve_label"
             style="@style/label_shift_style"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/reserve"
-            android:textSize="14dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/desc_string"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/desc_string"
             app:showReserve="@{viewModel.MDay}"
             tools:visibility="visible" />
 
@@ -80,11 +82,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:padding="4dp"
             android:text="@string/atz"
-            android:textSize="14dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/desc_string"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/reserve_label"
+            app:layout_constraintTop_toBottomOf="@+id/desc_string"
             app:layout_goneMarginStart="16dp"
             app:showAtz="@{viewModel.MDay}"
             tools:visibility="visible" />
@@ -97,7 +100,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/transparent_white"
-            android:textSize="64dp"
+            android:textSize="72dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/date_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,40 +112,49 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="6458.65 P" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/notes_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/earned_text"
             app:layout_constraintTop_toBottomOf="@+id/desc_string"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/notes"
-            android:visibility="invisible"
-            >
+            tools:layout_editor_absoluteX="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/notes_textView"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notes_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
-                android:focusable="false"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/notes"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/desc_string">
 
-                android:text="@{viewModel.MDay.notes}"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notes_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondary_text"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:text="@{viewModel.MDay.notes}"
+                    android:textSize="18sp"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facue suscipit pharetra. Praesent nec ris" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                android:textSize="18dp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facue suscipit pharetra. Praesent nec ris" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

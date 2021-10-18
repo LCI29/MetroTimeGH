@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Spinner
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
@@ -43,6 +44,8 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var arguments: ShiftCreateFragmentArgs
     val calendarViewModel: CalendarViewModel by activityViewModels()
     val sharedViewModel: SharedViewModel by activityViewModels()
+    private lateinit var listStartLocs: List<String>
+    private lateinit var listEndLocs: List<String>
 
 
 
@@ -74,6 +77,19 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ViewModelProvider(
                 this, viewModelFactory).get(ShiftCreateViewModel::class.java)
         binding!!.viewModel = shiftCreateViewModel
+
+        // filling suggesting lists
+        shiftCreateViewModel.startLocList.observe(viewLifecycleOwner) {
+            listStartLocs = it.filterNotNull().filter { str -> str.isNotBlank() }.toList()
+//            logd(it.toString())
+        }
+
+        shiftCreateViewModel.endLocList.observe(viewLifecycleOwner) {
+            listEndLocs = it.filterNotNull().filter { str -> str.isNotBlank() }.toList()
+//            logd("$it")
+        }
+
+
 
         // make spinner
         spinner = binding!!.spDayType
@@ -121,6 +137,22 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             atzCheckBox.setOnClickListener {
                 shiftCreateViewModel.onAtzChecked(atzCheckBox.isChecked)
             }
+            shiftCreateViewModel.startLocList.observe(viewLifecycleOwner) {
+                etStartPlace.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listStartLocs))
+            }
+            shiftCreateViewModel.endLocList.observe(viewLifecycleOwner) {
+                etEndPlace.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, listEndLocs))
+            }
+
+            etStartPlace.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) (v as AutoCompleteTextView).showDropDown()
+                else (v as AutoCompleteTextView).dismissDropDown()
+            }
+            etEndPlace.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) (v as AutoCompleteTextView).showDropDown()
+                else (v as AutoCompleteTextView).dismissDropDown()
+            }
+
 
         }
 
@@ -148,6 +180,11 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
             hasAtzLive.observe(viewLifecycleOwner, {
                 binding!!.atzCheckBox.isChecked = it
             })
+//            startLocList.observe(viewLifecycleOwner, {
+//                binding!!.etStartPlace.setAdapter(ArrayAdapter<String>(
+//                    requireContext(), android.R.layout.simple_list_item_1, if (it == null) listOf("Noo") else it
+//                ))
+//            })
         }
 
         binding!!.saveButton.setOnClickListener {

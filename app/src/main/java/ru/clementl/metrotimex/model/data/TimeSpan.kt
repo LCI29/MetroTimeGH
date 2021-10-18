@@ -72,7 +72,13 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
                 LocalDateTime.of(date, EVENING_TILL).toLong()
             )
 
-        fun nightEarlyOf(date: LocalDate): TimeSpan =
+        fun nightEarlyOfThis(date: LocalDate): TimeSpan =
+            TimeSpan(
+                LocalDateTime.of(date, LocalTime.MIN).toLong(),
+                LocalDateTime.of(date, NIGHT_TILL).toLong()
+            )
+
+        fun nightEarlyOfNext(date: LocalDate): TimeSpan =
             TimeSpan(
                 LocalDateTime.of(date.plusDays(1), LocalTime.MIN).toLong(),
                 LocalDateTime.of(date.plusDays(1), NIGHT_TILL).toLong()
@@ -83,10 +89,24 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
                 LocalDateTime.of(date, NIGHT_FROM).toLong(),
                 LocalDateTime.of(date, LocalTime.MAX).toLong()
             )
+
+
     }
 
     override fun toString(): String {
         return "[$startMilli, $endMilli]"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (null == other) return false
+        if (other !is TimeSpan) return false
+        return this.startMilli == other.startMilli && this.endMilli == other.endMilli
+    }
+
+    override fun hashCode(): Int {
+        val a = (startMilli?.div(10000) ?: 0).toInt()
+        val b = (endMilli?.div(10000) ?: 0).toInt()
+        return a + b
     }
 }
 
@@ -115,6 +135,14 @@ operator fun Long.compareTo(timeSpan: TimeSpan): Int {
 fun TimeSpan.isFinished(): Boolean {
     val end = endMilli ?: return false
     return LocalDateTime.now().isAfter(end.toDateTime())
+}
+
+fun LocalDate.nightSpansOf(): List<TimeSpan> {
+    return listOf(
+        TimeSpan.nightEarlyOfThis(this),
+        TimeSpan.nightLateOf(this),
+        TimeSpan.nightEarlyOfNext(this)
+    )
 }
 
 

@@ -71,6 +71,10 @@ fun Duration.inFloatHours(withH: Boolean = true): String {
     return String.format("%.1f${if (withH) "ч" else ""}", toMillis().toDouble() / HOUR_MILLI)
 }
 
+fun Long.inFloatHours(withH: Boolean = true): String {
+    return Duration.ofMillis(this).inFloatHours(withH)
+}
+
 fun Double.inFloatHours(withH: Boolean = true, decimals: Int = 1): String {
     return String.format("%.${decimals}f${if (withH) "ч" else ""}", this)
 }

@@ -49,6 +49,14 @@ class CalendarRepository(private val calendarDao: CalendarDao) {
         return calendarDao.loadDaysAfterAndThis(dayId, count.coerceAtLeast(0))
     }
 
+    suspend fun getStartLocations(): List<String> {
+        return calendarDao.getAllStartLocations()
+    }
+
+    suspend fun getEndLocations(): List<String> {
+        return calendarDao.getAllEndLocations()
+    }
+
 
 
 

@@ -58,15 +58,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/sp_day_type" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/et_end_place"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
-                    android:hint="Место окончания"
+                    android:hint="@string/end_place"
                     android:inputType="textPersonName"
+                    android:completionThreshold="0"
                     android:maxLength="5"
                     android:textSize="18dp"
                     app:endLoc="@{viewModel.editingDay}"
@@ -75,14 +76,15 @@
                     app:layout_constraintStart_toEndOf="@+id/et_start_place"
                     app:layout_constraintTop_toBottomOf="@+id/button_end_time" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/et_start_place"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:ems="10"
-                    android:hint="Место начала"
+                    android:hint="@string/start_place"
+                    android:completionThreshold="0"
                     android:inputType="textPersonName"
                     android:maxLength="5"
                     android:textSize="18dp"
@@ -230,6 +232,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/notes_textInputEditText"
+                        android:inputType="textCapSentences|textMultiLine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.editingDay.notes}"

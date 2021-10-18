@@ -61,6 +61,14 @@ class ShiftCreateViewModel(
     val hasAtzLive: LiveData<Boolean>
         get() = _hasAtzLive
 
+    private val _startLocsList = MutableLiveData<List<String>>(listOf())
+    val startLocList: LiveData<List<String>>
+        get() = _startLocsList
+
+    private val _endLocsList = MutableLiveData<List<String>>(listOf())
+    val endLocList: LiveData<List<String>>
+        get() = _endLocsList
+
 
 
     init {
@@ -70,6 +78,14 @@ class ShiftCreateViewModel(
         _workDayTypeLive.value = editingDay?.workDayType ?: WorkDayType.SHIFT
         _isReserveLive.value = editingDay?.shift?.isReserve ?: false
         _hasAtzLive.value = editingDay?.shift?.hasAtz ?: false
+        initializeLocLists()
+    }
+
+    private fun initializeLocLists() {
+        viewModelScope.launch {
+            _startLocsList.value = repository.getStartLocations()
+            _endLocsList.value = repository.getEndLocations()
+        }
     }
 
     fun initializeStartAndEndDate() {

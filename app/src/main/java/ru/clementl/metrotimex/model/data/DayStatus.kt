@@ -191,10 +191,11 @@ fun DayStatus.eveningSpan(): TimeSpan? {
 }
 
 fun DayStatus.nightSpans(): List<TimeSpan?> {
-    if (!isShift()) return listOf(null, null)
+    if (!isShift()) return listOf(null, null, null)
     return listOf(
-        timeSpan.intersect(TimeSpan.nightEarlyOf(date)),
-        timeSpan.intersect(TimeSpan.nightLateOf(date))
+        timeSpan.intersect(TimeSpan.nightEarlyOfThis(date)),
+        timeSpan.intersect(TimeSpan.nightLateOf(date)),
+        timeSpan.intersect(TimeSpan.nightEarlyOfNext(date))
     )
 }
 

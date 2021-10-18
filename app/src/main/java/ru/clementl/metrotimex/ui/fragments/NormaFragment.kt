@@ -127,6 +127,13 @@ class NormaFragment : Fragment() {
                 normaViewModel.setMonth(it.next())
             }
         }
+
+        normaViewModel.currentMonth.observe(viewLifecycleOwner) {
+            normaViewModel.logWorkMonth(it)
+        }
+
+
+
         return _binding?.root
     }
 

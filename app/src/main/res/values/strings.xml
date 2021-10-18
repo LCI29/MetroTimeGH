@@ -45,6 +45,8 @@
 
     <string name="change_theme_toast_message">Тема будет изменена после перезапуска приложения</string>
     <string name="notes">Примечания</string>
+    <string name="end_place">Место окончания</string>
+    <string name="start_place">Место начала</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

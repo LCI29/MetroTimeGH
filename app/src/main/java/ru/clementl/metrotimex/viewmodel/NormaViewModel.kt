@@ -8,9 +8,11 @@ import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.norma.WorkMonth
+import ru.clementl.metrotimex.model.salary.WorkMonthSalaryCounter
 import ru.clementl.metrotimex.utils.inFloatHours
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.salaryStyle
+import java.lang.Exception
 import java.lang.IllegalStateException
 import java.time.Duration
 import java.time.LocalDateTime
@@ -112,6 +114,10 @@ class NormaViewModel(
 
     fun onCheckedCountFuture() {
         setMonth(currentMonth.value?.yearMonth ?: YearMonth.now(), calendar)
+    }
+
+    fun logWorkMonth(workMonth: WorkMonth) {
+        logd(WorkMonthSalaryCounter(workMonth).logList())
     }
 
 }
