@@ -162,10 +162,10 @@
                     android:id="@+id/notes_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text"
                     android:editable="false"
                     android:focusable="false"
                     android:text="@{viewModel.MDay.notes}"
+                    android:textColor="@color/default_text_view"
                     android:textSize="18sp"
                     tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas facue suscipit pharetra. Praesent nec ris" />
             </com.google.android.material.textfield.TextInputLayout>

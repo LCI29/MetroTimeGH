@@ -51,6 +51,7 @@
     <string name="reserve_short_text">РЕЗ</string>
     <string name="atz_short_text">АТЗ</string>
     <string name="tech_ucheba_short_text">ТУ</string>
+    <string name="premium">Премия</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

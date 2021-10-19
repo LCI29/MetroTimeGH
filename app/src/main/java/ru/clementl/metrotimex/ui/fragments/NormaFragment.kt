@@ -108,6 +108,10 @@ class NormaFragment : Fragment() {
             binding.cellAsMentorHours.statValue.text = it
         }
 
+        binding.cellPremia.statName.text = stringFrom(R.string.premium)
+        //TODO
+        binding.cellPremia.statValue.text = "25%"
+
         normaViewModel.wasTechUch.observe(viewLifecycleOwner) { was ->
             binding.cellTechUcheba.statValue.setImageResource(
                 if (was) R.drawable.ic_checked_green else R.drawable.ic_x_gray

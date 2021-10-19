@@ -120,7 +120,7 @@ class TonightViewModel(private val repository: CalendarRepository, val machinist
         val startPointMilli = _currentInterval.value?.startPoint?.milli ?: Long.MIN_VALUE
         val gone = currentMilli - startPointMilli
 
-        val progress = ((gone.toDouble() / duration.toDouble()) * 100).toInt()
+        val progress = ((gone.toDouble() / duration.toDouble()) * 10000).toInt()
         progress
     }
 

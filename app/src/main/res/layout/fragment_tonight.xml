@@ -27,17 +27,21 @@
             android:paddingEnd="@dimen/padding_standard"
             android:paddingBottom="@dimen/padding_standard">
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/interval_progress"
-                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
+                android:max="10000"
                 android:progress="@{viewModel.progress}"
+                app:indicatorColor="@color/orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/simple_status_text" />
+                app:layout_constraintTop_toBottomOf="@+id/simple_status_text"
+                app:trackColor="@color/blue_gray"
+                app:trackCornerRadius="2dp"
+                app:trackThickness="3dp" />
 
             <TextView
                 android:id="@+id/simple_status_text"
@@ -74,6 +78,7 @@
                 android:id="@+id/interval_time_gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/icons_or_text"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/interval_progress"
@@ -84,6 +89,7 @@
                 android:id="@+id/interval_time_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@{viewModel.timeLeft}"
                 android:textColor="@color/icons_or_text"
                 android:textSize="14sp"
@@ -95,6 +101,7 @@
                 android:id="@+id/percent_progress"
                 android:layout_width="72dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/label_round_corner_white"
                 android:text="@{viewModel.percentProgress}"
                 android:textAlignment="center"

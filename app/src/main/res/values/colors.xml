@@ -34,5 +34,6 @@
     <color name="today_calendar_color">@color/light_blue_gray</color>
     <color name="label_round_background">@color/white</color>
     <color name="finished_color">@color/icons_or_text</color>
+    <color name="default_text_view">#8a000000</color>
 
 </resources>

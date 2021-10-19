@@ -29,4 +29,5 @@
     <color name="today_calendar_color">@color/light_blue_gray_20</color>
     <color name="label_round_background">@color/icons_or_text</color>
     <color name="finished_color">@color/light_black</color>
+    <color name="default_text_view">#b3ffffff</color>
 </resources>
