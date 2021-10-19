@@ -34,3 +34,11 @@ val MIGRATION_8_9: Migration = object : Migration(8, 9) {
         )
     }
 }
+
+val MIGRATION_9_10: Migration = object : Migration(9, 10) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL(
+            "CREATE TABLE year_month_data_table ('year_month' INTEGER PRIMARY KEY NOT NULL, 'premia' REAL DEFAULT 0.0)"
+        )
+    }
+}

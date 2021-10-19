@@ -7,21 +7,21 @@ import androidx.room.RoomDatabase
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.Shift
+import ru.clementl.metrotimex.model.norma.YearMonthData
 import ru.clementl.metrotimex.model.room.daos.CalendarDao
 import ru.clementl.metrotimex.model.room.daos.MachinistStatusChangeDao
-import ru.clementl.metrotimex.model.room.migration.MIGRATION_5_6
-import ru.clementl.metrotimex.model.room.migration.MIGRATION_6_7
-import ru.clementl.metrotimex.model.room.migration.MIGRATION_7_8
-import ru.clementl.metrotimex.model.room.migration.MIGRATION_8_9
+import ru.clementl.metrotimex.model.room.daos.YearMonthDataDao
+import ru.clementl.metrotimex.model.room.migration.*
 
 @Database(
-    entities = arrayOf(Shift::class, DayStatus::class, MachinistStatus::class),
-    version = 9
+    entities = [Shift::class, DayStatus::class, MachinistStatus::class, YearMonthData::class],
+    version = 10
 )
 abstract class MetroTimeDatabase : RoomDatabase() {
 
     abstract fun dayStatusDao(): CalendarDao
     abstract fun machinistStatusChangeDao(): MachinistStatusChangeDao
+    abstract fun yearMonthDataDao(): YearMonthDataDao
 
     companion object {
         @Volatile
@@ -38,6 +38,7 @@ abstract class MetroTimeDatabase : RoomDatabase() {
                     .addMigrations(MIGRATION_6_7)
                     .addMigrations(MIGRATION_7_8)
                     .addMigrations(MIGRATION_8_9)
+                    .addMigrations(MIGRATION_9_10)
                     .build()
                 INSTANCE = instance
                 instance

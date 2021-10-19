@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import ru.clementl.metrotimex.MetroTimeApplication
 import ru.clementl.metrotimex.R
 import ru.clementl.metrotimex.model.data.MachinistStatus
+import ru.clementl.metrotimex.utils.logd
 
 const val ON_POST_SINCE_KEY = "on_post_since"
 const val QUALIFICATION_CLASS_KEY = "qualification_class"
@@ -40,13 +41,14 @@ class ProfileFragment : PreferenceFragmentCompat() {
         )
 
         for (preference in machinistPreferences) {
-            preference?.setOnPreferenceChangeListener { _, _ ->
+            preference?.setOnPreferenceChangeListener { preference, _ ->
                 CoroutineScope(Job() + Dispatchers.Default).launch {
                     repository.insert(MachinistStatus.create(
                         prefs.machinist(),
                         ratePerHour = prefs.ratePerHour()
                     ))
                 }
+                logd("$preference changed")
                 true
             }
         }

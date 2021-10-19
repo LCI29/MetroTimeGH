@@ -46,13 +46,17 @@ class MainActivity : AppCompatActivity() {
         // against statuses
         val statusRepository = (application as MetroTimeApplication).machinistStatusRepository
         val calendarRepo = (application as MetroTimeApplication).repository
-        val statusViewModelFactory = StatusViewModelFactory(statusRepository)
+        val yearMonthRepository = (application as MetroTimeApplication).yearMonthRepository
+        val statusViewModelFactory = StatusViewModelFactory(statusRepository, yearMonthRepository)
         statusViewModel = ViewModelProvider(
             this, statusViewModelFactory).get(StatusViewModel::class.java)
         statusViewModel.liveStatusList.observe(this) {
 //                        logd("""
 //                statuses MA = ${it}
 //            """.trimIndent())
+        }
+        statusViewModel.liveYearMonthData.observe(this) {
+
         }
         val calendarViewModelFactory = CalendarViewModelFactory(calendarRepo, statusRepository)
         calendarViewModel = ViewModelProvider(

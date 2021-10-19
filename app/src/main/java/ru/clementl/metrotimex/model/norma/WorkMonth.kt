@@ -1,5 +1,8 @@
 package ru.clementl.metrotimex.model.norma
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong
@@ -9,12 +12,14 @@ import ru.clementl.metrotimex.model.data.WorkDayType.MEDIC_DAY
 import ru.clementl.metrotimex.utils.asShortString
 import ru.clementl.metrotimex.utils.inFloatHours
 import ru.clementl.metrotimex.utils.salaryStyle
+import ru.clementl.metrotimex.utils.toYearMonth
 import java.time.*
 
 data class WorkMonth(
     val yearMonth: YearMonth,
     val calendar: List<DayStatus>,
-    val statusChangeList: List<MachinistStatus>
+    val statusChangeList: List<MachinistStatus>,
+    val yearMonthData: List<YearMonthData>
 ) : TimeSpan(
     yearMonth.atDay(1).atStartOfDay().toLong(),
     yearMonth.atEndOfMonth().atTime(LocalTime.MAX).toLong()
@@ -34,6 +39,8 @@ data class WorkMonth(
     val allShifts: List<DayStatus> = listOfDays.filter { it.shift != null }
 
     val wasTechUch: Boolean = listOfDays.any { it.hasTechUch }
+
+    val premia: Double = yearMonthData.find { it.yearMonth == yearMonth }?.premia?.div(100) ?: endStatus.monthBonus.toDouble().div(100)
 
     val sundaysAndHolidaysCount = countSundaysAndHolidays()
     private fun countSundaysAndHolidays(): Int {
@@ -151,16 +158,14 @@ data class WorkMonth(
             .sumOf { it.finalSalary(it.dateLong.getMachinistStatus(statusChangeList)) }
 
 
-
-
     fun countOf(workDayType: WorkDayType): Int = listOfDays.count { it.isA(workDayType) }
 
     fun previous(): WorkMonth {
-        return of(yearMonth.minusMonths(1), calendar, statusChangeList)
+        return of(yearMonth.minusMonths(1), calendar, statusChangeList, yearMonthData)
     }
 
     fun next(): WorkMonth {
-        return of(yearMonth.plusMonths(1), calendar, statusChangeList)
+        return of(yearMonth.plusMonths(1), calendar, statusChangeList, yearMonthData)
     }
 
 
@@ -190,47 +195,63 @@ data class WorkMonth(
     val asString = yearMonth.asShortString()
 
 
-
     companion object {
         fun of(
             milli: Long,
             calendar: List<DayStatus> = listOf(),
-            statusChangeList: List<MachinistStatus> = listOf()
+            statusChangeList: List<MachinistStatus> = listOf(),
+            yearMonthData: List<YearMonthData>
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(milli.toDate()), calendar, statusChangeList)
+            return WorkMonth(YearMonth.from(milli.toDate()), calendar, statusChangeList,yearMonthData)
         }
 
         fun of(
             date: LocalDate,
             calendar: List<DayStatus> = listOf(),
-            statusChangeList: List<MachinistStatus> = listOf()
+            statusChangeList: List<MachinistStatus> = listOf(),
+            yearMonthData: List<YearMonthData>
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(date), calendar, statusChangeList)
+            return WorkMonth(YearMonth.from(date), calendar, statusChangeList, yearMonthData)
         }
 
         fun of(
             dateTime: LocalDateTime,
             calendar: List<DayStatus> = listOf(),
-            statusChangeList: List<MachinistStatus> = listOf()
+            statusChangeList: List<MachinistStatus> = listOf(),
+            yearMonthData: List<YearMonthData>
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(dateTime), calendar, statusChangeList)
+            return WorkMonth(YearMonth.from(dateTime), calendar, statusChangeList,yearMonthData)
         }
 
         fun of(
             yearMonth: YearMonth,
             calendar: List<DayStatus> = listOf(),
-            statusChangeList: List<MachinistStatus> = listOf()
+            statusChangeList: List<MachinistStatus> = listOf(),
+            yearMonthData: List<YearMonthData>
         ): WorkMonth {
-            return WorkMonth(yearMonth, calendar, statusChangeList)
+            return WorkMonth(yearMonth, calendar, statusChangeList, yearMonthData)
         }
 
         fun of(
             year: Int,
             month: Int,
             calendar: List<DayStatus> = listOf(),
-            statusChangeList: List<MachinistStatus> = listOf()
+            statusChangeList: List<MachinistStatus> = listOf(),
+            yearMonthData: List<YearMonthData>
         ): WorkMonth {
-            return WorkMonth(YearMonth.of(year, month), calendar, statusChangeList)
+            return WorkMonth(YearMonth.of(year, month), calendar, statusChangeList, yearMonthData)
         }
     }
+}
+
+@Entity(tableName = "year_month_data_table")
+data class YearMonthData(
+    @PrimaryKey @ColumnInfo(name = "year_month", typeAffinity = ColumnInfo.INTEGER) val yearMonthInt: Int,
+    @ColumnInfo(name = "premia") val premiaDb: Double?
+) {
+    val yearMonth: YearMonth
+        get() = yearMonthInt.toYearMonth()
+
+    val premia: Double
+        get() = premiaDb ?: 0.0
 }

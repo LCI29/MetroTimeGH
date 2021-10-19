@@ -52,6 +52,9 @@
     <string name="atz_short_text">АТЗ</string>
     <string name="tech_ucheba_short_text">ТУ</string>
     <string name="premium">Премия</string>
+    <string name="write_premia_size">Задайте размер премии</string>
+    <string name="ok">Ok</string>
+    <string name="premium_in_current_month">Премия (этот месяц)</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

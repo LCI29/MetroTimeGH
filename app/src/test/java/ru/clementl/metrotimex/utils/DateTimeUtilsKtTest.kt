@@ -8,7 +8,7 @@ import org.junit.jupiter.api.RepetitionInfo
 import java.time.LocalDate
 import java.time.LocalTime
 
-internal class TimeUtilsKtTest {
+internal class DateTimeUtilsKtTest {
 
     @RepeatedTest(3)
     fun oddEven(repetitionInfo: RepetitionInfo) {

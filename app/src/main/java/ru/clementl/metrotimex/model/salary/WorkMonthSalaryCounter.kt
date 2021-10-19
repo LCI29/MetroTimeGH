@@ -37,7 +37,7 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val stageBonus: Double
         get() = base * workMonth.endStatus.machinist.getStageQ(workMonth.endMilli!!)
     val premia: Double
-        get() = workMonth.endStatus.machinist.monthBonus *
+        get() = workMonth.premia *
                 (baseLineIncome +
                         baseReserveIncome +
                         baseGapIncome +

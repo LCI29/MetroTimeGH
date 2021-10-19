@@ -30,8 +30,8 @@
         android:inputType="number"
         android:key="month_bonus"
         android:maxLength="3"
-        android:summary="Ожидаемая премия в этом месяце"
-        android:title="Премия, %"
+        android:summary="Нормальная премия в вашем депо"
+        android:title="Стандартная премия, %"
         app:useSimpleSummaryProvider="true" />
     <SwitchPreference
         android:defaultValue="true"

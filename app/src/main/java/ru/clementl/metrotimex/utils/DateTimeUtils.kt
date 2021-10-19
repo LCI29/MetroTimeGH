@@ -87,8 +87,16 @@ fun YearMonth.asShortString(): String {
     return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} $year"
 }
 
-fun main() {
+// Returns Int like 202107 on July 2021
+fun YearMonth.toInt(): Int =
+    if (monthValue < 10) "${year}0$monthValue".toInt() else "${year}$monthValue".toInt()
 
-    println((DAY_MILLI + 14 * HOUR_MILLI).ofPatternTime(true))
+// Returns YearMonth from string like "202107" - July 2021. Throws DateTimeException
+// if month will be not in 1..12
+fun Int.toYearMonth(): YearMonth = YearMonth.of(this / 100, this % 100)
+
+
+fun main() {
+    println((202113).toYearMonth())
 }
 
