@@ -78,6 +78,8 @@ fun Long.getStageQ(statusChangeList: List<MachinistStatus>): Double {
 
 fun Long.getUnionQ(statusChangeList: List<MachinistStatus>) = getMachinistStatus(statusChangeList).machinist.getUnionQ()
 
+fun Long.getSickListQ(statusChangeList: List<MachinistStatus>) = getMachinistStatus(statusChangeList).machinist.getSickListQ(moment = this)
+
 fun Long?.getMachinistStatus(list: List<MachinistStatus>) =
     list.findLast {
         it.date <= this ?: 0

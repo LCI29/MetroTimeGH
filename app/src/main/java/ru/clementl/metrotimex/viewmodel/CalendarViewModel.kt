@@ -9,6 +9,7 @@ import ru.clementl.metrotimex.repositories.MachinistStatusRepository
 import ru.clementl.metrotimex.utils.logd
 import java.lang.IllegalStateException
 import java.time.LocalDate
+import java.time.YearMonth
 
 class CalendarViewModel(
     private val repository: CalendarRepository,
@@ -45,8 +46,6 @@ class CalendarViewModel(
         super.onCleared()
         logd("CalendarViewModel onCleared")
     }
-
-
 }
 
 class CalendarViewModelFactory(

@@ -60,7 +60,7 @@ internal class WorkMonthTest {
 
     )
 
-    val m1 = WorkMonth.of(2021, 7, calendar)
+    val m1 = WorkMonth.of(2021, 7, calendar, statusChangeList = listOf(), yearMonthData = listOf())
     val m1_totalHours = 16
     val m1_lineHours = 13
     val m1_reserveHours = 3
@@ -94,7 +94,7 @@ internal class WorkMonthTest {
     fun getStandardNormaDays() {
         assertEquals(27, m1.standardNormaDays)
 
-        val m2 = WorkMonth.of(2021, 12, calendar)
+        val m2 = WorkMonth.of(2021, 12, calendar, statusChangeList = listOf(), yearMonthData = listOf())
         assertEquals(26, m2.standardNormaDays)
     }
 

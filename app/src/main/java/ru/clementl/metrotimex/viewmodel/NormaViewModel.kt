@@ -52,7 +52,7 @@ class NormaViewModel(
     }
 
     val sickListDaysString: LiveData<String> = Transformations.map(currentMonth) {
-        it.countOf(WorkDayType.SICK_LIST).toString()
+        it.countOf(WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD).toString()
     }
 
     val vacationDaysString: LiveData<String> = Transformations.map(currentMonth) {
@@ -155,12 +155,8 @@ class NormaViewModel(
         viewModelScope.launch {
             currentMonth.value?.let {
                 yearMonthRepository.insert(YearMonthData(it.yearMonth.toInt(), value))
-                logd("premia saved: ${it.yearMonth} - $value%")
             }
-            logd("NormaViewModel: ${yearMonthDataList.value}")
-
         }
-
     }
 
     fun initializeWorkMonth(): WorkMonth {

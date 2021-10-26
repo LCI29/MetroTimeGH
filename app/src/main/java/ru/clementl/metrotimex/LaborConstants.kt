@@ -1,7 +1,7 @@
 package ru.clementl.metrotimex
 
-import ru.clementl.metrotimex.model.norma.WorkMonth
 import java.time.LocalDate
+import java.time.Year
 import java.time.YearMonth
 
 val NORMA_MAP = mapOf(
@@ -19,7 +19,7 @@ val NORMA_MAP = mapOf(
     YearMonth.of(2021, 12) to 158.4
 )
 
-val HOLIDAYS_2021 = setOf(
+val HOLIDAYS = setOf(
     LocalDate.of(2021, 1,1),
     LocalDate.of(2021, 1,2),
     LocalDate.of(2021, 1,3),
@@ -42,3 +42,22 @@ val CHANGED_WEEKENDS_2021 = setOf(
     LocalDate.of(2021, 11, 5),
     LocalDate.of(2021, 12, 31),
 )
+
+data class YearConstant(val year: Year, val mrot: Double, val sickDayMaxPay: Double)
+
+val YEAR_CONSTS = setOf(
+    YearConstant(Year.of(2019), 11280.00, 2150.68),
+    YearConstant(Year.of(2020), 12130.00, 2301.37),
+    YearConstant(Year.of(2021), 12792.00, 2434.24),
+    YearConstant(Year.of(2022), 13617.00, 2572.60),
+)
+
+// SickListQ
+const val SICK_Q_UNDER_6_MONTHS = 0.0
+const val SICK_Q_UNDER_5_YEARS = 0.6
+const val SICK_Q_UNDER_8_YEARS = 0.8
+const val SICK_Q_MAX = 1.0
+
+
+
+

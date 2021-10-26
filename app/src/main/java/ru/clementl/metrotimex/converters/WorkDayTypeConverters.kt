@@ -13,6 +13,7 @@ fun Int.toWorkDayType(): WorkDayType {
         TYPE_VACATION_DAY -> WorkDayType.VACATION_DAY
         TYPE_MEDIC -> WorkDayType.MEDIC_DAY
         TYPE_DONOR_DAY -> WorkDayType.DONOR_DAY
+        TYPE_SICK_LIST_CHILD -> WorkDayType.SICK_LIST_CHILD
         else -> WorkDayType.UNKNOWN
     }
 }

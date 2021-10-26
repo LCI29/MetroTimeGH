@@ -83,6 +83,8 @@ const val MEDIC_DAY_SP = 41
 const val MEDIC_DAY_EP = 42
 const val DONOR_DAY_SP = 51
 const val DONOR_DAY_EP = 52
+const val SICK_DAY_CHILD_SP = 61
+const val SICK_DAY_CHILD_EP = 62
 
 // Время смены суток для метро, определяется наиболее поздним возможным окончанием неночной смены
 val DAY_CHANGE_TIME: LocalTime = LocalTime.of(0, 0)
@@ -105,11 +107,11 @@ const val NO_DATA_STRING = "Нет данных"
 
 // set of all the TimePoints types, which represent START of the interval
 val START_POINTS =
-    setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MEDIC_DAY_SP, DONOR_DAY_SP, UNKNOWN_SP)
+    setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MEDIC_DAY_SP, DONOR_DAY_SP, SICK_DAY_CHILD_SP, UNKNOWN_SP)
 
 // set of all the TimePoints types, which represent END of the interval
 val END_POINTS =
-    setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, DONOR_DAY_EP, UNKNOWN_EP)
+    setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, DONOR_DAY_EP, SICK_DAY_CHILD_EP, UNKNOWN_EP)
 
 val DAYS_FOR_TONIGHT_BEFORE = 100 // Days before today to load from db for TonightFragment
 val DAYS_FOR_TONIGHT_AFTER =
@@ -145,5 +147,8 @@ val EARLIEST_START_OF_EVENING_SHIFT: LocalTime = LocalTime.of(11, 0)
 
 // When duration is more that that, app shows time as "5д 2:05:07" against "122:05:07"
 const val MAX_TIME_WITHOUT_DAYS = 3 * DAY_MILLI
+
+const val HOURS_FOR_MEDIC_DAY = 6.0
+const val HOURS_FOR_DONOR_DAY = 6.0
 
 

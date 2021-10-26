@@ -19,6 +19,7 @@ object NightGapAdvancedState : AdvancedState(NIGHT_GAP_STRING)
 
 abstract class SpecialAdvancedState(val type: WorkDayType) : AdvancedState(type.desc)
 
+object SickChildAdvancedState : SpecialAdvancedState(WorkDayType.SICK_LIST_CHILD)
 object SickAdvancedState : SpecialAdvancedState(WorkDayType.SICK_LIST)
 object WeekendAdvancedState : SpecialAdvancedState(WorkDayType.WEEKEND)
 object VacationAdvancedState : SpecialAdvancedState(WorkDayType.VACATION_DAY)
@@ -65,6 +66,7 @@ fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
             }
         WorkDayType.WEEKEND -> WeekendAdvancedState
         WorkDayType.SICK_LIST -> SickAdvancedState
+        WorkDayType.SICK_LIST_CHILD -> SickChildAdvancedState
         WorkDayType.VACATION_DAY -> VacationAdvancedState
         WorkDayType.MEDIC_DAY -> MedicAdvancedState
         WorkDayType.DONOR_DAY -> DonorAdvancedState

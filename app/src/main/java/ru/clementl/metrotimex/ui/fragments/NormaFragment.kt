@@ -19,6 +19,7 @@ import ru.clementl.metrotimex.databinding.FragmentNormaBinding
 import ru.clementl.metrotimex.getEditTextLayout
 import ru.clementl.metrotimex.ui.activities.MainActivity
 import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.utils.toDoubleEmptyZero
 import ru.clementl.metrotimex.viewmodel.CalendarViewModel
 import ru.clementl.metrotimex.viewmodel.NormaViewModel
 import ru.clementl.metrotimex.viewmodel.NormaViewModelFactory
@@ -155,7 +156,7 @@ class NormaFragment : Fragment() {
 
         // Logging salary list of chosen month
         normaViewModel.currentMonth.observe(viewLifecycleOwner) {
-            normaViewModel.logWorkMonth(it)
+//            normaViewModel.logWorkMonth(it)
             logd(it.yearMonthData.toString())
         }
 
@@ -176,7 +177,7 @@ class NormaFragment : Fragment() {
             .setNegativeButton(resources.getString(R.string.button_cancel)) { dialog, which ->
             }
             .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
-                setPremia(textInputEditText.text.toString().toDouble())
+                setPremia(textInputEditText.text.toString().toDoubleEmptyZero())
                 logd(textInputEditText.text.toString())
             }
             .show()
@@ -184,6 +185,7 @@ class NormaFragment : Fragment() {
 
     private fun setPremia(value: Double) {
         normaViewModel.setPremia(value)
+
 
 
     }

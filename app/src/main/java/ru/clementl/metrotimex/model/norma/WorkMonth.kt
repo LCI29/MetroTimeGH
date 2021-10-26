@@ -11,7 +11,6 @@ import ru.clementl.metrotimex.model.data.WorkDayType.*
 import ru.clementl.metrotimex.model.data.WorkDayType.MEDIC_DAY
 import ru.clementl.metrotimex.utils.asShortString
 import ru.clementl.metrotimex.utils.inFloatHours
-import ru.clementl.metrotimex.utils.salaryStyle
 import ru.clementl.metrotimex.utils.toYearMonth
 import java.time.*
 
@@ -26,13 +25,31 @@ data class WorkMonth(
 ) {
 
     val standardNormaHours = NORMA_MAP[yearMonth]
+
     val endStatus: MachinistStatus
         get() = endMilli.getMachinistStatus(statusChangeList)
+    val currentStatus: MachinistStatus
+        get() = LocalDateTime.now().toLong().getMachinistStatus(statusChangeList)
     val progressString: String
         get() = "${normaProgress.toInt()}%"
 
     val listOfDays: List<DayStatus> =
         calendar.filter { YearMonth.from(it.date) == this.yearMonth }.sortedBy { it.date }
+
+    val sickListDays: List<DayStatus>
+        get() = listOfDays.filter { it.isA(SICK_LIST) || it.isA(SICK_LIST_CHILD) }
+
+    val vacationDays: List<DayStatus>
+        get() = listOfDays.filter { it.isA(VACATION_DAY) }
+
+    val medicDays: List<DayStatus>
+        get() = listOfDays.filter { it.isA(MEDIC_DAY) }
+
+    val donorDays: List<DayStatus>
+        get() = listOfDays.filter { it.isA(DONOR_DAY) }
+
+    val daysWorkedForAverageDaily: List<DayStatus>
+        get() = listOfDays.filter { it.isA(SHIFT) || it.isA(WEEKEND) }
 
     val wideListOfDays = calendar.filter { containsOrNear(it, 3) }
 
@@ -48,7 +65,7 @@ data class WorkMonth(
         for (i in 1..yearMonth.atEndOfMonth().dayOfMonth) {
             val day = yearMonth.atDay(i)
             if (day.dayOfWeek ==
-                DayOfWeek.SUNDAY || HOLIDAYS_2021.contains(day) || CHANGED_WEEKENDS_2021.contains(
+                DayOfWeek.SUNDAY || HOLIDAYS.contains(day) || CHANGED_WEEKENDS_2021.contains(
                     day
                 )
             )
@@ -60,15 +77,18 @@ data class WorkMonth(
     val standardNormaDays = yearMonth.lengthOfMonth() - sundaysAndHolidaysCount
     val standardNormaWeekend = sundaysAndHolidaysCount
 
+    val avgHoursPerDay: Double? = standardNormaHours?.div(standardNormaDays)
+
     val realNormaDays: Int
         get() {
             return standardNormaDays - listOfDays.count {
                 it.workDayType in setOf(
                     MEDIC_DAY,
                     SICK_LIST,
+                    SICK_LIST_CHILD,
                     VACATION_DAY,
                     DONOR_DAY
-                ) && it.date.dayOfWeek != DayOfWeek.SUNDAY
+                ) && it.date.dayOfWeek != DayOfWeek.SUNDAY && !it.isPublicHoliday()
             }
         }
 
@@ -87,8 +107,9 @@ data class WorkMonth(
             MEDIC_DAY,
             DONOR_DAY,
             SICK_LIST,
+            SICK_LIST_CHILD,
             VACATION_DAY
-        ) && it.date.dayOfWeek == DayOfWeek.SUNDAY
+        ) && (it.date.dayOfWeek == DayOfWeek.SUNDAY || it.isPublicHoliday())
     }
 
     val workedInHours: Double
@@ -153,12 +174,15 @@ data class WorkMonth(
                         (nightSpans[2]?.intersect(this)?.duration ?: 0)
             }
 
+    // old salary getter
     val totalSalary: Double
         get() = allShifts
             .sumOf { it.finalSalary(it.dateLong.getMachinistStatus(statusChangeList)) }
 
 
     fun countOf(workDayType: WorkDayType): Int = listOfDays.count { it.isA(workDayType) }
+
+    fun countOf(vararg workDayTypes: WorkDayType): Int = listOfDays.count { it.workDayType in workDayTypes }
 
     fun previous(): WorkMonth {
         return of(yearMonth.minusMonths(1), calendar, statusChangeList, yearMonthData)

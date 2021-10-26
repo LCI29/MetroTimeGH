@@ -6,6 +6,7 @@ import androidx.room.*
 import ru.clementl.metrotimex.ALWAYS_NIGHT_AFTER
 import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
+import ru.clementl.metrotimex.HOLIDAYS
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
@@ -103,6 +104,10 @@ data class DayStatus(
 
         fun sickListDayOf(date: LocalDate): DayStatus {
             return DayStatus(date.toLong(), WorkDayType.SICK_LIST.type, null)
+        }
+
+        fun sickListChildDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.SICK_LIST_CHILD.type, null)
         }
 
         fun donorDayOf(date: LocalDate): DayStatus {
@@ -208,5 +213,9 @@ fun DayStatus.getClassQ(statusChangeList: List<MachinistStatus>) = dateLong.getC
 fun DayStatus.getStageQ(statusChangeList: List<MachinistStatus>) = dateLong.getStageQ(statusChangeList)
 
 fun DayStatus.getUnionQ(statusChangeList: List<MachinistStatus>) = dateLong.getUnionQ(statusChangeList)
+
+fun DayStatus.getSickListQ(statusChangeList: List<MachinistStatus>) = dateLong.getSickListQ(statusChangeList)
+
+fun DayStatus.isPublicHoliday(): Boolean = date in HOLIDAYS
 
 

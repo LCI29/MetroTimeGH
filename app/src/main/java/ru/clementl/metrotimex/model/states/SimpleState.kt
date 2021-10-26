@@ -52,7 +52,7 @@ fun Interval.simpleState(): SimpleState {
 
             SHIFT_SP -> if (duration!! < NIGHT_GAP_MAX_DURATION) NightGapSimpleState else GapSimpleState
             WEEKEND_SP -> GapSimpleState
-            SICK_DAY_SP -> GapSimpleState
+            SICK_DAY_SP, SICK_DAY_CHILD_SP -> GapSimpleState
             VACATION_DAY_SP -> GapSimpleState
             MEDIC_DAY_SP -> GapSimpleState
             DONOR_DAY_SP -> GapSimpleState
@@ -60,7 +60,7 @@ fun Interval.simpleState(): SimpleState {
 
             SHIFT_EP -> unknown
             WEEKEND_EP -> GapSimpleState
-            SICK_DAY_EP -> SickSimpleState
+            SICK_DAY_EP, SICK_DAY_CHILD_EP -> SickSimpleState
             VACATION_DAY_EP -> VacationSimpleState
             MEDIC_DAY_EP -> GapSimpleState
             DONOR_DAY_EP -> GapSimpleState
@@ -93,14 +93,34 @@ fun Interval.simpleState(): SimpleState {
             SHIFT_SP -> GapSimpleState // Это маловероятно, но такое будет считаться разрывом
 
             SHIFT_EP -> ShiftSimpleState
-            SICK_DAY_EP -> SickSimpleState
+            SICK_DAY_EP, SICK_DAY_CHILD_EP -> SickSimpleState
 
             null -> unknown
             else -> unknown
         }
 
         SICK_DAY_EP -> when (afterCode) {
-            SICK_DAY_SP -> SickSimpleState
+            SICK_DAY_SP, SICK_DAY_CHILD_SP -> SickSimpleState
+            in START_POINTS -> GapSimpleState
+
+            SHIFT_EP -> ShiftSimpleState
+
+            null -> NoDataSimpleState
+            else -> unknown
+        }
+
+        SICK_DAY_CHILD_SP -> when (afterCode) {
+            SHIFT_SP -> GapSimpleState // Это маловероятно, но такое будет считаться разрывом
+
+            SHIFT_EP -> ShiftSimpleState
+            SICK_DAY_EP, SICK_DAY_CHILD_EP -> SickSimpleState
+
+            null -> unknown
+            else -> unknown
+        }
+
+        SICK_DAY_CHILD_EP -> when (afterCode) {
+            SICK_DAY_SP, SICK_DAY_CHILD_SP -> SickSimpleState
             in START_POINTS -> GapSimpleState
 
             SHIFT_EP -> ShiftSimpleState
