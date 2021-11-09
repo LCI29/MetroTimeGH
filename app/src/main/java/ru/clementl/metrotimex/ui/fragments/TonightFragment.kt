@@ -153,6 +153,12 @@ class TonightFragment : Fragment() {
             date.setOnClickListener(currentShiftClickListener)
             shiftDescString.setOnClickListener(currentShiftClickListener)
         }
+
+        binding.currentNonShiftLayout.apply {
+            shiftName.setOnClickListener(currentShiftClickListener)
+            date.setOnClickListener(currentShiftClickListener)
+            dayOfWeek.setOnClickListener(currentShiftClickListener)
+        }
         binding.textView.setOnClickListener(nextShiftClickListener)
         return binding.root
     }
