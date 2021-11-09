@@ -28,6 +28,8 @@ import java.time.YearMonth
 
 class NormaFragment : Fragment() {
 
+    private val app by lazy { requireActivity().application as MetroTimeApplication }
+
     private var _binding: FragmentNormaBinding? = null
     private val calendarViewModel: CalendarViewModel by activityViewModels()
     private val statusViewModel: StatusViewModel by activityViewModels()
@@ -36,10 +38,11 @@ class NormaFragment : Fragment() {
             calendarViewModel.allDays.value ?: listOf(),
             statusViewModel.liveStatusList,
 //            (activity as MainActivity).statuses,
-//            (activity?.application as MetroTimeApplication).machinistStatusRepository,
+//            app.machinistStatusRepository,
             statusViewModel.liveYearMonthData,
-            (requireActivity().application as MetroTimeApplication).yearMonthRepository,
-            YearMonth.now()
+            app.yearMonthRepository,
+            YearMonth.now(),
+            fiveDayWeek = app.prefs.getBoolean("week_size_pref", false)
         )
     }
 

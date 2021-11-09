@@ -28,7 +28,8 @@ class NormaViewModel(
     val statusList: LiveData<List<MachinistStatus>>,
     val yearMonthDataList: LiveData<List<YearMonthData>>,
     val yearMonthRepository: YearMonthRepository,
-    val yearMonth: YearMonth
+    val yearMonth: YearMonth,
+    val fiveDayWeek: Boolean
 ) : ViewModel() {
 
     private val uiScope = CoroutineScope(Job() + Dispatchers.Main)
@@ -172,7 +173,7 @@ class NormaViewModel(
             calendar.filter { it.endDateTime.isBefore(LocalDateTime.now()) },
             statusList.value ?: listOf(),
             yearMonthDataList.value ?: listOf(),
-            fiveDayWeek = true
+            fiveDayWeek = fiveDayWeek
         )
     }
 
@@ -183,7 +184,8 @@ class NormaViewModelFactory(
     private val statusList: LiveData<List<MachinistStatus>>,
     private val yearMonthLiveData: LiveData<List<YearMonthData>>,
     private val yearMonthRepository: YearMonthRepository,
-    private val yearMonth: YearMonth
+    private val yearMonth: YearMonth,
+    private val fiveDayWeek: Boolean
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NormaViewModel::class.java)) {
@@ -193,7 +195,7 @@ class NormaViewModelFactory(
 //                Statuses === $statusList
 //            """.trimIndent())
             @Suppress("UNCHECKED_CAST")
-            return NormaViewModel(calendar, statusList, yearMonthLiveData, yearMonthRepository, yearMonth) as T
+            return NormaViewModel(calendar, statusList, yearMonthLiveData, yearMonthRepository, yearMonth, fiveDayWeek) as T
         }
         throw IllegalStateException("Unknown ViewModel class")
     }
