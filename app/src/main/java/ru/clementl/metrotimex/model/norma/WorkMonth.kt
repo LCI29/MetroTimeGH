@@ -102,6 +102,14 @@ data class WorkMonth(
             return null
         }
 
+    val realNormaMillis: Long?
+        get() {
+            realNormaHours?.let {
+                (it * 60 * 60 * 1000).toLong()
+            }
+            return null
+        }
+
     val realNormaWeekend: Int = standardNormaWeekend - listOfDays.count {
         it.workDayType in setOf(
             MEDIC_DAY,
@@ -139,14 +147,15 @@ data class WorkMonth(
                 if (it.shift?.hasAtz == true)
                     (it.intersectionWith(this) - ATZ_DURATION_MILLI)
                 else it.intersectionWith(this)
-            }
+            }.coerceAtMost(realNormaMillis?.minus(baseReserveTimeMillis) ?: Long.MAX_VALUE)
+
     val baseReserveTimeMillis: Long
         get() = wideListOfDays
             .filter { it.shift?.isReserve == true || it.shift?.hasAtz == true }
             .sumOf {
                 if (it.shift?.isReserve == true) it.intersectionWith(this)
                 else it.intersectionWith(this).coerceAtMost(ATZ_DURATION_MILLI.toLong())
-            }
+            }.coerceAtMost(realNormaMillis ?: Long.MAX_VALUE)
 
     val baseGapTimeMillis: Long
         get() = ((baseLineTimeMillis + baseReserveTimeMillis) * ADDING_GAP).toLong()
