@@ -29,7 +29,7 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     }
 
     val base: Double
-        get() = workMonth.workedInMillis() * rate
+        get() = workMonth.workedInMillis() * rate + workMonth.holidayMillis * rate
     val normaBase: Double
         get() = workMonth.normaWorkedInMillis() * rate
     val baseLineIncome: Double
@@ -60,7 +60,8 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
                         classBonus +
                         masterBonus +
                         mentorBonus +
-                        overWorkPay)
+                        overWorkPay +
+                        holidayPay)
 
     val overWorkPay: Double
         get() = workMonth.overworkMillis * rate
@@ -70,6 +71,12 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
 
     val overWorkOverPayFull: Double
         get() = workMonth.overworkMillisForFullPay * rate
+
+    val holidayPay: Double
+        get() = workMonth.holidayMillis * rate
+
+    val holidayOverPay: Double
+        get() = workMonth.holidayMillis * rate
 
 
 
@@ -122,13 +129,14 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val incomeForDailyAverage: Double
         get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
                 classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch +
-                overWorkPay + overWorkOverPayHalf + overWorkOverPayFull
+                overWorkPay + overWorkOverPayHalf + overWorkOverPayFull + holidayPay +
+                holidayOverPay
 
     val totalIncome: Double
         get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
                 classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch +
                 sickListPay + vacationPay + medicPay + donorPay + overWorkPay + overWorkOverPayHalf +
-                overWorkOverPayFull
+                overWorkOverPayFull + holidayPay + holidayOverPay
 
     val ndflSub: Double
         get() = totalIncome * NDFL
@@ -160,6 +168,8 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
             ОплЗаСверхурочн.100%      | ${overworkMillis.inFloatHours()} | ${overWorkPay.salaryStyle()}
             ДоплЗаСверхурочн.50%      | ${overworkMillisForHalfPay.inFloatHours()} | ${overWorkOverPayHalf.salaryStyle()}
             ДоплЗаСверхурочн.100%     | ${overworkMillisForFullPay.inFloatHours()} | ${overWorkOverPayFull.salaryStyle()}
+            ОплРабПраздВыхДниВнеГраф  | ${holidayMillis.inFloatHours()} | ${holidayPay.salaryStyle()}
+            ДоплРабПраздВыхДниВнеГраф | ${holidayMillis.inFloatHours()} | ${holidayOverPay.salaryStyle()}
             Надбавка за класс квалиф  | ${endMilli?.getClassQ(statusChangeList)?.times(100)}% | ${classBonus.salaryStyle()}
             Техническая учеба         | 2,0ч | ${techUch.salaryStyle()}
             Допл.за практ.обуч.маш.   | ${asMentorMillis.inFloatHours()} | ${mentorBonus.salaryStyle()}

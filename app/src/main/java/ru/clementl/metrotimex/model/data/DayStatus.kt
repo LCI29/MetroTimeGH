@@ -218,4 +218,16 @@ fun DayStatus.getSickListQ(statusChangeList: List<MachinistStatus>) = dateLong.g
 
 fun DayStatus.isPublicHoliday(): Boolean = date in HOLIDAYS
 
+fun DayStatus.intersectionWith(date: LocalDate): Long =
+    timeSpan.intersectionDuration(TimeSpan.from(date))
+
+fun DayStatus.holidayDuration(holidays: List<LocalDate>): Long {
+    if (!isShift()) return 0
+    var dur = 0L
+    holidays.forEach { holiday ->
+        dur += this.intersectionWith(holiday)
+    }
+    return dur
+}
+
 

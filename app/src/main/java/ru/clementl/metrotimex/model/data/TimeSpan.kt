@@ -90,6 +90,11 @@ open class TimeSpan(open val startMilli: Long?, open val endMilli: Long?) {
                 LocalDateTime.of(date, LocalTime.MAX).toLong()
             )
 
+        fun from(date: LocalDate): TimeSpan =
+            TimeSpan(
+                date.atStartOfDay().toLong(),
+                LocalDateTime.of(date, LocalTime.MAX).toLong()
+            )
 
     }
 

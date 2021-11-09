@@ -60,14 +60,13 @@ data class WorkMonth(
     val premia: Double = yearMonthData.find { it.yearMonth == yearMonth }?.premia?.div(100) ?: endStatus.monthBonus.toDouble().div(100)
 
     val sundaysAndHolidaysCount = countSundaysAndHolidays()
+
     private fun countSundaysAndHolidays(): Int {
         var sundays = 0
         for (i in 1..yearMonth.atEndOfMonth().dayOfMonth) {
             val day = yearMonth.atDay(i)
             if (day.dayOfWeek ==
-                DayOfWeek.SUNDAY || HOLIDAYS.contains(day) || CHANGED_WEEKENDS_2021.contains(
-                    day
-                )
+                DayOfWeek.SUNDAY || HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day)
             )
                 sundays++
         }
@@ -133,6 +132,9 @@ data class WorkMonth(
     val workdayString: String
         get() = "${countOf(SHIFT)} / $realNormaDays"
 
+    val overworkString: String
+        get() = overworkMillis.inFloatHours()
+
     val nightShifts = listOfDays.count { it.isNightShift(calendar) }
 
     val eveningShiftsCount = listOfDays.count { it.isEveningShift(calendar) }
@@ -145,16 +147,16 @@ data class WorkMonth(
             .filter { it.shift?.isReserve == false }
             .sumOf {
                 if (it.shift?.hasAtz == true)
-                    (it.intersectionWith(this) - ATZ_DURATION_MILLI)
-                else it.intersectionWith(this)
+                    (it.intersectionWith(this) - ATZ_DURATION_MILLI) - (it.holidayDuration(holidays) - ATZ_DURATION_MILLI)
+                else it.intersectionWith(this) - (it.holidayDuration(holidays))
             }.coerceAtMost(realNormaMillis?.minus(baseReserveTimeMillis) ?: Long.MAX_VALUE)
 
     val baseReserveTimeMillis: Long
         get() = wideListOfDays
             .filter { it.shift?.isReserve == true || it.shift?.hasAtz == true }
             .sumOf {
-                if (it.shift?.isReserve == true) it.intersectionWith(this)
-                else it.intersectionWith(this).coerceAtMost(ATZ_DURATION_MILLI.toLong())
+                if (it.shift?.isReserve == true) it.intersectionWith(this) - it.holidayDuration(holidays)
+                else (it.intersectionWith(this) - it.holidayDuration(holidays)).coerceAtMost(ATZ_DURATION_MILLI)
             }.coerceAtMost(realNormaMillis ?: Long.MAX_VALUE)
 
     val baseGapTimeMillis: Long
@@ -192,6 +194,27 @@ data class WorkMonth(
     val overworkMillisForFullPay: Long
         get() = overworkMillis - overworkMillisForHalfPay
 
+    val holidays: List<LocalDate>
+        get() = HOLIDAYS.filter { YearMonth.from(it) == this.yearMonth }
+
+    val holidayShifts: Int
+        get() = allShifts.count { it.isPublicHoliday() }
+
+    val holidayMillis: Long
+        get() {
+            if (holidays.count() == 0) return 0
+            var sum = 0L
+            val shifts = wideListOfDays.filter { it.isShift() }
+            holidays.forEach { holiday ->
+                shifts.forEach { shift ->
+                    if (shift.date == holiday || shift.date == holiday.minusDays(1)) {
+                        sum += (shift.timeSpan.intersect(from(holiday)))?.duration ?: 0
+                    }
+                }
+            }
+            return sum
+        }
+
     // old salary getter
     val totalSalary: Double
         get() = allShifts
@@ -212,8 +235,8 @@ data class WorkMonth(
 
 
     fun workedInMillis(): Long {
-        return wideListOfDays
-            .totalDurationIn(this)
+        return (wideListOfDays
+            .totalDurationIn(this) - holidayMillis).coerceAtLeast(0)
     }
 
     fun normaWorkedInMillis(): Long {

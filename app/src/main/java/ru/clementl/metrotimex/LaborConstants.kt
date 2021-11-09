@@ -37,7 +37,7 @@ val HOLIDAYS = setOf(
     LocalDate.of(2021, 12, 31),
 )
 
-val CHANGED_WEEKENDS_2021 = setOf(
+val CHANGED_WEEKENDS = setOf(
     LocalDate.of(2021, 2, 22),
     LocalDate.of(2021, 11, 5),
     LocalDate.of(2021, 12, 31),
