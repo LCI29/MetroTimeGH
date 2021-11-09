@@ -186,6 +186,12 @@ data class WorkMonth(
     val overworkMillis: Long
         get() = (workedInMillis() - (realNormaMillis ?: 0)).coerceAtLeast(0)
 
+    val overworkMillisForHalfPay: Long
+        get() = overworkMillis.coerceAtMost(MILLIS_PAYED_HALF)
+
+    val overworkMillisForFullPay: Long
+        get() = overworkMillis - overworkMillisForHalfPay
+
     // old salary getter
     val totalSalary: Double
         get() = allShifts

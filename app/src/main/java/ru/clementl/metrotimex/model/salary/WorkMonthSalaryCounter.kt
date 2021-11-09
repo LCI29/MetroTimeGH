@@ -63,6 +63,14 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val overWorkPay: Double
         get() = workMonth.overworkMillis * rate
 
+    val overWorkOverPayHalf: Double
+        get() = workMonth.overworkMillisForHalfPay * rate * 0.5
+
+    val overWorkOverPayFull: Double
+        get() = workMonth.overworkMillisForFullPay * rate
+
+
+
     val techUch: Double
         get() = if (workMonth.wasTechUch) TECH_UCH_Q * rate * 2 * HOUR_MILLI else 0.0
 
@@ -112,12 +120,13 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val incomeForDailyAverage: Double
         get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
                 classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch +
-                overWorkPay
+                overWorkPay + overWorkOverPayHalf + overWorkOverPayFull
 
     val totalIncome: Double
         get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
                 classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch +
-                sickListPay + vacationPay + medicPay + donorPay + overWorkPay
+                sickListPay + vacationPay + medicPay + donorPay + overWorkPay + overWorkOverPayHalf +
+                overWorkOverPayFull
 
     val ndflSub: Double
         get() = totalIncome * NDFL
@@ -147,6 +156,8 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
             Доплата за вечернее время | ${eveningMillis.inFloatHours()} | ${eveningBonus.salaryStyle()}
             Доплата за ночное время   | ${nightMillis.inFloatHours()} | ${nightBonus.salaryStyle()}
             ОплЗаСверхурочн.100%      | ${overworkMillis.inFloatHours()} | ${overWorkPay.salaryStyle()}
+            ДоплЗаСверхурочн.50%      | ${overworkMillisForHalfPay.inFloatHours()} | ${overWorkOverPayHalf.salaryStyle()}
+            ДоплЗаСверхурочн.100%     | ${overworkMillisForFullPay.inFloatHours()} | ${overWorkOverPayFull.salaryStyle()}
             Надбавка за класс квалиф  | ${endMilli?.getClassQ(statusChangeList)?.times(100)}% | ${classBonus.salaryStyle()}
             Техническая учеба         | 2,0ч | ${techUch.salaryStyle()}
             Допл.за практ.обуч.маш.   | ${asMentorMillis.inFloatHours()} | ${mentorBonus.salaryStyle()}

@@ -58,6 +58,10 @@ const val SICK_Q_UNDER_5_YEARS = 0.6
 const val SICK_Q_UNDER_8_YEARS = 0.8
 const val SICK_Q_MAX = 1.0
 
+// Overwork
+const val HOURS_PAYED_HALF: Int = 2
+const val MILLIS_PAYED_HALF: Long = HOURS_PAYED_HALF * 60 * 60 * 1000L
+
 
 
 
