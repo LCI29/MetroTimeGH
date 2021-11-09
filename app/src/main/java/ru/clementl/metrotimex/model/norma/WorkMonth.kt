@@ -183,6 +183,9 @@ data class WorkMonth(
                         (nightSpans[2]?.intersect(this)?.duration ?: 0)
             }
 
+    val overworkMillis: Long
+        get() = workedInMillis() - (realNormaMillis ?: 0)
+
     // old salary getter
     val totalSalary: Double
         get() = allShifts
