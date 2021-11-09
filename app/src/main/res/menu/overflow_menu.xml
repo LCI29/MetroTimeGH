@@ -15,4 +15,11 @@
         android:visible="true"
         app:showAsAction="never"
         android:title="@string/settings" />
+
+    <item
+        android:id="@+id/infoFragment"
+        android:menuCategory="secondary"
+        app:showAsAction="never"
+        android:visible="true"
+        android:title="@string/info_menu_text" />
 </menu>

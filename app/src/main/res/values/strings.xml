@@ -44,6 +44,7 @@
     <string name="shift_start">Начало смены</string>
     <string name="shift_end">Конец смены</string>
     <string name="delete_queston">Удалить?</string>
+    <string name="version_text">Версия %s</string>
 
     <string name="change_theme_toast_message">Тема будет изменена после перезапуска приложения</string>
     <string name="notes">Примечания</string>
@@ -57,6 +58,9 @@
     <string name="write_premia_size">Задайте размер премии</string>
     <string name="ok">Ok</string>
     <string name="premium_in_current_month">Премия (этот месяц)</string>
+    <string name="try_other_apps">Попробуйте другие приложения:</string>
+    <string name="info_menu_text">Инфо</string>
+    <string name="metrotest_desc">Проходите тесты УПЦ на своем устройстве Android. Выбирайте количество вопросов. Ищите ответы быстро во встроенном поиске. Просматривайте статистику по темам техобучения.</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ru.clementl.metrotimex">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".MetroTimeApplication"
         android:allowBackup="true"

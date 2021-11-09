@@ -75,5 +75,9 @@
         android:id="@+id/normaFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.NormaFragment"
         android:label="@string/norma" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.InfoFragment"
+        android:label="@string/info_menu_text" />
 
 </navigation>
