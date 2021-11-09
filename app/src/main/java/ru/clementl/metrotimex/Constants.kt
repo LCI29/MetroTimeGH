@@ -5,7 +5,7 @@ import java.time.LocalTime
 
 // Factors
 const val GAP_Q = 0.3
-const val ADDING_GAP = 0.35 // Average monthly (GapHours divide TotalHours)
+const val ADDING_GAP = 0.4 // Average monthly (GapHours divide TotalHours)
 
 const val MENTOR_Q = 0.15
 const val MASTER_Q = 0.1
