@@ -35,8 +35,8 @@
             android:textColor="@color/primary_text"
             android:textSize="20sp"
             app:dayNameWithOddEven="@{day}"
-            app:layout_constraintStart_toEndOf="@+id/dayOfWeek"
-            app:layout_constraintTop_toTopOf="@+id/date" />
+            app:layout_constraintStart_toEndOf="@+id/date_layout"
+            app:layout_constraintTop_toTopOf="@+id/date_layout" />
 
         <TextView
             android:id="@+id/shift_desc_string"
@@ -45,35 +45,43 @@
             android:textColor="@color/secondary_text"
             android:textSize="14sp"
             app:descString="@{day}"
-            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintBottom_toBottomOf="@+id/date_layout"
             app:layout_constraintStart_toStartOf="@+id/shiftName" />
 
-        <TextView
-            android:id="@+id/date"
+        <LinearLayout
+            android:id="@+id/date_layout"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:background="@color/primaryColor"
-            android:gravity="center"
-            android:paddingBottom="@dimen/cell_date_bottom_padding"
-            android:textColor="@color/icons_or_text"
-            android:textSize="24sp"
-            app:dayOfMonth="@{day}"
+            android:background="@drawable/backround_date"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/dayOfWeek"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#00F1F8E9"
-            android:gravity="top|center"
-            android:paddingBottom="@dimen/cell_day_of_week_bottom_padding"
-            android:textColor="@color/icons_or_text"
-            android:textSize="10sp"
-            app:dayOfWeek="@{day}"
-            app:layout_constraintBottom_toBottomOf="@+id/date"
-            app:layout_constraintEnd_toEndOf="@+id/date"
-            app:layout_constraintStart_toStartOf="@+id/date" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:gravity="center"
+                tools:text="20"
+                android:textColor="@color/icons_or_text"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                app:dayOfMonth="@{day}" />
+
+
+            <TextView
+                android:id="@+id/dayOfWeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="чт"
+                android:textColor="@color/icons_or_text"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                app:dayOfWeek="@{day}"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/label_reserve"
@@ -128,7 +136,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date" />
+            app:layout_constraintTop_toBottomOf="@+id/date_layout" />
 
         <ImageView
             android:id="@+id/notes_label_shift"
