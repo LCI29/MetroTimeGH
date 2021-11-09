@@ -105,7 +105,7 @@ data class WorkMonth(
     val realNormaMillis: Long?
         get() {
             realNormaHours?.let {
-                (it * 60 * 60 * 1000).toLong()
+                return (it * 60 * 60 * 1000).toLong()
             }
             return null
         }
