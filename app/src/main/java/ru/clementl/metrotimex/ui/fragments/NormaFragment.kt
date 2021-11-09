@@ -166,7 +166,7 @@ class NormaFragment : Fragment() {
 
         // Logging salary list of chosen month
         normaViewModel.currentMonth.observe(viewLifecycleOwner) {
-            normaViewModel.logWorkMonth(it)
+//            normaViewModel.logWorkMonth(it)
             logd(it.yearMonthData.toString())
         }
 
