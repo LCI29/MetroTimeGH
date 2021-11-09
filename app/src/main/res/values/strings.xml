@@ -26,6 +26,8 @@
     <string name="norma">Норма</string>
     <string name="workdays_stat_name">Рабочие дни</string>
     <string name="weekends_stat_name">Выходные</string>
+    <string name="holidays_stat_name">Праздничные</string>
+    <string name="overwork_stat_name">Переработка</string>
     <string name="sick_list_days_stat_name">Дней на Б/Л</string>
     <string name="vacation_days_stat_name">Дней в отпуске</string>
     <string name="night_shifts_stat_name">Ночей</string>

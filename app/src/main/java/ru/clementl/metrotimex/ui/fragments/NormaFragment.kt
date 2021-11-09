@@ -68,6 +68,10 @@ class NormaFragment : Fragment() {
             binding.cellWeekends.statValue.text = it
         }
 
+        binding.cellHolidays.statName.text = stringFrom(R.string.holidays_stat_name)
+
+        binding.cellOverwork.statName.text = stringFrom(R.string.overwork_stat_name)
+
         binding.cellSickListDays.statName.text = stringFrom(R.string.sick_list_days_stat_name)
         normaViewModel.sickListDaysString.observe(viewLifecycleOwner) {
             binding.cellSickListDays.statValue.text = it

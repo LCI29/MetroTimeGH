@@ -147,6 +147,24 @@
                     android:layout_margin="8dp">
 
                     <include
+                        android:id="@+id/cell_holidays"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_overwork"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
                         android:id="@+id/cell_sick_list_days"
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
