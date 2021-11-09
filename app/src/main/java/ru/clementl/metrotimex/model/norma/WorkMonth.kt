@@ -184,7 +184,7 @@ data class WorkMonth(
             }
 
     val overworkMillis: Long
-        get() = workedInMillis() - (realNormaMillis ?: 0)
+        get() = (workedInMillis() - (realNormaMillis ?: 0)).coerceAtLeast(0)
 
     // old salary getter
     val totalSalary: Double
