@@ -43,6 +43,17 @@ val CHANGED_WEEKENDS = setOf(
     LocalDate.of(2021, 12, 31),
 )
 
+val WORKING_WEEKENDS = setOf(
+    LocalDate.of(2021, 2, 20),
+)
+
+val SHORTENED_DAYS = setOf(
+    LocalDate.of(2021, 2, 20),
+    LocalDate.of(2021, 4, 30),
+    LocalDate.of(2021, 6, 11),
+    LocalDate.of(2021, 11, 3),
+)
+
 data class YearConstant(val year: Year, val mrot: Double, val sickDayMaxPay: Double)
 
 val YEAR_CONSTS = setOf(

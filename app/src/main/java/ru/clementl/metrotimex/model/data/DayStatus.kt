@@ -230,4 +230,6 @@ fun DayStatus.holidayDuration(holidays: List<LocalDate>): Long {
     return dur
 }
 
+fun List<DayStatus>.getDayOf(date: LocalDate): DayStatus? = find { it.date == date }
+
 

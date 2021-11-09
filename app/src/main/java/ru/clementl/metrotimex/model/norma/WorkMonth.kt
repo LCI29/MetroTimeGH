@@ -18,13 +18,17 @@ data class WorkMonth(
     val yearMonth: YearMonth,
     val calendar: List<DayStatus>,
     val statusChangeList: List<MachinistStatus>,
-    val yearMonthData: List<YearMonthData>
+    val yearMonthData: List<YearMonthData>,
+    val fiveDayWeek: Boolean = false
 ) : TimeSpan(
     yearMonth.atDay(1).atStartOfDay().toLong(),
     yearMonth.atEndOfMonth().atTime(LocalTime.MAX).toLong()
 ) {
 
     val standardNormaHours = NORMA_MAP[yearMonth]
+
+    val weekendDays =
+        if (fiveDayWeek) setOf(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY) else setOf(DayOfWeek.SUNDAY)
 
     val endStatus: MachinistStatus
         get() = endMilli.getMachinistStatus(statusChangeList)
@@ -63,14 +67,28 @@ data class WorkMonth(
 
     private fun countSundaysAndHolidays(): Int {
         var sundays = 0
-        for (i in 1..yearMonth.atEndOfMonth().dayOfMonth) {
-            val day = yearMonth.atDay(i)
-            if (day.dayOfWeek ==
-                DayOfWeek.SUNDAY || HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day)
-            )
-                sundays++
+        when (fiveDayWeek) {
+            true -> {
+                for (i in 1..yearMonth.atEndOfMonth().dayOfMonth) {
+                    val day = yearMonth.atDay(i)
+                    if (!WORKING_WEEKENDS.contains(day) &&
+                        (day.dayOfWeek in weekendDays ||
+                        HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day)))
+                        sundays++
+                }
+                return sundays
+            }
+            false -> {
+                for (i in 1..yearMonth.atEndOfMonth().dayOfMonth) {
+                    val day = yearMonth.atDay(i)
+                    if (day.dayOfWeek ==
+                        DayOfWeek.SUNDAY || HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day)
+                    )
+                        sundays++
+                }
+                return sundays
+            }
         }
-        return sundays
     }
 
     val standardNormaDays = yearMonth.lengthOfMonth() - sundaysAndHolidaysCount
@@ -80,6 +98,7 @@ data class WorkMonth(
 
     val realNormaDays: Int
         get() {
+
             return standardNormaDays - listOfDays.count {
                 it.workDayType in setOf(
                     MEDIC_DAY,
@@ -87,18 +106,31 @@ data class WorkMonth(
                     SICK_LIST_CHILD,
                     VACATION_DAY,
                     DONOR_DAY
-                ) && it.date.dayOfWeek != DayOfWeek.SUNDAY && !it.isPublicHoliday()
+                ) && it.date.dayOfWeek !in weekendDays && !it.isPublicHoliday() &&
+                        !(fiveDayWeek && CHANGED_WEEKENDS.contains(it.date))
             }
         }
 
     // Returns HOURS in Double
     val realNormaHours: Double?
         get() {
-            standardNormaHours?.let {
-                val q = realNormaDays.toDouble() / standardNormaDays
-                return q * it
+            when (fiveDayWeek) {
+                true -> {
+                    return realNormaDays * 7.2 - SHORTENED_DAYS.count {
+                        YearMonth.from(it) == yearMonth &&
+                                listOfDays.getDayOf(it)?.workDayType !in setOf(
+                                    MEDIC_DAY, SICK_LIST, SICK_LIST_CHILD, VACATION_DAY, DONOR_DAY
+                                )
+                    }
+                }
+                false -> {
+                    standardNormaHours?.let { norma ->
+                        val q = realNormaDays.toDouble() / standardNormaDays
+                        return q * norma
+                    }
+                    return null
+                }
             }
-            return null
         }
 
     val realNormaMillis: Long?
@@ -116,7 +148,7 @@ data class WorkMonth(
             SICK_LIST,
             SICK_LIST_CHILD,
             VACATION_DAY
-        ) && (it.date.dayOfWeek == DayOfWeek.SUNDAY || it.isPublicHoliday())
+        ) && (it.date.dayOfWeek in weekendDays || it.isPublicHoliday())
     }
 
     val workedInHours: Double
@@ -131,9 +163,6 @@ data class WorkMonth(
 
     val workdayString: String
         get() = "${countOf(SHIFT)} / $realNormaDays"
-
-    val overworkString: String
-        get() = overworkMillis.inFloatHours()
 
     val nightShifts = listOfDays.count { it.isNightShift(calendar) }
 
@@ -269,36 +298,40 @@ data class WorkMonth(
             milli: Long,
             calendar: List<DayStatus> = listOf(),
             statusChangeList: List<MachinistStatus> = listOf(),
-            yearMonthData: List<YearMonthData>
+            yearMonthData: List<YearMonthData>,
+            fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(milli.toDate()), calendar, statusChangeList,yearMonthData)
+            return WorkMonth(YearMonth.from(milli.toDate()), calendar, statusChangeList,yearMonthData, fiveDayWeek)
         }
 
         fun of(
             date: LocalDate,
             calendar: List<DayStatus> = listOf(),
             statusChangeList: List<MachinistStatus> = listOf(),
-            yearMonthData: List<YearMonthData>
+            yearMonthData: List<YearMonthData>,
+            fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(date), calendar, statusChangeList, yearMonthData)
+            return WorkMonth(YearMonth.from(date), calendar, statusChangeList, yearMonthData, fiveDayWeek)
         }
 
         fun of(
             dateTime: LocalDateTime,
             calendar: List<DayStatus> = listOf(),
             statusChangeList: List<MachinistStatus> = listOf(),
-            yearMonthData: List<YearMonthData>
+            yearMonthData: List<YearMonthData>,
+            fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(dateTime), calendar, statusChangeList,yearMonthData)
+            return WorkMonth(YearMonth.from(dateTime), calendar, statusChangeList,yearMonthData, fiveDayWeek)
         }
 
         fun of(
             yearMonth: YearMonth,
             calendar: List<DayStatus> = listOf(),
             statusChangeList: List<MachinistStatus> = listOf(),
-            yearMonthData: List<YearMonthData>
+            yearMonthData: List<YearMonthData>,
+            fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(yearMonth, calendar, statusChangeList, yearMonthData)
+            return WorkMonth(yearMonth, calendar, statusChangeList, yearMonthData, fiveDayWeek)
         }
 
         fun of(
@@ -306,9 +339,10 @@ data class WorkMonth(
             month: Int,
             calendar: List<DayStatus> = listOf(),
             statusChangeList: List<MachinistStatus> = listOf(),
-            yearMonthData: List<YearMonthData>
+            yearMonthData: List<YearMonthData>,
+            fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.of(year, month), calendar, statusChangeList, yearMonthData)
+            return WorkMonth(YearMonth.of(year, month), calendar, statusChangeList, yearMonthData, fiveDayWeek)
         }
     }
 }

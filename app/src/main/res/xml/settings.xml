@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:key="theme_pref"
+        android:icon="@drawable/ic_choose_theme"
         app:useSimpleSummaryProvider="true"
         android:title="Тема"
         android:entryValues="@array/values_array_3"
         android:entries="@array/theme_entries"
         android:defaultValue="2"/>
+
+    <CheckBoxPreference
+        android:key="week_size_pref"
+        android:icon="@drawable/ic_week_size"
+        android:summary="Использовать в рассчетах пятидневную неделю вместо шестидневной"
+        android:title="Пятидневная неделя"
+        android:defaultValue="false" />
 
 </PreferenceScreen>

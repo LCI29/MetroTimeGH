@@ -171,7 +171,8 @@ class NormaViewModel(
         return WorkMonth.of(yearMonth,
             calendar.filter { it.endDateTime.isBefore(LocalDateTime.now()) },
             statusList.value ?: listOf(),
-            yearMonthDataList.value ?: listOf()
+            yearMonthDataList.value ?: listOf(),
+            fiveDayWeek = true
         )
     }
 
