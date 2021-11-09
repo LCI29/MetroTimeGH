@@ -142,23 +142,6 @@
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp">
-
-                    <include
-                        android:id="@+id/cell_holidays"
-                        layout="@layout/norma_element" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp">
-
-                    <include
-                        android:id="@+id/cell_overwork"
-                        layout="@layout/norma_element" />
-                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_columnWeight="1"
@@ -178,8 +161,6 @@
                         android:id="@+id/cell_vacation_days"
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
-
-
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_columnWeight="1"
@@ -238,6 +219,24 @@
 
                     <include
                         android:id="@+id/cell_night_hours"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_holidays"
+                        layout="@layout/norma_element" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp">
+
+                    <include
+                        android:id="@+id/cell_overwork"
                         layout="@layout/norma_element" />
                 </com.google.android.material.card.MaterialCardView>
 

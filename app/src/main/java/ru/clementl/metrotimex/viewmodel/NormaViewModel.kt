@@ -51,6 +51,14 @@ class NormaViewModel(
         it.workdayString
     }
 
+    val holidaysString: LiveData<String> = Transformations.map(currentMonth) {
+        it.holidayMillis.inFloatHours()
+    }
+
+    val overworkString: LiveData<String> = Transformations.map(currentMonth) {
+        it.overworkMillis.inFloatHours()
+    }
+
     val sickListDaysString: LiveData<String> = Transformations.map(currentMonth) {
         it.countOf(WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD).toString()
     }

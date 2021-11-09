@@ -69,8 +69,14 @@ class NormaFragment : Fragment() {
         }
 
         binding.cellHolidays.statName.text = stringFrom(R.string.holidays_stat_name)
+        normaViewModel.holidaysString.observe(viewLifecycleOwner) {
+            binding.cellHolidays.statValue.text = it
+        }
 
         binding.cellOverwork.statName.text = stringFrom(R.string.overwork_stat_name)
+        normaViewModel.overworkString.observe(viewLifecycleOwner) {
+            binding.cellOverwork.statValue.text = it
+        }
 
         binding.cellSickListDays.statName.text = stringFrom(R.string.sick_list_days_stat_name)
         normaViewModel.sickListDaysString.observe(viewLifecycleOwner) {
