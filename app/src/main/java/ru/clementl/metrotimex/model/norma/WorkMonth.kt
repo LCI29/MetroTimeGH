@@ -216,6 +216,10 @@ data class WorkMonth(
             .totalDurationIn(this)
     }
 
+    fun normaWorkedInMillis(): Long {
+        return workedInMillis().coerceAtMost(realNormaMillis ?: Long.MAX_VALUE)
+    }
+
     private fun Collection<DayStatus>.totalDurationIn(workMonth: WorkMonth): Long =
         sumOf { it.intersectionWith(workMonth) }
 

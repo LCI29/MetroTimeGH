@@ -30,6 +30,8 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
 
     val base: Double
         get() = workMonth.workedInMillis() * rate
+    val normaBase: Double
+        get() = workMonth.normaWorkedInMillis() * rate
     val baseLineIncome: Double
         get() = workMonth.baseLineTimeMillis * rate
     val baseReserveIncome: Double
@@ -47,7 +49,7 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val mentorBonus: Double
         get() = workMonth.asMentorMillis * rate * MENTOR_Q
     val stageBonus: Double
-        get() = base * workMonth.endStatus.machinist.getStageQ(workMonth.endMilli!!)
+        get() = normaBase * workMonth.endStatus.machinist.getStageQ(workMonth.endMilli!!)
     val premia: Double
         get() = workMonth.premia *
                 (baseLineIncome +
@@ -152,7 +154,7 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
             Повр. опл. по тариф. став | ${baseLineTimeMillis.inFloatHours()} | ${baseLineIncome.salaryStyle()}
             Опл. РЕЗЕРВ на поверхност | ${baseReserveTimeMillis.inFloatHours()} | ${baseReserveIncome.salaryStyle()}
             Разрывные часы            | ${baseGapTimeMillis.inFloatHours()} | ${baseGapIncome.salaryStyle()}
-            ЕжемПремЛокБр             | ${status.machinist.monthBonus.times(100)}% | ${premia.salaryStyle()}
+            ЕжемПремЛокБр             | ${status.machinist.monthBonus.times(100)}% | ${this@WorkMonthSalaryCounter.premia.salaryStyle()}
             Доплата за вечернее время | ${eveningMillis.inFloatHours()} | ${eveningBonus.salaryStyle()}
             Доплата за ночное время   | ${nightMillis.inFloatHours()} | ${nightBonus.salaryStyle()}
             ОплЗаСверхурочн.100%      | ${overworkMillis.inFloatHours()} | ${overWorkPay.salaryStyle()}
