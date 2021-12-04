@@ -18,8 +18,6 @@ class InfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         return requireActivity().layoutInflater.inflate(R.layout.fragment_info, container, false)
     }
 

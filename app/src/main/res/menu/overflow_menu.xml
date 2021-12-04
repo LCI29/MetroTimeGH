@@ -9,17 +9,27 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/yearBonusFragment"
+        android:icon="@drawable/ic_13_zp"
+        android:title="@string/menu_yearly_title"
+        android:menuCategory="secondary"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:menuCategory="secondary"
+        android:title="@string/settings"
         android:visible="true"
-        app:showAsAction="never"
-        android:title="@string/settings" />
+        app:showAsAction="never" />
+
+
 
     <item
         android:id="@+id/infoFragment"
         android:menuCategory="secondary"
-        app:showAsAction="never"
+        android:title="@string/info_menu_text"
         android:visible="true"
-        android:title="@string/info_menu_text" />
+        app:showAsAction="never" />
 </menu>

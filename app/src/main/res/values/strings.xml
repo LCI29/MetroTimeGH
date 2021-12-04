@@ -61,6 +61,9 @@
     <string name="try_other_apps">Попробуйте другие приложения:</string>
     <string name="info_menu_text">Инфо</string>
     <string name="metrotest_desc">Проходите тесты УПЦ на своем устройстве Android. Выбирайте количество вопросов. Ищите ответы быстро во встроенном поиске. Просматривайте статистику по темам техобучения.</string>
+    <string name="yearly_bonus_sum">Сумма для годовой премии</string>
+    <string name="year_bonus_fragment_label">Рассчет 13 зп</string>
+    <string name="menu_yearly_title">Рассчет 13 зп</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

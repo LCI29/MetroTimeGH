@@ -79,5 +79,9 @@
         android:id="@+id/infoFragment"
         android:name="ru.clementl.metrotimex.ui.fragments.InfoFragment"
         android:label="@string/info_menu_text" />
+    <fragment
+        android:id="@+id/yearBonusFragment"
+        android:name="ru.clementl.metrotimex.ui.fragments.YearBonusFragment"
+        android:label="@string/year_bonus_fragment_label" />
 
 </navigation>
