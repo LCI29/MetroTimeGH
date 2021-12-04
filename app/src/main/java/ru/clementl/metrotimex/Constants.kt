@@ -24,6 +24,15 @@ const val STAGE_10_14 = 0.2
 const val STAGE_15_19 = 0.25
 const val STAGE_20_PLUS = 0.3
 
+const val YEARLY_13_Q_0 = 0.0
+const val YEARLY_13_Q_1 = 1.0
+const val YEARLY_13_Q_2 = 1.2
+const val YEARLY_13_Q_3 = 1.4
+const val YEARLY_13_Q_4_5 = 1.6
+const val YEARLY_13_Q_6_9 = 1.8
+const val YEARLY_13_Q_10_PLUS = 2.0
+
+
 const val NDFL = 0.13
 const val UNION_Q = 0.01
 

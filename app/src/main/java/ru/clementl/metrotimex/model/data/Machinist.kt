@@ -2,6 +2,7 @@ package ru.clementl.metrotimex.model.data
 
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
+import ru.clementl.metrotimex.converters.toLong
 import java.time.*
 
 data class Machinist(
@@ -37,6 +38,21 @@ fun Machinist.getStageQ(moment: Long): Double {
     }
 }
 
+fun Machinist.getYearlyBonusQ(): Double {
+    val fullYears =
+        stageOn(LocalDateTime.now().withMonth(12).withDayOfMonth(31).toLong()).years
+    return when (fullYears) {
+        in Int.MIN_VALUE..0 -> YEARLY_13_Q_0
+        1 -> YEARLY_13_Q_1
+        2 -> YEARLY_13_Q_2
+        3 -> YEARLY_13_Q_3
+        4, 5 -> YEARLY_13_Q_4_5
+        in 6..9 -> YEARLY_13_Q_6_9
+        in 10..Int.MAX_VALUE -> YEARLY_13_Q_10_PLUS
+        else -> 0.0
+    }
+}
+
 fun Machinist.getMasterQ() = if (isMaster) MASTER_Q else 0.0
 
 
@@ -53,6 +69,8 @@ fun Machinist.getSickListQ(moment: Long): Double {
         else -> SICK_Q_UNDER_6_MONTHS
     }
 }
+
+
 
 
 

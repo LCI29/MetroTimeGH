@@ -64,6 +64,7 @@
     <string name="yearly_bonus_sum">Сумма для годовой премии</string>
     <string name="year_bonus_fragment_label">Рассчет 13 зп</string>
     <string name="menu_yearly_title">Рассчет 13 зп</string>
+    <string name="yearly_q_desc">Коп. за руб.</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>
