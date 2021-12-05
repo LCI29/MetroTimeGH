@@ -5,3 +5,5 @@ fun Double.salaryStyle(): String {
 }
 
 fun String.toDoubleEmptyZero(): Double = if (isEmpty()) 0.0 else toDouble()
+
+fun String.toDoubleOrNullEmptyZero(): Double? = if (isEmpty()) 0.0 else toDoubleOrNull()

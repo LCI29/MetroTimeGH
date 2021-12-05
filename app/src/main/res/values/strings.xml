@@ -56,15 +56,18 @@
     <string name="tech_ucheba_short_text">ТУ</string>
     <string name="premium">Премия</string>
     <string name="write_premia_size">Задайте размер премии</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="premium_in_current_month">Премия (этот месяц)</string>
     <string name="try_other_apps">Попробуйте другие приложения:</string>
     <string name="info_menu_text">Инфо</string>
     <string name="metrotest_desc">Проходите тесты УПЦ на своем устройстве Android. Выбирайте количество вопросов. Ищите ответы быстро во встроенном поиске. Просматривайте статистику по темам техобучения.</string>
-    <string name="yearly_bonus_sum">Сумма для годовой премии</string>
-    <string name="year_bonus_fragment_label">Рассчет 13 зп</string>
-    <string name="menu_yearly_title">Рассчет 13 зп</string>
+    <string name="yearly_bonus_sum">Введите СГП за НОЯБРЬ</string>
+    <string name="year_bonus_fragment_label">Расчет 13 зп</string>
+    <string name="menu_yearly_title">Расчет 13 зп</string>
     <string name="yearly_q_desc">Коп. за руб.</string>
+    <string name="yearly_title_text">Расчет годовой премии</string>
+    <string name="year_stage_q_text">Ваш коэффициент: %.1f</string>
+    <string name="yearly_q_text">%.1f коп. за руб</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>
