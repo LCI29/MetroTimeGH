@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/yearBonusFragment"
-        android:icon="@drawable/ic_13_zp"
+        android:icon="@drawable/ic_13_nice"
         android:title="@string/menu_yearly_title"
         android:menuCategory="secondary"
         android:visible="true"
