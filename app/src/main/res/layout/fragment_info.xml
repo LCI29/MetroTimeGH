@@ -1,51 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/text_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary_text"
-        tools:text="Версия 1.7" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="16sp"
-        android:textColor="@color/primary_text"
-        android:text="@string/try_other_apps" />
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/metrotest_img"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/metrotest_icon"
-            android:clickable="true"
-            android:focusable="true"
-            />
         <TextView
-            android:layout_marginStart="16dp"
+            android:id="@+id/text_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/metrotest_desc"/>
+            android:textColor="@color/primary_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Версия 1.7" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/try_other_apps"
+            android:textColor="@color/primary_text"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:id="@+id/metrotest_img"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/metrotest_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/metrotest_desc" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:id="@+id/arithmetic_img"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/arithmetics_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/arithmetic_desc" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-
-</LinearLayout>
+</ScrollView>

@@ -68,6 +68,9 @@
     <string name="yearly_title_text">Расчет годовой премии</string>
     <string name="year_stage_q_text">Ваш коэффициент: %.1f</string>
     <string name="yearly_q_text">%.1f коп. за руб</string>
+    <string name="arithmetic_desc">2 2 2 = 1. Какие знаки нужно расставить между цифрами, чтобы равенство стало верным? Данное приложение позволяет быстро решать подобные уравнения.</string>
+    <string name="metrotest_ref">https://play.google.com/store/apps/details?id=com.wannagoflorida.metrotest</string>
+    <string name="arithmetics_ref">https://play.google.com/store/apps/details?id=com.clementl.android.arithmeticsigns</string>
 
     <string-array name="day_status_types">
         <item>Смена</item>

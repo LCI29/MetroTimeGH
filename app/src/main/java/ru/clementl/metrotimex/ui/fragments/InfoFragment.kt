@@ -23,12 +23,30 @@ class InfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showVersion(view)
+        bindMetroTest(view)
+        bindArithmetics(view)
+    }
+
+    private fun showVersion(view: View) {
         view.findViewById<TextView>(R.id.text_version).text =
             resources.getString(R.string.version_text, BuildConfig.VERSION_NAME)
+    }
+
+    private fun bindMetroTest(view: View) {
         view.findViewById<ImageView>(R.id.metrotest_img).setOnClickListener {
-            val ref = "https://play.google.com/store/apps/details?id=com.wannagoflorida.metrotest"
+            val ref = getString(R.string.metrotest_ref)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ref))
+            startActivity(intent)
+        }
+    }
+
+    private fun bindArithmetics(view: View) {
+        view.findViewById<ImageView>(R.id.arithmetic_img).setOnClickListener {
+            val ref = getString(R.string.arithmetics_ref)
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ref))
             startActivity(intent)
         }
     }
 }
+
