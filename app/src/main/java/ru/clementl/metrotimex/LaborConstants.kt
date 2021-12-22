@@ -16,7 +16,20 @@ val NORMA_MAP = mapOf(
     YearMonth.of(2021, 9) to 158.4,
     YearMonth.of(2021, 10) to 151.2,
     YearMonth.of(2021, 11) to 143.0,
-    YearMonth.of(2021, 12) to 158.4
+    YearMonth.of(2021, 12) to 158.4,
+    // 2022
+    YearMonth.of(2022, 1) to 115.2,
+    YearMonth.of(2022, 2) to 135.8,
+    YearMonth.of(2022, 3) to 157.4,
+    YearMonth.of(2022, 4) to 151.2,
+    YearMonth.of(2022, 5) to 129.6,
+    YearMonth.of(2022, 6) to 151.2,
+    YearMonth.of(2022, 7) to 151.2,
+    YearMonth.of(2022, 8) to 165.6,
+    YearMonth.of(2022, 9) to 158.4,
+    YearMonth.of(2022, 10) to 151.2,
+    YearMonth.of(2022, 11) to 150.2,
+    YearMonth.of(2022, 12) to 158.4
 )
 
 val HOLIDAYS = setOf(
@@ -35,16 +48,41 @@ val HOLIDAYS = setOf(
     LocalDate.of(2021, 6, 12),
     LocalDate.of(2021, 11, 4),
     LocalDate.of(2021, 12, 31),
+
+    // 2022
+    LocalDate.of(2022, 1,1),
+    LocalDate.of(2022, 1,2),
+    LocalDate.of(2022, 1,3),
+    LocalDate.of(2022, 1,4),
+    LocalDate.of(2022, 1,5),
+    LocalDate.of(2022, 1,6),
+    LocalDate.of(2022, 1,7),
+    LocalDate.of(2022, 1,8),
+    LocalDate.of(2022, 2,23),
+    LocalDate.of(2022, 3,8),
+    LocalDate.of(2022, 5,1),
+    LocalDate.of(2022, 5, 9),
+    LocalDate.of(2022, 6, 12),
+    LocalDate.of(2022, 11, 4),
 )
 
 val CHANGED_WEEKENDS = setOf(
     LocalDate.of(2021, 2, 22),
     LocalDate.of(2021, 11, 5),
     LocalDate.of(2021, 12, 31),
+
+    //2022
+
+    LocalDate.of(2022, 5, 3),
+    LocalDate.of(2022, 5, 10),
+    LocalDate.of(2022, 3, 7),
 )
 
 val WORKING_WEEKENDS = setOf(
     LocalDate.of(2021, 2, 20),
+
+    //2022
+    LocalDate.of(2022, 3, 5)
 )
 
 val SHORTENED_DAYS = setOf(
@@ -52,6 +90,11 @@ val SHORTENED_DAYS = setOf(
     LocalDate.of(2021, 4, 30),
     LocalDate.of(2021, 6, 11),
     LocalDate.of(2021, 11, 3),
+
+    // 2022
+    LocalDate.of(2022, 2, 22),
+    LocalDate.of(2022, 3, 5),
+    LocalDate.of(2022, 11, 3),
 )
 
 data class YearConstant(val year: Year, val mrot: Double, val sickDayMaxPay: Double)
