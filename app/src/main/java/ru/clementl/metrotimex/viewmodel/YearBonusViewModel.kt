@@ -2,9 +2,7 @@ package ru.clementl.metrotimex.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import ru.clementl.metrotimex.utils.salaryStyle
 
 class YearBonusViewModel : ViewModel() {
 
@@ -21,8 +19,8 @@ class YearBonusViewModel : ViewModel() {
         get() = _sgp
 
     fun calculateBonus(stageQ: Double, inUnion: Boolean) {
-        val futureSgp = (sgp.value ?: 0.0) / 11 * 12
-        _result.value = futureSgp * stageQ * (yearQ.value?.div(100) ?: 0.0) * (if (inUnion) 0.86 else  0.87)
+        val sgp = (sgp.value ?: 0.0)
+        _result.value = sgp * stageQ * (yearQ.value?.div(100) ?: 0.0) * (if (inUnion) 0.86 else  0.87)
     }
 
     fun yearQInc() {
