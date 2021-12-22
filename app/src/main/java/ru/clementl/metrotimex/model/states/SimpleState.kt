@@ -9,6 +9,7 @@ object ShiftSimpleState : SimpleState(SHIFT_STRING)
 object GapSimpleState : SimpleState(GAP_STRING)
 object SickSimpleState : SimpleState(SICK_DAY_STRING)
 object VacationSimpleState : SimpleState(VACATION_DAY_STRING)
+object StudySimpleState : SimpleState(STUDY_DAY_STRING)
 object NoDataSimpleState : SimpleState(NO_DATA_STRING)
 object NightGapSimpleState : SimpleState(NIGHT_GAP_STRING)
 
@@ -56,12 +57,14 @@ fun Interval.simpleState(): SimpleState {
             VACATION_DAY_SP -> GapSimpleState
             MEDIC_DAY_SP -> GapSimpleState
             DONOR_DAY_SP -> GapSimpleState
+            STUDY_DAY_SP -> GapSimpleState
             UNKNOWN_SP -> GapSimpleState
 
             SHIFT_EP -> unknown
             WEEKEND_EP -> GapSimpleState
             SICK_DAY_EP, SICK_DAY_CHILD_EP -> SickSimpleState
             VACATION_DAY_EP -> VacationSimpleState
+            STUDY_DAY_EP -> StudySimpleState
             MEDIC_DAY_EP -> GapSimpleState
             DONOR_DAY_EP -> GapSimpleState
             UNKNOWN_EP -> GapSimpleState
@@ -179,6 +182,26 @@ fun Interval.simpleState(): SimpleState {
         }
 
         DONOR_DAY_EP -> when (afterCode) {
+            in START_POINTS -> GapSimpleState
+
+            SHIFT_EP -> ShiftSimpleState
+
+            null -> NoDataSimpleState
+            else -> unknown
+        }
+
+        STUDY_DAY_SP -> when (afterCode) {
+            SHIFT_SP -> GapSimpleState
+
+            SHIFT_EP -> ShiftSimpleState
+            STUDY_DAY_EP -> StudySimpleState
+
+            null -> unknown
+            else -> unknown
+        }
+
+        STUDY_DAY_EP -> when (afterCode) {
+            STUDY_DAY_SP -> StudySimpleState
             in START_POINTS -> GapSimpleState
 
             SHIFT_EP -> ShiftSimpleState

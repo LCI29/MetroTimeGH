@@ -44,7 +44,7 @@ data class WorkMonth(
         get() = listOfDays.filter { it.isA(SICK_LIST) || it.isA(SICK_LIST_CHILD) }
 
     val vacationDays: List<DayStatus>
-        get() = listOfDays.filter { it.isA(VACATION_DAY) }
+        get() = listOfDays.filter { it.isA(VACATION_DAY) || it.isA(STUDY_DAY)}
 
     val medicDays: List<DayStatus>
         get() = listOfDays.filter { it.isA(MEDIC_DAY) }
@@ -105,7 +105,8 @@ data class WorkMonth(
                     SICK_LIST,
                     SICK_LIST_CHILD,
                     VACATION_DAY,
-                    DONOR_DAY
+                    DONOR_DAY,
+                    STUDY_DAY
                 ) && it.date.dayOfWeek !in weekendDays && !it.isPublicHoliday() &&
                         !(fiveDayWeek && CHANGED_WEEKENDS.contains(it.date))
             }
@@ -119,7 +120,7 @@ data class WorkMonth(
                     return realNormaDays * 7.2 - SHORTENED_DAYS.count {
                         YearMonth.from(it) == yearMonth &&
                                 listOfDays.getDayOf(it)?.workDayType !in setOf(
-                                    MEDIC_DAY, SICK_LIST, SICK_LIST_CHILD, VACATION_DAY, DONOR_DAY
+                                    MEDIC_DAY, SICK_LIST, SICK_LIST_CHILD, VACATION_DAY, DONOR_DAY, STUDY_DAY
                                 )
                     }
                 }
@@ -147,7 +148,8 @@ data class WorkMonth(
             DONOR_DAY,
             SICK_LIST,
             SICK_LIST_CHILD,
-            VACATION_DAY
+            VACATION_DAY,
+            STUDY_DAY
         ) && (it.date.dayOfWeek in weekendDays || it.isPublicHoliday())
     }
 

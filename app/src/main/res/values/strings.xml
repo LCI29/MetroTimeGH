@@ -80,6 +80,7 @@
         <item>Медкомиссия</item>
         <item>Донорский день</item>
         <item>Больничный по уходу</item>
+        <item>Учебный отпуск</item>
     </string-array>
 
     <string-array name="qualification_classes_entries">

@@ -25,6 +25,7 @@ object WeekendAdvancedState : SpecialAdvancedState(WorkDayType.WEEKEND)
 object VacationAdvancedState : SpecialAdvancedState(WorkDayType.VACATION_DAY)
 object MedicAdvancedState : SpecialAdvancedState(WorkDayType.MEDIC_DAY)
 object DonorAdvancedState : SpecialAdvancedState(WorkDayType.DONOR_DAY)
+object StudyAdvancedState : SpecialAdvancedState(WorkDayType.STUDY_DAY)
 
 
 class UnknownAdvancedState constructor(description: String) : AdvancedState(description) {
@@ -70,6 +71,7 @@ fun Long.advancedState(calendar: List<DayStatus>?): AdvancedState {
         WorkDayType.VACATION_DAY -> VacationAdvancedState
         WorkDayType.MEDIC_DAY -> MedicAdvancedState
         WorkDayType.DONOR_DAY -> DonorAdvancedState
+        WorkDayType.STUDY_DAY -> StudyAdvancedState
         WorkDayType.UNKNOWN -> UnknownAdvancedState("Неизвестный тип дня")
     }
 }

@@ -102,6 +102,10 @@ data class DayStatus(
             return DayStatus(date.toLong(), WorkDayType.VACATION_DAY.type, null)
         }
 
+        fun studyDayOf(date: LocalDate): DayStatus {
+            return DayStatus(date.toLong(), WorkDayType.STUDY_DAY.type, null)
+        }
+
         fun sickListDayOf(date: LocalDate): DayStatus {
             return DayStatus(date.toLong(), WorkDayType.SICK_LIST.type, null)
         }

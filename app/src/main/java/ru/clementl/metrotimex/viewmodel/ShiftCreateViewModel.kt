@@ -184,7 +184,7 @@ class ShiftCreateViewModel(
     fun createDaysInRange(): List<DayStatus> {
         val list = mutableListOf<DayStatus>()
         val wdt = workDayTypeLive.value ?: return list
-        if (wdt !in setOf(WorkDayType.VACATION_DAY, WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD)) return list
+        if (wdt !in setOf(WorkDayType.VACATION_DAY, WorkDayType.STUDY_DAY, WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD)) return list
         val dateFrom = startDate.value ?: throw IllegalStateException("startDate not set")
         val dateTo = endDate.value ?: throw IllegalStateException("startDate not set")
         var d = LocalDate.from(dateFrom)

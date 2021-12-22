@@ -14,6 +14,7 @@ fun Int.toWorkDayType(): WorkDayType {
         TYPE_MEDIC -> WorkDayType.MEDIC_DAY
         TYPE_DONOR_DAY -> WorkDayType.DONOR_DAY
         TYPE_SICK_LIST_CHILD -> WorkDayType.SICK_LIST_CHILD
+        TYPE_STUDY_DAY -> WorkDayType.STUDY_DAY
         else -> WorkDayType.UNKNOWN
     }
 }

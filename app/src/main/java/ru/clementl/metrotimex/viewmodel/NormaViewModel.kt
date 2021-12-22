@@ -65,7 +65,7 @@ class NormaViewModel(
     }
 
     val vacationDaysString: LiveData<String> = Transformations.map(currentMonth) {
-        it.countOf(WorkDayType.VACATION_DAY).toString()
+        it.countOf(WorkDayType.VACATION_DAY, WorkDayType.STUDY_DAY).toString()
     }
 
     val nightShiftsString: LiveData<String> = Transformations.map(currentMonth) {

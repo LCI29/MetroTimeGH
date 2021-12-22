@@ -94,6 +94,8 @@ const val DONOR_DAY_SP = 51
 const val DONOR_DAY_EP = 52
 const val SICK_DAY_CHILD_SP = 61
 const val SICK_DAY_CHILD_EP = 62
+const val STUDY_DAY_SP = 71
+const val STUDY_DAY_EP = 72
 
 // Время смены суток для метро, определяется наиболее поздним возможным окончанием неночной смены
 val DAY_CHANGE_TIME: LocalTime = LocalTime.of(0, 0)
@@ -106,6 +108,7 @@ const val WEEKEND_STRING = "Выходной"
 const val SICK_DAY_STRING = "Больничный"
 const val SICK_DAY_STRING_SHORT = "Б/Л"
 const val VACATION_DAY_STRING = "Отпуск"
+const val STUDY_DAY_STRING = "Учебный отпуск"
 const val MEDIC_DAY = "Медкомиссия"
 const val NEXT_SHIFT_STRING = "Следующая смена"
 const val SHIFT_FINISHED_STRING = "Смена завершена"
@@ -116,11 +119,31 @@ const val NO_DATA_STRING = "Нет данных"
 
 // set of all the TimePoints types, which represent START of the interval
 val START_POINTS =
-    setOf(SHIFT_SP, WEEKEND_SP, SICK_DAY_SP, VACATION_DAY_SP, MEDIC_DAY_SP, DONOR_DAY_SP, SICK_DAY_CHILD_SP, UNKNOWN_SP)
+    setOf(
+        SHIFT_SP,
+        WEEKEND_SP,
+        SICK_DAY_SP,
+        VACATION_DAY_SP,
+        MEDIC_DAY_SP,
+        DONOR_DAY_SP,
+        SICK_DAY_CHILD_SP,
+        STUDY_DAY_SP,
+        UNKNOWN_SP
+    )
 
 // set of all the TimePoints types, which represent END of the interval
 val END_POINTS =
-    setOf(SHIFT_EP, WEEKEND_EP, SICK_DAY_EP, VACATION_DAY_EP, MEDIC_DAY_EP, DONOR_DAY_EP, SICK_DAY_CHILD_EP, UNKNOWN_EP)
+    setOf(
+        SHIFT_EP,
+        WEEKEND_EP,
+        SICK_DAY_EP,
+        VACATION_DAY_EP,
+        MEDIC_DAY_EP,
+        DONOR_DAY_EP,
+        SICK_DAY_CHILD_EP,
+        STUDY_DAY_EP,
+        UNKNOWN_EP
+    )
 
 val DAYS_FOR_TONIGHT_BEFORE = 100 // Days before today to load from db for TonightFragment
 val DAYS_FOR_TONIGHT_AFTER =

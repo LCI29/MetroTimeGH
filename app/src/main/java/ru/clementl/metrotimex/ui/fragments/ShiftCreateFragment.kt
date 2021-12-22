@@ -314,12 +314,13 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     notesTextInputLayout.visibility = View.VISIBLE
                 }
             }
-            2, 3, 6 -> {
+            2, 3, 6, 7 -> {
                 with(shiftCreateViewModel) {
                     when (pos) {
                         2 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST)
                         3 -> onWorkDayTypeChanged(WorkDayType.VACATION_DAY)
                         6 -> onWorkDayTypeChanged(WorkDayType.SICK_LIST_CHILD)
+                        7 -> onWorkDayTypeChanged(WorkDayType.STUDY_DAY)
                     }
                 }
                 with(binding!!) {
@@ -383,7 +384,8 @@ class ShiftCreateFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun save() {
         when (shiftCreateViewModel.workDayTypeLive.value) {
-            WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD, WorkDayType.VACATION_DAY -> {
+            WorkDayType.SICK_LIST, WorkDayType.SICK_LIST_CHILD, WorkDayType.VACATION_DAY,
+            WorkDayType.STUDY_DAY -> {
                 if (shiftCreateViewModel.mode == SHIFT_EDITING) saveDay() else saveDays()
             }
             else -> saveDay()
