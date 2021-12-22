@@ -55,7 +55,7 @@ const val RATE_GAP_MILLI = RATE_GAP_DEFAULT / HOUR_MILLI
 
 // ATZ constants
 const val ATZ_FACTOR = 0.75
-const val ATZ_DURATION_MILLI = HOUR_MILLI - 1
+const val ATZ_DURATION_MILLI = 0L // HOUR_MILLI - 1
 
 const val TECH_UCH_Q = 0.80324
 
