@@ -14,8 +14,8 @@ android {
         applicationId "ru.clementl.metrotimex"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.9"
+        versionCode 17
+        versionName "1.9.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
