@@ -47,7 +47,6 @@ val HOLIDAYS = setOf(
     LocalDate.of(2021, 5, 9),
     LocalDate.of(2021, 6, 12),
     LocalDate.of(2021, 11, 4),
-    LocalDate.of(2021, 12, 31),
 
     // 2022
     LocalDate.of(2022, 1,1),
