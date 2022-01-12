@@ -60,6 +60,20 @@
                 android:layout_height="wrap_content"
                 android:columnCount="2">
 
+                <TextView
+                    android:id="@+id/total_hours_value"
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="fill"
+                    android:layout_margin="8dp"
+                    android:padding="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:gravity="center"
+                    android:textSize="36dp"
+                    android:textStyle="bold"
+                    android:text="74,2"
+                    android:textColor="@color/primary_text" />
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_columnSpan="2"
                     android:layout_gravity="fill"
