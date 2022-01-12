@@ -69,9 +69,8 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:gravity="center"
-                    android:textSize="36dp"
+                    android:textSize="32dp"
                     android:textStyle="bold"
-                    android:text="74,2"
                     android:textColor="@color/primary_text" />
 
                 <com.google.android.material.card.MaterialCardView

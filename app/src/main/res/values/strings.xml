@@ -23,6 +23,7 @@
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
     <string name="yesterday">Вчера</string>
+    <string name="total_text">Всего: %s</string>
     <string name="norma">Норма</string>
     <string name="workdays_stat_name">Рабочие дни</string>
     <string name="weekends_stat_name">Выходные</string>

@@ -61,6 +61,12 @@ class NormaFragment : Fragment() {
         val binding = _binding!!
 
 
+        normaViewModel.totalHoursString.observe(viewLifecycleOwner) {
+            binding.totalHoursValue.apply {
+                text = getString(R.string.total_text, it)
+            }
+        }
+
         binding.cellWorkdays.statName.text = stringFrom(R.string.workdays_stat_name)
         normaViewModel.workDayString.observe(viewLifecycleOwner) {
             binding.cellWorkdays.statValue.text = it

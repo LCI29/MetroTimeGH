@@ -44,7 +44,7 @@ data class WorkMonth(
         get() = listOfDays.filter { it.isA(SICK_LIST) || it.isA(SICK_LIST_CHILD) }
 
     val vacationDays: List<DayStatus>
-        get() = listOfDays.filter { it.isA(VACATION_DAY) || it.isA(STUDY_DAY)}
+        get() = listOfDays.filter { it.isA(VACATION_DAY) || it.isA(STUDY_DAY) }
 
     val medicDays: List<DayStatus>
         get() = listOfDays.filter { it.isA(MEDIC_DAY) }
@@ -61,7 +61,8 @@ data class WorkMonth(
 
     val wasTechUch: Boolean = listOfDays.any { it.hasTechUch }
 
-    val premia: Double = yearMonthData.find { it.yearMonth == yearMonth }?.premia?.div(100) ?: endStatus.monthBonus.toDouble().div(100)
+    val premia: Double = yearMonthData.find { it.yearMonth == yearMonth }?.premia?.div(100)
+        ?: endStatus.monthBonus.toDouble().div(100)
 
     val sundaysAndHolidaysCount = countSundaysAndHolidays()
 
@@ -73,7 +74,8 @@ data class WorkMonth(
                     val day = yearMonth.atDay(i)
                     if (!WORKING_WEEKENDS.contains(day) &&
                         (day.dayOfWeek in weekendDays ||
-                        HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day)))
+                                HOLIDAYS.contains(day) || CHANGED_WEEKENDS.contains(day))
+                    )
                         sundays++
                 }
                 return sundays
@@ -120,8 +122,13 @@ data class WorkMonth(
                     return realNormaDays * 7.2 - SHORTENED_DAYS.count {
                         YearMonth.from(it) == yearMonth &&
                                 listOfDays.getDayOf(it)?.workDayType !in setOf(
-                                    MEDIC_DAY, SICK_LIST, SICK_LIST_CHILD, VACATION_DAY, DONOR_DAY, STUDY_DAY
-                                )
+                            MEDIC_DAY,
+                            SICK_LIST,
+                            SICK_LIST_CHILD,
+                            VACATION_DAY,
+                            DONOR_DAY,
+                            STUDY_DAY
+                        )
                     }
                 }
                 false -> {
@@ -186,8 +193,12 @@ data class WorkMonth(
         get() = wideListOfDays
             .filter { it.shift?.isReserve == true || it.shift?.hasAtz == true }
             .sumOf {
-                if (it.shift?.isReserve == true) it.intersectionWith(this) - it.holidayDuration(holidays)
-                else (it.intersectionWith(this) - it.holidayDuration(holidays)).coerceAtMost(ATZ_DURATION_MILLI)
+                if (it.shift?.isReserve == true) it.intersectionWith(this) - it.holidayDuration(
+                    holidays
+                )
+                else (it.intersectionWith(this) - it.holidayDuration(holidays)).coerceAtMost(
+                    ATZ_DURATION_MILLI
+                )
             }.coerceAtMost(realNormaMillis ?: Long.MAX_VALUE)
 
     val baseGapTimeMillis: Long
@@ -254,7 +265,8 @@ data class WorkMonth(
 
     fun countOf(workDayType: WorkDayType): Int = listOfDays.count { it.isA(workDayType) }
 
-    fun countOf(vararg workDayTypes: WorkDayType): Int = listOfDays.count { it.workDayType in workDayTypes }
+    fun countOf(vararg workDayTypes: WorkDayType): Int =
+        listOfDays.count { it.workDayType in workDayTypes }
 
     fun previous(): WorkMonth {
         return of(yearMonth.minusMonths(1), calendar, statusChangeList, yearMonthData)
@@ -265,9 +277,13 @@ data class WorkMonth(
     }
 
 
-    fun workedInMillis(): Long {
-        return (wideListOfDays
-            .totalDurationIn(this) - holidayMillis).coerceAtLeast(0)
+    fun workedInMillis(withoutHolidays: Boolean = true): Long {
+        return if (withoutHolidays) {
+            (wideListOfDays
+                .totalDurationIn(this) - holidayMillis).coerceAtLeast(0)
+        } else {
+            wideListOfDays.totalDurationIn(this).coerceAtLeast(0)
+        }
     }
 
     fun normaWorkedInMillis(): Long {
@@ -303,7 +319,13 @@ data class WorkMonth(
             yearMonthData: List<YearMonthData>,
             fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(milli.toDate()), calendar, statusChangeList,yearMonthData, fiveDayWeek)
+            return WorkMonth(
+                YearMonth.from(milli.toDate()),
+                calendar,
+                statusChangeList,
+                yearMonthData,
+                fiveDayWeek
+            )
         }
 
         fun of(
@@ -313,7 +335,13 @@ data class WorkMonth(
             yearMonthData: List<YearMonthData>,
             fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(date), calendar, statusChangeList, yearMonthData, fiveDayWeek)
+            return WorkMonth(
+                YearMonth.from(date),
+                calendar,
+                statusChangeList,
+                yearMonthData,
+                fiveDayWeek
+            )
         }
 
         fun of(
@@ -323,7 +351,13 @@ data class WorkMonth(
             yearMonthData: List<YearMonthData>,
             fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.from(dateTime), calendar, statusChangeList,yearMonthData, fiveDayWeek)
+            return WorkMonth(
+                YearMonth.from(dateTime),
+                calendar,
+                statusChangeList,
+                yearMonthData,
+                fiveDayWeek
+            )
         }
 
         fun of(
@@ -344,14 +378,23 @@ data class WorkMonth(
             yearMonthData: List<YearMonthData>,
             fiveDayWeek: Boolean = false
         ): WorkMonth {
-            return WorkMonth(YearMonth.of(year, month), calendar, statusChangeList, yearMonthData, fiveDayWeek)
+            return WorkMonth(
+                YearMonth.of(year, month),
+                calendar,
+                statusChangeList,
+                yearMonthData,
+                fiveDayWeek
+            )
         }
     }
 }
 
 @Entity(tableName = "year_month_data_table")
 data class YearMonthData(
-    @PrimaryKey @ColumnInfo(name = "year_month", typeAffinity = ColumnInfo.INTEGER) val yearMonthInt: Int,
+    @PrimaryKey @ColumnInfo(
+        name = "year_month",
+        typeAffinity = ColumnInfo.INTEGER
+    ) val yearMonthInt: Int,
     @ColumnInfo(name = "premia") val premiaDb: Double?
 ) {
     val yearMonth: YearMonth

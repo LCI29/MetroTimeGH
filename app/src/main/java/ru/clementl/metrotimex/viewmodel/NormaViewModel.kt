@@ -10,10 +10,7 @@ import ru.clementl.metrotimex.model.norma.WorkMonth
 import ru.clementl.metrotimex.model.norma.YearMonthData
 import ru.clementl.metrotimex.model.salary.WorkMonthSalaryCounter
 import ru.clementl.metrotimex.repositories.YearMonthRepository
-import ru.clementl.metrotimex.utils.inFloatHours
-import ru.clementl.metrotimex.utils.logd
-import ru.clementl.metrotimex.utils.salaryStyle
-import ru.clementl.metrotimex.utils.toInt
+import ru.clementl.metrotimex.utils.*
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.time.Duration
@@ -39,6 +36,10 @@ class NormaViewModel(
     )
     val currentMonth: LiveData<WorkMonth>
         get() = _currentMonth
+
+    val totalHoursString: LiveData<String> = Transformations.map(currentMonth) {
+        it.workedInMillis(withoutHolidays = false).inFloatHours()
+    }
 
     val weekendString: LiveData<String> = Transformations.map(currentMonth) {
         it.weekendString
