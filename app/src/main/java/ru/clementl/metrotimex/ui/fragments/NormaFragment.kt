@@ -145,12 +145,16 @@ class NormaFragment : Fragment() {
             binding.cellPremia.statValue.text = it
         }
 
-
-
         normaViewModel.wasTechUch.observe(viewLifecycleOwner) { was ->
             binding.cellTechUcheba.statValue.setImageResource(
                 if (was) R.drawable.ic_checked_green else R.drawable.ic_x_gray
             )
+        }
+
+        normaViewModel.avgRateValueString.observe(viewLifecycleOwner) {
+            binding.averageRateValue.apply {
+                text = getString(R.string.average_rate_per_hour_text, it)
+            }
         }
 
         binding.countFutureShiftsChb.setOnCheckedChangeListener { _, isChecked ->

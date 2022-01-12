@@ -93,8 +93,16 @@ class NormaViewModel(
         Duration.ofMillis(it.asMentorMillis).inFloatHours()
     }
 
-    val totalSalaryString: LiveData<String> = Transformations.map(currentMonth) {
-        WorkMonthSalaryCounter(it).getSalary(LocalDateTime.now().toLong()).salaryStyle()
+    private val counter: LiveData<WorkMonthSalaryCounter> = Transformations.map(currentMonth) {
+        WorkMonthSalaryCounter(it)
+    }
+
+    private val totalSalary: LiveData<Double> = Transformations.map(counter) {
+        it.getSalary(LocalDateTime.now().toLong())
+    }
+
+    val totalSalaryString: LiveData<String> = Transformations.map(totalSalary) {
+        it.salaryStyle()
     }
 
     val lineHoursString: LiveData<String> = Transformations.map(currentMonth) {
@@ -111,6 +119,14 @@ class NormaViewModel(
 
     val wasTechUch: LiveData<Boolean> = Transformations.map(currentMonth) {
         it.wasTechUch
+    }
+
+    val avgRateValueString: LiveData<String> = Transformations.map(counter) {
+        var avg = it.getSalaryWithoutVacation(LocalDateTime.now().toLong()) /
+                it.workMonth.workedInHoursTotal
+        logd("avg = $avg")
+        if (avg == Double.POSITIVE_INFINITY || avg.isNaN()) avg = 0.0
+        avg.salaryStyle()
     }
 
     // For changing premia value

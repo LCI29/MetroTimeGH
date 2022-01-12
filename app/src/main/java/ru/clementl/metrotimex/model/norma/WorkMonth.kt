@@ -160,8 +160,13 @@ data class WorkMonth(
         ) && (it.date.dayOfWeek in weekendDays || it.isPublicHoliday())
     }
 
+    // without holidays
     val workedInHours: Double
         get() = Duration.ofMillis(workedInMillis()).toMillis().toDouble() / HOUR_MILLI
+
+    // with holidays
+    val workedInHoursTotal: Double
+        get() = Duration.ofMillis(workedInMillis(false)).toMillis().toDouble() / HOUR_MILLI
 
     val normaString: String
         get() =

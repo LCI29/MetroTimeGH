@@ -144,10 +144,27 @@ class WorkMonthSalaryCounter(val workMonth: WorkMonth) : SalaryCounter {
     val profsouzSub: Double
         get() = totalIncome * UNION_Q
 
+    // For avg per hour
+    val totalIncomeWithoutVacation: Double
+        get() = baseLineIncome + baseReserveIncome + baseGapIncome + eveningBonus + nightBonus +
+                classBonus + masterBonus + mentorBonus + premia + stageBonus + techUch +
+                overWorkPay + overWorkOverPayHalf +
+                overWorkOverPayFull + holidayPay + holidayOverPay
+
+    val ndflSubWithoutVacation: Double
+        get() = totalIncomeWithoutVacation * NDFL
+
+    val profsouzSubWithoutVacation: Double
+        get() = totalIncomeWithoutVacation * UNION_Q
+
 
 
     override fun getSalary(moment: Long): Double {
         return totalIncome - ndflSub - profsouzSub
+    }
+
+    fun getSalaryWithoutVacation(moment: Long): Double {
+        return totalIncomeWithoutVacation - ndflSubWithoutVacation - profsouzSubWithoutVacation
     }
 
 

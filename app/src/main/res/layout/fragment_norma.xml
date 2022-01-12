@@ -69,7 +69,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:gravity="center"
-                    android:textSize="32dp"
+                    android:textSize="28sp"
                     android:textStyle="bold"
                     android:textColor="@color/primary_text" />
 
@@ -328,6 +328,16 @@
                             android:textAlignment="textEnd"
                             android:textColor="@color/primary_text"
                             android:textSize="32sp"
+                            android:textStyle="normal" />
+                        <TextView
+                            android:id="@+id/average_rate_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="8dp"
+                            android:paddingEnd="@dimen/cell_paddingBtwElements"
+                            android:textAlignment="textEnd"
+                            android:textSize="18sp"
                             android:textStyle="normal" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
