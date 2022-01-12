@@ -84,7 +84,22 @@ fun Double.inFloatHours(withH: Boolean = true, decimals: Int = 1): String {
  * Returns YearMonth as "АВГУСТ 2021"
  */
 fun YearMonth.asShortString(): String {
-    return "${month.getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault()).capitalize(Locale.ROOT)} $year"
+    val month = when (month) {
+        Month.JANUARY -> "Янв"
+        Month.FEBRUARY -> "Фев"
+        Month.MARCH -> "Март"
+        Month.APRIL -> "Апр"
+        Month.MAY -> "Май"
+        Month.JUNE -> "Июнь"
+        Month.JULY -> "Июль"
+        Month.AUGUST -> "Авг"
+        Month.SEPTEMBER -> "Сен"
+        Month.OCTOBER -> "Окт"
+        Month.NOVEMBER -> "Ноя"
+        Month.DECEMBER -> "Дек"
+        else -> ""
+    }
+    return "$month $year"
 }
 
 // Returns Int like 202107 on July 2021

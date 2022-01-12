@@ -37,7 +37,9 @@
                 android:text="@{viewModel.currentMonth.asString}"
                 android:textAlignment="center"
                 android:textColor="@color/primary_text"
-                android:textSize="18sp" />
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/next_button"
@@ -337,7 +339,7 @@
                             android:layout_marginBottom="8dp"
                             android:paddingEnd="@dimen/cell_paddingBtwElements"
                             android:textAlignment="textEnd"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="normal" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
