@@ -3,9 +3,8 @@ package ru.clementl.metrotimex.repositories
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.joinAll
 import ru.clementl.metrotimex.model.data.DayStatus
-import ru.clementl.metrotimex.model.room.daos.CalendarDao
+import ru.clementl.metrotimex.room.daos.CalendarDao
 
 class CalendarRepository(private val calendarDao: CalendarDao) {
 

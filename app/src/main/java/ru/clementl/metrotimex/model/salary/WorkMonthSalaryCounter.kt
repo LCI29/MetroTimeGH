@@ -3,7 +3,7 @@ package ru.clementl.metrotimex.model.salary
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toLong
 import ru.clementl.metrotimex.model.data.*
-import ru.clementl.metrotimex.model.norma.WorkMonth
+import ru.clementl.metrotimex.screens.norma.WorkMonth
 import ru.clementl.metrotimex.utils.inFloatHours
 import ru.clementl.metrotimex.utils.logd
 import ru.clementl.metrotimex.utils.salaryStyle

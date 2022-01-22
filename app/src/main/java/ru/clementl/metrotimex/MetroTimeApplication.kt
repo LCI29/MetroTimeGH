@@ -2,7 +2,7 @@ package ru.clementl.metrotimex
 
 import android.app.Application
 import androidx.preference.PreferenceManager
-import ru.clementl.metrotimex.model.room.MetroTimeDatabase
+import ru.clementl.metrotimex.room.MetroTimeDatabase
 import ru.clementl.metrotimex.repositories.CalendarRepository
 import ru.clementl.metrotimex.repositories.MachinistStatusRepository
 import ru.clementl.metrotimex.repositories.YearMonthRepository

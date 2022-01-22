@@ -2,12 +2,10 @@ package ru.clementl.metrotimex.model.salary
 
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toLong
-import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
 import ru.clementl.metrotimex.model.data.WorkDayType
 import ru.clementl.metrotimex.model.data.getSickListQ
-import ru.clementl.metrotimex.model.norma.WorkMonth
-import ru.clementl.metrotimex.utils.logd
+import ru.clementl.metrotimex.cnst.*
 import java.time.LocalDate
 
 const val SICK_LIST_NORMAL = 1

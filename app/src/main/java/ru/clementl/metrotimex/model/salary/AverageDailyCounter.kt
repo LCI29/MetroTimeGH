@@ -3,12 +3,10 @@ package ru.clementl.metrotimex.model.salary
 import kotlinx.coroutines.*
 import ru.clementl.metrotimex.model.data.DayStatus
 import ru.clementl.metrotimex.model.data.MachinistStatus
-import ru.clementl.metrotimex.model.norma.WorkMonth
-import ru.clementl.metrotimex.model.norma.YearMonthData
+import ru.clementl.metrotimex.screens.norma.WorkMonth
+import ru.clementl.metrotimex.screens.norma.YearMonthData
 import ru.clementl.metrotimex.utils.logd
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
 import java.time.YearMonth
 
 class AverageDailyCounter {

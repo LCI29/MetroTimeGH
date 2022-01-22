@@ -13,7 +13,7 @@
 
         <variable
             name="clickListener"
-            type="ru.clementl.metrotimex.ui.adapters.DayListener" />
+            type="ru.clementl.metrotimex.screens.calendar.DayListener" />
 
     </data>
 

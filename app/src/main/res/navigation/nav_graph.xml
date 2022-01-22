@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.CalendarFragment"
+        android:name="ru.clementl.metrotimex.screens.calendar.CalendarFragment"
         android:label="@string/label_fragment_calendar"
         tools:layout="@layout/fragment_calendar">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/tonightFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.TonightFragment"
+        android:name="ru.clementl.metrotimex.screens.tonight.TonightFragment"
         android:label="@string/label_fragment_tonight"
         tools:layout="@layout/fragment_tonight" >
         <action
@@ -27,17 +27,17 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.ProfileFragment"
+        android:name="ru.clementl.metrotimex.screens.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@xml/profile" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.SettingsFragment"
+        android:name="ru.clementl.metrotimex.screens.settings.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@xml/settings" />
     <fragment
         android:id="@+id/shiftDetailFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.ShiftDetailFragment"
+        android:name="ru.clementl.metrotimex.screens.shift.detail.ShiftDetailFragment"
         android:label="@string/shift_details"
         tools:layout="@layout/fragment_shift_detail">
         <argument
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/shiftEditDialogFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.ShiftCreateFragment"
+        android:name="ru.clementl.metrotimex.screens.shift.editcreate.ShiftCreateFragment"
         android:label="@string/shift_edit"
         tools:layout="@layout/fragment_shift_create">
         <action
@@ -73,15 +73,15 @@
     </fragment>
     <fragment
         android:id="@+id/normaFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.NormaFragment"
+        android:name="ru.clementl.metrotimex.screens.norma.NormaFragment"
         android:label="@string/norma" />
     <fragment
         android:id="@+id/infoFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.InfoFragment"
+        android:name="ru.clementl.metrotimex.screens.info.InfoFragment"
         android:label="@string/info_menu_text" />
     <fragment
         android:id="@+id/yearBonusFragment"
-        android:name="ru.clementl.metrotimex.ui.fragments.YearBonusFragment"
+        android:name="ru.clementl.metrotimex.screens.yearly.YearBonusFragment"
         android:label="@string/year_bonus_fragment_label" />
 
 </navigation>

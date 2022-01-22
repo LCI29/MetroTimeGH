@@ -1,8 +1,8 @@
 package ru.clementl.metrotimex.repositories
 
 import androidx.lifecycle.LiveData
-import ru.clementl.metrotimex.model.norma.YearMonthData
-import ru.clementl.metrotimex.model.room.daos.YearMonthDataDao
+import ru.clementl.metrotimex.room.daos.YearMonthDataDao
+import ru.clementl.metrotimex.screens.norma.YearMonthData
 
 class YearMonthRepository(private val yearMonthDataDao: YearMonthDataDao) {
 

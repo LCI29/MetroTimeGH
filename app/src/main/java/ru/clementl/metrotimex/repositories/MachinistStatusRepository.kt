@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
 import ru.clementl.metrotimex.model.data.MachinistStatus
-import ru.clementl.metrotimex.model.room.daos.MachinistStatusChangeDao
+import ru.clementl.metrotimex.room.daos.MachinistStatusChangeDao
 
 class MachinistStatusRepository(private val machinistStatusDao: MachinistStatusChangeDao) {
 

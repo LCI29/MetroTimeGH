@@ -1,6 +1,7 @@
 package ru.clementl.metrotimex.model.data
 
-import android.content.SharedPreferences
+import ru.clementl.metrotimex.FIRST_CLASS_Q
+import ru.clementl.metrotimex.cnst.*
 import ru.clementl.metrotimex.*
 import ru.clementl.metrotimex.converters.toDate
 import ru.clementl.metrotimex.converters.toLong

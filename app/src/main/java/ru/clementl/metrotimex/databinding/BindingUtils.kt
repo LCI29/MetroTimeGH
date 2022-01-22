@@ -10,7 +10,6 @@ import ru.clementl.metrotimex.model.data.*
 import ru.clementl.metrotimex.model.states.AdvancedState
 import ru.clementl.metrotimex.model.states.SimpleState
 import ru.clementl.metrotimex.utils.*
-import ru.clementl.metrotimex.viewmodel.ShiftDetailViewModel
 import java.time.Duration
 
 @BindingAdapter("dayOfMonth")

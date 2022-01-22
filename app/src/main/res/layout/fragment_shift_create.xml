@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="ru.clementl.metrotimex.viewmodel.ShiftCreateViewModel" />
+            type="ru.clementl.metrotimex.screens.shift.editcreate.ShiftCreateViewModel" />
     </data>
 
     <LinearLayout

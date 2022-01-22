@@ -6,7 +6,7 @@ import androidx.room.*
 import ru.clementl.metrotimex.ALWAYS_NIGHT_AFTER
 import ru.clementl.metrotimex.DAY_START_TIME
 import ru.clementl.metrotimex.EARLIEST_START_OF_EVENING_SHIFT
-import ru.clementl.metrotimex.HOLIDAYS
+import ru.clementl.metrotimex.cnst.*
 import ru.clementl.metrotimex.converters.*
 import ru.clementl.metrotimex.model.salary.MachinistSalaryCounter
 import ru.clementl.metrotimex.model.states.*
